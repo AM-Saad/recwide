@@ -1,4 +1,4 @@
-require = require('esm')(module);
+require('esm')(module);
 const allRoutes = require('./src/router')
 const routes = allRoutes.default.options.routes
 module.exports = {
@@ -7,7 +7,7 @@ module.exports = {
     sitemap: {
       // baseURL:'http://localhost:8080',
       hashMode: false,
-      baseURL: 'https://recwide.com',
+      baseURL: 'http://recwide.com',
       routes,
     }
   },
