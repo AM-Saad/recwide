@@ -128,7 +128,7 @@ export default {
 
 <style scoped>
 .header {
-  width: 100%;
+  width: 99%;
   align-items: center;
   justify-items: center;
   position: relative;
