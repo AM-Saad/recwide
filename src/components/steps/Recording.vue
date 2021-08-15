@@ -82,7 +82,13 @@ export default {
 
   created() {
     this.checkIfNeedGuide(this.recordingSettings);
-
+    try {
+      window.boradcast.getTracks().forEach((track) => {
+        track.stop();
+      });
+    } catch (error) {
+      console.log("___");
+    }
     window.onbeforeunload = function () {
       return "Are you sure you want to close the window?";
     };

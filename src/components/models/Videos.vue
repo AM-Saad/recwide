@@ -385,7 +385,7 @@ export default {
 #progress1 {
   position: absolute;
   /* opacity: 0; */
-  top: 1px;
+  top: .5px;
   cursor: pointer;
   border-radius: 50px;
 }

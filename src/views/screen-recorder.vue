@@ -8,8 +8,6 @@
       v-on:reRecord="rerecorde"
     ></component>
     <Final v-if="finished" v-on:reRecord="rerecorde"></Final>
-
- 
   </div>
 </template>
 
@@ -61,7 +59,7 @@ export default {
 h1 {
   text-align: center;
 }
-.head{
+.head {
   margin: var(--s-margin);
 }
 .step {
@@ -73,9 +71,10 @@ h1 {
 }
 .step .btn {
   margin: auto;
+  margin-top: var(--m-margin);
 }
 @media only screen and (max-width: 767px) and (min-width: 320px) {
-  h1{
+  h1 {
     font-size: 22px;
     margin: var(--m-margin) 0;
   }

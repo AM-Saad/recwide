@@ -96,14 +96,25 @@
             </div>
             <!---->
           </div>
-          <button class="btn btn-big" @click="startRec()">
+          <button
+            class="btn btn-big"
+            v-if="dontWaitCamPrev"
+            @click="startRec()"
+          >
+            Start Recording
+          </button>
+          <button
+            class="btn btn-big"
+            style="opacity: 0.5"
+            v-if="!dontWaitCamPrev"
+          >
             Start Recording
           </button>
         </div>
       </div>
       <div class="cam-area" v-if="this.mode != 'screen'">
         <!-- Broadcast -->
-        <CamBroadcast />
+        <CamBroadcast v-on:cameraReady="camPrevReady()" />
         <div v-if="!camGranted">
           <button class="btn" @click="openAllowAccess">
             Allow access to Camera
@@ -128,7 +139,7 @@ export default {
     return {
       needPermissions: false,
       showPermissions: false,
-
+      dontWaitCamPrev: false,
       showAllowAccess: false,
     };
   },
@@ -142,6 +153,12 @@ export default {
   },
   mounted() {},
   created() {
+    if (
+      this.mode === "screen" ||
+      (this.mode === "screenAndWebcam" && !this.camGranted)
+    ) {
+      this.dontWaitCamPrev = true;
+    }
     this.checkIfNeedPermissions();
     try {
       window.camstream.getTracks().forEach((track) => {
@@ -156,9 +173,32 @@ export default {
   },
   methods: {
     checkIfNeedPermissions() {
-      if (!this.micGranted || !this.camGranted) {
+      if (
+        this.mode === "screenAndWebcam" &&
+        (!this.camGranted ||
+          (!this.micGranted && this.recordingSettings !== "No audio"))
+      ) {
         this.needPermissions = true;
+      } else if (
+        this.mode === "webcam" &&
+        (!this.camGranted || !this.micGranted)
+      ) {
+        this.needPermissions = true;
+      } else if (
+        this.mode === "screen" &&
+        (this.recordingSettings === "Microphone + System audio" ||
+          this.recordingSettings === "Microphone")
+      ) {
+        if (!this.micGranted) {
+          console.log("supposed be here");
+          this.needPermissions = true;
+        } else {
+          this.needPermissions = false
+          this.readyToStart += 1;
+        }
       } else {
+          this.needPermissions = false
+
         this.readyToStart += 1;
       }
     },
@@ -183,6 +223,9 @@ export default {
       if (this.mode != "screen" && this.camGranted) {
         return this.$emit("switch", "Recording");
       }
+      if (this.mode == "screen" && (!this.micGranted || !this.camGranted)) {
+        return this.$emit("switch", "Recording");
+      }
     },
     openAllowAccess() {
       this.showAllowAccess = true;
@@ -200,6 +243,14 @@ export default {
     },
     changeSoundOpts(mode) {
       this.$store.commit("recSettings", mode);
+    },
+    camPrevReady() {
+      this.dontWaitCamPrev = true;
+    },
+  },
+  watch: {
+    recordingSettings() {
+      this.checkIfNeedPermissions();
     },
   },
 };
