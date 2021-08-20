@@ -12,6 +12,7 @@ module.exports = {
       hashMode: false,
       baseURL: 'http://recwide.com',
       routes,
+      outputDir: '/',
     }
   },
   pwa: {

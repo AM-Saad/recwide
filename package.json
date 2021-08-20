@@ -6,6 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "sitemap": "vue-cli-service sitemap",
     "postinstall": "npm install express"
   },
   "dependencies": {
@@ -19,6 +20,7 @@
     "register-service-worker": "^1.6.2",
     "socket.io-client": "^2.2.0",
     "vue": "^2.6.10",
+    "vue-cli-plugin-sitemap": "^2.3.0",
     "vue-router": "^3.0.3",
     "vue-socket.io": "^3.0.7",
     "vuex": "^3.0.1"
