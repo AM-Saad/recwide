@@ -6,7 +6,11 @@
         <span>Back To Recording Scene</span>
       </div>
     </div>
-    <Allowaccess v-on:close="closeAllowAccess" v-if="showAllowAccess" />
+    <Allowaccess
+      v-on:close="closeAllowAccess"
+      v-if="showAllowAccess"
+      :requestedGuide="requestedGuide"
+    />
 
     <Permissions
       v-on:gotit="closePermissions"
@@ -42,7 +46,10 @@
                   recordingSettings == 'Microphone + System audio'
                 "
               >
-                <p class="f-center m-t-3 c-r" @click="openAllowAccess">
+                <p
+                  class="f-center m-t-3 c-r"
+                  @click="openAllowAccess('Microphone')"
+                >
                   Allow access to mic
                 </p>
               </div>
@@ -61,7 +68,10 @@
                 <span>Microphone</span>
               </div>
               <div v-if="!micGranted && recordingSettings == 'Microphone'">
-                <p class="f-center m-t-3 c-r" @click="openAllowAccess">
+                <p
+                  class="f-center m-t-3 c-r"
+                  @click="openAllowAccess('Microphone')"
+                >
                   Allow access to mic
                 </p>
               </div>
@@ -96,6 +106,18 @@
             </div>
             <!---->
           </div>
+          <div class="grid">
+            <h3 for="resolution">Resolution</h3>
+            <select class="options-select active" id="resolution" v-model="currentResolution">
+              <option
+                v-for="i in resolutions"
+                :key="i.height"
+                :value="i.height"
+              >
+                {{ i.height }}
+              </option>
+            </select>
+          </div>
           <button
             class="btn btn-big"
             v-if="dontWaitCamPrev"
@@ -116,7 +138,7 @@
         <!-- Broadcast -->
         <CamBroadcast v-on:cameraReady="camPrevReady()" />
         <div v-if="!camGranted">
-          <button class="btn" @click="openAllowAccess">
+          <button class="btn" @click="openAllowAccess('Webcam')">
             Allow access to Camera
             <p class="font-xl">&#x261C;</p>
           </button>
@@ -141,10 +163,18 @@ export default {
       showPermissions: false,
       dontWaitCamPrev: false,
       showAllowAccess: false,
+      requestedGuide: "",
+      currentResolution: 1080,
     };
   },
   computed: {
-    ...mapState(["recordingSettings", "mode", "micGranted", "camGranted"]),
+    ...mapState([
+      "recordingSettings",
+      "mode",
+      "micGranted",
+      "camGranted",
+      "resolutions",
+    ]),
   },
   components: {
     CamBroadcast,
@@ -153,6 +183,7 @@ export default {
   },
   mounted() {},
   created() {
+
     if (
       this.mode === "screen" ||
       (this.mode === "screenAndWebcam" && !this.camGranted)
@@ -170,6 +201,8 @@ export default {
     } catch (error) {
       console.log("___");
     }
+      this.$store.commit("changeResolution", this.currentResolution);
+
   },
   methods: {
     checkIfNeedPermissions() {
@@ -190,19 +223,17 @@ export default {
           this.recordingSettings === "Microphone")
       ) {
         if (!this.micGranted) {
-          console.log("supposed be here");
           this.needPermissions = true;
         } else {
-          this.needPermissions = false
+          this.needPermissions = false;
           this.readyToStart += 1;
         }
       } else {
-          this.needPermissions = false
+        this.needPermissions = false;
 
         this.readyToStart += 1;
       }
     },
-
     startRec() {
       if (this.needPermissions) {
         this.showPermissions = true;
@@ -227,7 +258,8 @@ export default {
         return this.$emit("switch", "Recording");
       }
     },
-    openAllowAccess() {
+    openAllowAccess(requestedGuide) {
+      this.requestedGuide = requestedGuide;
       this.showAllowAccess = true;
     },
     closeAllowAccess() {
@@ -246,11 +278,21 @@ export default {
     },
     camPrevReady() {
       this.dontWaitCamPrev = true;
+      this.$store.commit("camGranted", true);
     },
   },
   watch: {
     recordingSettings() {
       this.checkIfNeedPermissions();
+    },
+    camGranted(val) {
+      if (val) {
+        this.$store.commit("micGranted", true);
+      }
+    },
+    currentResolution(val) {
+      this.currentResolution = val
+      this.$store.commit("changeResolution", val);
     },
   },
 };

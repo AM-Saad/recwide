@@ -15,7 +15,7 @@ export default {
   },
   props: ["recording", "start", "stopCam"],
   computed: {
-    ...mapState(["mode", "recordingSettings", "micGranted", "camGranted"]),
+    ...mapState(["mode", "recordingSettings", "micGranted", "camGranted", "resolution"]),
   },
   async created() {
     if (this.camGranted) {
@@ -33,7 +33,6 @@ export default {
       });
       window.mediaCamRecorder.stop();
       this.mediaCamRecorder.stop();
-   
     } catch (error) {
       console.log("___");
     }
@@ -44,17 +43,17 @@ export default {
       let constraints;
       if (this.recordingSettings == "No audio") {
         constraints = {
-          video: true,
+          video: this.resolution,
         };
       } else {
         if (this.micGranted) {
           constraints = {
             audio: true,
-            video: true,
+            video: this.resolution,
           };
         } else {
           constraints = {
-            video: true,
+            video: this.resolution,
           };
         }
       }

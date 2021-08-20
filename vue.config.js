@@ -2,6 +2,9 @@ require = require('esm')(module);
 const allRoutes = require('./src/router')
 const routes = allRoutes.default.options.routes
 module.exports = {
+  devServer:{
+    port:9090
+  },
   publicPath: '/',
   pluginOptions: {
     sitemap: {

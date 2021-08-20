@@ -28,6 +28,8 @@ export default {
       "camerror",
       "micGranted",
       "camGranted",
+      "resolution",
+      "resolutions",
     ]),
   },
   async created() {
@@ -46,25 +48,27 @@ export default {
   },
   methods: {
     getOptions() {
+
       let options = {};
+
       if (this.recordingSettings === "Microphone + System audio") {
         options = {
-          video: { video: true, audio: true },
+          video: { video: this.resolution, audio: true },
           audio: { audio: true },
         };
       } else if (this.recordingSettings === "Microphone") {
         options = {
-          video: { video: true },
+          video: { video: this.resolution },
           audio: { audio: true },
         };
       } else if (this.recordingSettings === "System audio") {
         options = {
-          video: { video: true, audio: true },
+          video: { video: this.resolution, audio: true },
           audio: { audio: false },
         };
       } else {
         options = {
-          video: { video: true },
+          video: { video: this.resolution },
           audio: { audio: false },
         };
       }
@@ -103,10 +107,10 @@ export default {
       let desktopStream;
       let voiceStream;
       let canceled = false;
-
+      console.log(options.video.video);
       try {
         desktopStream = await navigator.mediaDevices.getDisplayMedia({
-          video: true,
+          video: options.video.video,
           audio: audio,
         });
       } catch (error) {

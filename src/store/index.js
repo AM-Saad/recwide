@@ -20,7 +20,22 @@ export default new Vuex.Store({
     finished: false,
     camerror: false,
     camIsReady: false,
-    screenIsReady: false
+    screenIsReady: false,
+    resolution: 1080,
+    resolutions: [
+      {
+        height: 1080, width: 1920, aspectRatio: { ideal: 1.7777777778 },
+        frameRate: 30
+      },
+      {
+        height: 720, width: 1280, aspectRatio: { ideal: 1.7777777778 },
+        frameRate: 30
+      },
+      {
+        height: 480, width: 720, aspectRatio: { ideal: 1.7777777778 },
+        frameRate: 30
+      },
+    ]
   },
   getters: {},
   mutations: {
@@ -28,7 +43,7 @@ export default new Vuex.Store({
     changeMode(state, mode) {
       state.mode = mode
       console.log(state);
-      if(mode === 'webcam'){
+      if (mode === 'webcam') {
         state.recordingSettings = 'Microphone'
       }
     },
@@ -65,8 +80,13 @@ export default new Vuex.Store({
       state.blobs = []
       state.mode = 'screen'
       state.recordingSettings = 'Microphone + System audio'
-
-    }
+      state.resolution = 1080
+    },
+    changeResolution(state,val) {
+      state.resolution = state.resolutions.find(
+        (i) => i.height === val
+      );
+    },
   },
 
   actions: {

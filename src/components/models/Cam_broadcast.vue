@@ -4,11 +4,7 @@
       Your browser doesn't support the video tag
     </video>
     <div class="loading-cam grid" v-if="!ready">
-      <img
-        src="@/assets/images/cam_loading.gif"
-        alt=""
-        srcset=""
-      />
+      <img src="@/assets/images/cam_loading.gif" alt="" srcset="" />
       <p v-if="camGranted">Cam Preview is loading...</p>
       <p v-if="!camGranted" class="c-r">Cannot access to camera</p>
     </div>
@@ -29,37 +25,36 @@ export default {
   },
   props: ["recording"],
   computed: {
-    ...mapState(["mode", "recordingSettings", "camerror", "camGranted"]),
+    ...mapState([
+      "mode",
+      "recordingSettings",
+      "camerror",
+      "camGranted",
+      "resolution",
+    ]),
   },
   created() {
-    if (this.camGranted) {
-      this.startCambroadcast();
-    }
+    // if (this.camGranted) {
+    this.startBroadcast();
+    // }
+  },
+  beforeDestroy() {
+    this.stopBroadcast();
   },
   destroyed() {
-    if (this.camGranted) {
-      try {
-        console.log("broadcast destroyed");
-        this.ready = false;
+    this.stopBroadcast();
 
-        window.boradcast.getTracks().forEach((track) => {
-          track.stop();
-        });
-      } catch (error) {
-        console.log("____");
-      }
-    }
   },
   methods: {
-    startCambroadcast() {
+    startBroadcast() {
       navigator.mediaDevices
         .getUserMedia({
-          video: true,
+          audio: true,
+          video: this.resolution,
         })
         .then((stream) => {
           this.ready = true;
           this.$emit("cameraReady");
-
           var gumVideo = document.querySelector("#cam-broadcast");
           window.boradcast = stream;
           gumVideo.srcObject = stream;
@@ -73,6 +68,30 @@ export default {
           }
         });
     },
+    stopBroadcast() {
+      if (this.camGranted) {
+        try {
+          console.log("broadcast destroyed");
+          this.ready = false;
+
+          window.boradcast.getTracks().forEach((track) => {
+            track.stop();
+          });
+        } catch (error) {
+          console.log("____");
+        }
+      }
+    },
+  },
+  watch:{
+    resolution(val){
+      if(val){
+        this.stopBroadcast()
+        setTimeout(() => {
+            this.startBroadcast()
+        }, 1000);
+      }
+    }
   },
 };
 </script>

@@ -6,7 +6,7 @@
         Please check "Share Audio" box to record system audio.
       </div>
       <video
-        src="https://www.recordcast.com/media/tools/video/systemAudio.mp4?v=1.1"
+        src="@/assets/videos/share-sound.mp4"
         muted
         autoplay
         loop="loop"

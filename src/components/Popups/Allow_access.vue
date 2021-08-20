@@ -1,13 +1,21 @@
 <template>
   <div class="backdrop">
     <div class="inner">
-      <div class="title">Get Webcam And Microphone Permissions</div>
+      <div class="title">Get {{ requestedGuide }} Permission</div>
       <div class="desc">
         Please click the lock button in the browser address bar to set
         permissions.
       </div>
       <video
-        src="https://www.recordcast.com/media/tools/video/camera.mp4?v=1.1"
+        v-if="(requestedGuide === 'Microphone')"
+        src="@/assets/videos/allow-mic.mp4"
+        muted
+        autoplay
+        loop="loop"
+      ></video>
+        <video
+        v-if="requestedGuide === 'Webcam'"
+        src="@/assets/videos/allow-cam.mp4"
         muted
         autoplay
         loop="loop"
@@ -25,7 +33,9 @@ export default {
   data() {
     return {};
   },
-  created() {},
+  created() {
+  },
+  props: ["requestedGuide"],
   methods: {
     gotit() {
       this.$emit("close");

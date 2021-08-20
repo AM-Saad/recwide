@@ -12,6 +12,7 @@
         :recording="recording"
         :start="start"
         :finished="finished"
+        :resolution="resolution"
         v-on:downloadlink="pushScreenFile"
         v-on:forceStopCam="forceStopCam"
       />
@@ -77,6 +78,7 @@ export default {
       "finished",
       "camIsReady",
       "screenIsReady",
+      "resolution"
     ]),
   },
 
@@ -119,7 +121,6 @@ export default {
     canceled(msg) {
       this.$store.commit("camReady", false);
       this.$store.commit("screenReady", false);
-
       this.checkReady();
       this.$emit("switch", "options", msg);
     },

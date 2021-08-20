@@ -8,24 +8,24 @@ self.__precacheManifest = [
     "url": "/js/Home.c9b2a522.js"
   },
   {
-    "revision": "212c7b5b6dd89d8ff7f0",
-    "url": "/css/about.a10df181.css"
+    "revision": "16588d411847cf551046",
+    "url": "/css/about.a7ff9e6d.css"
   },
   {
-    "revision": "212c7b5b6dd89d8ff7f0",
-    "url": "/js/about.8e06da82.js"
+    "revision": "16588d411847cf551046",
+    "url": "/js/about.4b7d3a4b.js"
   },
   {
     "revision": "d663da2d3ba15ccdf702",
     "url": "/js/account.689c5d70.js"
   },
   {
-    "revision": "6681295785a905dff383",
+    "revision": "ea183f569f565e08098b",
     "url": "/css/app.bf75b9cc.css"
   },
   {
-    "revision": "6681295785a905dff383",
-    "url": "/js/app.a208a6a3.js"
+    "revision": "ea183f569f565e08098b",
+    "url": "/js/app.8d02fe74.js"
   },
   {
     "revision": "b6e9a96e94e41eceb023",
@@ -52,6 +52,10 @@ self.__precacheManifest = [
     "url": "/img/logo-geek.c028e98f.png"
   },
   {
+    "revision": "4a1367e3313e6d8d51bf2c2cda1a9717",
+    "url": "/media/allow-mic.4a1367e3.mp4"
+  },
+  {
     "revision": "8d017e17f8b7ee573cd0b47027192f9c",
     "url": "/img/cam.8d017e17.svg"
   },
@@ -76,6 +80,10 @@ self.__precacheManifest = [
     "url": "/img/screen.422f31c8.svg"
   },
   {
+    "revision": "558f6144f9a2ac92e0fb5bd549c99395",
+    "url": "/media/allow-cam.558f6144.mp4"
+  },
+  {
     "revision": "21000cf3e8110383fc54b70d90e4f4b1",
     "url": "/img/nodown.21000cf3.png"
   },
@@ -88,44 +96,48 @@ self.__precacheManifest = [
     "url": "/img/free.11d6b549.png"
   },
   {
-    "revision": "34a01af40e267018a1d7c3c54e266d31",
+    "revision": "80dbd06af41cf266ecda00c56bbb19d9",
+    "url": "/media/share-sound.80dbd06a.mp4"
+  },
+  {
+    "revision": "de45afa0f3eb8c83def514bbd34383e5",
     "url": "/index.html"
-  },
-  {
-    "revision": "1a034e64d80905128113e5272a5ab95e",
-    "url": "/img/icons/apple-touch-icon-152x152.png"
-  },
-  {
-    "revision": "a08a63f5fefd8a35bd44532f3e7b1f97",
-    "url": "/img/icons/android-chrome-512x512.png"
   },
   {
     "revision": "cae76bb2207c769d81896c0bff3cb6e1",
     "url": "/img/icons/android-chrome-192x192.png"
   },
   {
-    "revision": "c43cd371a49ee4ca17ab3a60e72bdd51",
-    "url": "/img/icons/apple-touch-icon-180x180.png"
+    "revision": "a08a63f5fefd8a35bd44532f3e7b1f97",
+    "url": "/img/icons/android-chrome-512x512.png"
   },
   {
     "revision": "f69e9969ac20cdee191059ef2a580743",
     "url": "/img/icons/apple-touch-icon-120x120.png"
   },
   {
-    "revision": "6470323bbbc9f5aa66bf4cc1ec46cc0d",
-    "url": "/img/icons/apple-touch-icon.png"
+    "revision": "1a034e64d80905128113e5272a5ab95e",
+    "url": "/img/icons/apple-touch-icon-152x152.png"
   },
   {
-    "revision": "d9923fe9cfa1e44466cf036242af6040",
-    "url": "/img/icons/apple-touch-icon-76x76.png"
+    "revision": "c43cd371a49ee4ca17ab3a60e72bdd51",
+    "url": "/img/icons/apple-touch-icon-180x180.png"
   },
   {
     "revision": "9a2b5c0f19de617685b7b5b42464e7db",
     "url": "/img/icons/apple-touch-icon-60x60.png"
   },
   {
-    "revision": "46dca34b047ee268f5793ebc498da47a",
-    "url": "/favicon.ico"
+    "revision": "d9923fe9cfa1e44466cf036242af6040",
+    "url": "/img/icons/apple-touch-icon-76x76.png"
+  },
+  {
+    "revision": "6470323bbbc9f5aa66bf4cc1ec46cc0d",
+    "url": "/img/icons/apple-touch-icon.png"
+  },
+  {
+    "revision": "3e17a4a142f30aa333d19ac36a9eb4d9",
+    "url": "/img/icons/favicon-16x16.png"
   },
   {
     "revision": "3e17a4a142f30aa333d19ac36a9eb4d9",
@@ -134,10 +146,6 @@ self.__precacheManifest = [
   {
     "revision": "a888f4a6cf09372619c520f1da54b581",
     "url": "/img/icons/maskable_icon_x384 (1).png"
-  },
-  {
-    "revision": "3e17a4a142f30aa333d19ac36a9eb4d9",
-    "url": "/img/icons/favicon-16x16.png"
   },
   {
     "revision": "b89032a4a5a1879f30ba05a13947f26f",
@@ -156,11 +164,15 @@ self.__precacheManifest = [
     "url": "/manifest.json"
   },
   {
+    "revision": "b6216d61c03e6ce0c9aea6ca7808f7ca",
+    "url": "/robots.txt"
+  },
+  {
     "revision": "c58c8c5a358d3566dc3785666ba55af8",
     "url": "/service-worker.js"
   },
   {
-    "revision": "b6216d61c03e6ce0c9aea6ca7808f7ca",
-    "url": "/robots.txt"
+    "revision": "46dca34b047ee268f5793ebc498da47a",
+    "url": "/favicon.ico"
   }
 ];
