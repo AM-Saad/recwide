@@ -1,6 +1,18 @@
 <template>
   <div>
     <div class="wrapper">
+      <section id="about">
+        <h2>About us</h2>
+        <p>
+          Our aim to give every content creator, teacher, or anyone who wants to
+          record anything the ability to do it free without that annoying
+          watermark or even a specific time that cannot be exceeded. Recwide is
+          a completely free screen and camera recorder that works online,
+          however, since it's a PWA ( Progressive Web App ) it could be
+          installed on your laptop to enjoy using it whether you're online or
+          offline.
+        </p>
+      </section>
       <section id="services" class="grid">
         <h2>Why Choose Recwide</h2>
 
@@ -63,7 +75,7 @@
             </div>
           </div>
         </div>
-      </section>  
+      </section>
     </div>
 
     <footer>
@@ -111,36 +123,12 @@ export default {
 </script>
 
 <style scoped>
-.header {
-  width: 100%;
-  align-items: center;
-  justify-items: center;
-  position: relative;
-  z-index: 2;
-  margin-top: 0;
-}
-
-.header-intro p {
-  color: #222;
-  margin: var(--m-margin);
+#about p{
   font-size: 22px;
-  margin-bottom: var(--l-margin);
-  text-align: center;
-}
-
-.header img {
-  max-width: 100%;
-}
-
-.header .play-btn {
-  height: 140px;
-  width: 140px;
-  margin: auto;
-  border-radius: 118px;
-  background: transparent;
-  color: red;
-  font-size: 42px;
-  border-width: 3px;
+    font-weight: 700;
+    margin-top: var(--m-margin);
+    line-height: 1.7;
+    color: #333;
 }
 .services-item {
   padding: var(--m-padding);

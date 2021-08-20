@@ -1,18 +1,16 @@
 <template>
   <div>
-    <section
-      class=" header"
-      style="align-items: center; justify-items: center"
-    >
+    <section class="header" style="align-items: center; justify-items: center">
       <div class="header-intro">
         <img src="@/assets/images/full_logo.png" alt="" srcset="" />
 
         <p>
-          Screen recording and webcam became easy, free and it will always be
+          Screen recorder and webcam recorder have never been this easy, free
+          and timeless befroe
         </p>
         <router-link class="btn play-btn" to="/recorder"
-          ><i class="fas fa-play"></i></router-link
-        >
+          ><i class="fas fa-play"></i
+        ></router-link>
       </div>
       <div class="header-img"></div>
     </section>
@@ -58,9 +56,8 @@
             <div class="mt-3">
               <h5 class="mb-2" style="font-weight: 600">Flexable Recording</h5>
               <p>
-                Whether you want to record the entire screen or just a browser
-                tab it's up to you. you could also record the screen and the
-                webcam at the same time
+                Whether you want to record screen, record webcam, a browser tab,
+                entire screen or all of them combined it's up to you.
               </p>
             </div>
           </div>
@@ -100,9 +97,9 @@
             </li>
           </ul>
           <ul class="footer-contact_menu">
-            <li><a href="">Support</a></li>
+            <li><a href="/">Support</a></li>
             <li><a href="/about">About</a></li>
-            <li><a href="/contact">Contact </a></li>
+            <li><a href="/">Contact </a></li>
           </ul>
         </div>
       </div>
@@ -137,28 +134,28 @@ export default {
 }
 
 .header-intro p {
-    color: #222;
-    margin: var(--m-margin);
-    font-size: 22px;
-    margin-bottom: var(--l-margin);
-    text-align: center;
+  color: #222;
+  margin: var(--m-margin);
+  font-size: 22px;
+  margin-bottom: var(--l-margin);
+  text-align: center;
 }
 
 .header img {
   max-width: 100%;
-  display:block;
+  display: block;
   margin: auto;
 }
 
-.header .play-btn{
-      height: 140px;
-    width: 140px;
-    margin: auto;
-    border-radius: 118px;
-    background: transparent;
-    color: red;
-    font-size: 42px;
-    border-width: 3px;
+.header .play-btn {
+  height: 140px;
+  width: 140px;
+  margin: auto;
+  border-radius: 118px;
+  background: transparent;
+  color: red;
+  font-size: 42px;
+  border-width: 3px;
 }
 .services-item {
   padding: var(--m-padding);
