@@ -42,13 +42,11 @@ export default new Vuex.Store({
 
     changeMode(state, mode) {
       state.mode = mode
-      console.log(state);
       if (mode === 'webcam') {
         state.recordingSettings = 'Microphone'
       }
     },
     recSettings(state, mode) {
-      console.log(mode);
       state.recordingSettings = mode
     },
     newBlob(state, blob) {
@@ -92,9 +90,7 @@ export default new Vuex.Store({
   actions: {
     async checkConnection({ state }) {
 
-      const res = await fetch("http://info.cern.ch/")
-      console.log(res);
-
+    await fetch("http://info.cern.ch/")
       state.networkconnections = !state.networkconnections
     },
 

@@ -60,7 +60,6 @@ export default {
           gumVideo.srcObject = stream;
         })
         .catch((error) => {
-          console.log("navigator.getUserMedia error: ", error);
           if (error.name === "NotAllowedError") {
             this.ready = false;
 
@@ -71,14 +70,13 @@ export default {
     stopBroadcast() {
       if (this.camGranted) {
         try {
-          console.log("broadcast destroyed");
           this.ready = false;
 
           window.boradcast.getTracks().forEach((track) => {
             track.stop();
           });
         } catch (error) {
-          console.log("____");
+         return
         }
       }
     },

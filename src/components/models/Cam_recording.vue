@@ -34,7 +34,7 @@ export default {
       window.mediaCamRecorder.stop();
       this.mediaCamRecorder.stop();
     } catch (error) {
-      console.log("___");
+      return
     }
   },
   methods: {
@@ -108,7 +108,7 @@ export default {
         });
         this.mediaCamRecorder.stop();
       } catch (error) {
-        console.log("___");
+        return
       }
       this.$emit("downloadlink", this.recordedCamBlobs);
     },

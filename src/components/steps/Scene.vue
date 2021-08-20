@@ -71,7 +71,7 @@ export default {
         track.stop();
       });
     } catch (error) {
-      console.log("___");
+      return;
     }
   },
   methods: {

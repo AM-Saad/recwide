@@ -115,7 +115,6 @@ export default {
   },
   mounted() {
     let authtype = this.$route.params.type;
-    console.log(authtype);
     this.$refs[authtype].classList.add("block");
   },
   created() {},
@@ -136,7 +135,6 @@ export default {
           password: this.password,
         },
       });
-      console.log(res);
       if (!res.state) {
         this.loading = false;
         return (document.querySelector(".signup-error").innerHTML = res.msg);
@@ -163,7 +161,6 @@ export default {
           password: this.password,
         },
       });
-      console.log(res);
       if (!res.state) {
         this.loading = false;
         return (document.querySelector(".login-error").innerHTML = res.msg);

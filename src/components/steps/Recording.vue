@@ -89,7 +89,7 @@ export default {
         track.stop();
       });
     } catch (error) {
-      console.log("___");
+      return
     }
     window.onbeforeunload = function () {
       return "Are you sure you want to close the window?";

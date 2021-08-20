@@ -120,7 +120,6 @@ export default {
 
       videoPlayer.onloadedmetadata = function () {
         // it should already be available here
-        console.log("duration: " + videoPlayer.duration);
         // handle chrome's bug
         if (videoPlayer.duration === Infinity) {
           // set it to bigger than the actual duration
@@ -129,11 +128,9 @@ export default {
             _comp.ready = true;
 
             this.ontimeupdate = () => {
-              console.log("time updated");
               _comp.updateProgressBar();
               return;
             };
-            console.log("after workaround: " + videoPlayer.duration);
           };
         }
       };
@@ -202,17 +199,14 @@ export default {
     },
 
     pausebyprogress() {
-      console.log("progress cliced");
       let videoPlayer = document.getElementById("main_video");
       let mirageProgressBar = this.$refs.mirageProgressBar;
-      console.log(mirageProgressBar.value);
       let playPauseBtn = this.$refs.playPauseBtn;
       playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
 
       let videos = document.querySelectorAll("video");
       for (let index = 0; index < videos.length; index++) {
         var current = (mirageProgressBar.value * videoPlayer.duration) / 100;
-        console.log(current);
         videos[index].currentTime = current;
         videos[index].pause();
       }

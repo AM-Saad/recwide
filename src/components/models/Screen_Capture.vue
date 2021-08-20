@@ -107,14 +107,12 @@ export default {
       let desktopStream;
       let voiceStream;
       let canceled = false;
-      console.log(options.video.video);
       try {
         desktopStream = await navigator.mediaDevices.getDisplayMedia({
           video: options.video.video,
           audio: audio,
         });
       } catch (error) {
-        console.log("___");
         canceled = true;
         this.$emit(
           "canceled",
@@ -170,7 +168,7 @@ export default {
           };
         }
       } catch (error) {
-        console.log("____");
+        return
       }
 
       this.rec.start(1000);
@@ -189,7 +187,7 @@ export default {
 
         await window.audioCtx.close();
       } catch (error) {
-        console.log("___");
+        return
       }
     },
   },

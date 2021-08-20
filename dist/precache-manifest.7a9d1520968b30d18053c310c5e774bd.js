@@ -8,32 +8,32 @@ self.__precacheManifest = [
     "url": "/js/Home.2c6b00f4.js"
   },
   {
-    "revision": "c36cce078fe2a1ebb289",
-    "url": "/css/about.e796e429.css"
+    "revision": "e9cfb83ec3348b101fc3",
+    "url": "/css/about.185d4e91.css"
   },
   {
-    "revision": "c36cce078fe2a1ebb289",
-    "url": "/js/about.69098eb6.js"
+    "revision": "e9cfb83ec3348b101fc3",
+    "url": "/js/about.8eb6be4e.js"
   },
   {
     "revision": "d663da2d3ba15ccdf702",
     "url": "/js/account.689c5d70.js"
   },
   {
-    "revision": "aba30db254faadb99b1a",
+    "revision": "fba9b333a4a63a1363b0",
     "url": "/css/app.bf75b9cc.css"
   },
   {
-    "revision": "aba30db254faadb99b1a",
-    "url": "/js/app.c349fc26.js"
+    "revision": "fba9b333a4a63a1363b0",
+    "url": "/js/app.7061e89c.js"
   },
   {
-    "revision": "382989e8c40746cee0b0",
+    "revision": "40a15575646c6465a5d8",
     "url": "/css/auth.8603fe1c.css"
   },
   {
-    "revision": "382989e8c40746cee0b0",
-    "url": "/js/auth.e6266938.js"
+    "revision": "40a15575646c6465a5d8",
+    "url": "/js/auth.5d9371a9.js"
   },
   {
     "revision": "780c8a0da1179d739398",
@@ -100,7 +100,7 @@ self.__precacheManifest = [
     "url": "/media/share-sound.80dbd06a.mp4"
   },
   {
-    "revision": "17f92f25fec2962d2db8268a5afe9b13",
+    "revision": "9372d5857e4b8189cb63eeac9b23f0a7",
     "url": "/index.html"
   },
   {
@@ -120,20 +120,24 @@ self.__precacheManifest = [
     "url": "/img/icons/android-chrome-512x512.png"
   },
   {
-    "revision": "c43cd371a49ee4ca17ab3a60e72bdd51",
-    "url": "/img/icons/apple-touch-icon-180x180.png"
+    "revision": "9a2b5c0f19de617685b7b5b42464e7db",
+    "url": "/img/icons/apple-touch-icon-60x60.png"
   },
   {
     "revision": "d9923fe9cfa1e44466cf036242af6040",
     "url": "/img/icons/apple-touch-icon-76x76.png"
   },
   {
+    "revision": "c43cd371a49ee4ca17ab3a60e72bdd51",
+    "url": "/img/icons/apple-touch-icon-180x180.png"
+  },
+  {
     "revision": "6470323bbbc9f5aa66bf4cc1ec46cc0d",
     "url": "/img/icons/apple-touch-icon.png"
   },
   {
-    "revision": "9a2b5c0f19de617685b7b5b42464e7db",
-    "url": "/img/icons/apple-touch-icon-60x60.png"
+    "revision": "46dca34b047ee268f5793ebc498da47a",
+    "url": "/favicon.ico"
   },
   {
     "revision": "3e17a4a142f30aa333d19ac36a9eb4d9",
@@ -144,8 +148,8 @@ self.__precacheManifest = [
     "url": "/img/icons/favicon-32x32.png"
   },
   {
-    "revision": "46dca34b047ee268f5793ebc498da47a",
-    "url": "/favicon.ico"
+    "revision": "a888f4a6cf09372619c520f1da54b581",
+    "url": "/img/icons/maskable_icon_x384 (1).png"
   },
   {
     "revision": "b89032a4a5a1879f30ba05a13947f26f",
@@ -154,10 +158,6 @@ self.__precacheManifest = [
   {
     "revision": "058a3335d15a3eb84e7ae3707ba09620",
     "url": "/img/icons/mstile-150x150.png"
-  },
-  {
-    "revision": "a888f4a6cf09372619c520f1da54b581",
-    "url": "/img/icons/maskable_icon_x384 (1).png"
   },
   {
     "revision": "f22d501a35a87d9f21701cb031f6ea17",

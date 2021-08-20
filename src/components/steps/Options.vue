@@ -199,7 +199,7 @@ export default {
         track.stop();
       });
     } catch (error) {
-      console.log("___");
+      return
     }
       this.$store.commit("changeResolution", this.currentResolution);
 
