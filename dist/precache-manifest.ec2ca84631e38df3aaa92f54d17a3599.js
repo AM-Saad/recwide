@@ -100,8 +100,12 @@ self.__precacheManifest = [
     "url": "/media/share-sound.80dbd06a.mp4"
   },
   {
-    "revision": "9372d5857e4b8189cb63eeac9b23f0a7",
+    "revision": "0521193dd9dc267dad7356353255375f",
     "url": "/index.html"
+  },
+  {
+    "revision": "46dca34b047ee268f5793ebc498da47a",
+    "url": "/favicon.ico"
   },
   {
     "revision": "a08a63f5fefd8a35bd44532f3e7b1f97",
@@ -112,6 +116,14 @@ self.__precacheManifest = [
     "url": "/img/icons/android-chrome-192x192.png"
   },
   {
+    "revision": "9a2b5c0f19de617685b7b5b42464e7db",
+    "url": "/img/icons/apple-touch-icon-60x60.png"
+  },
+  {
+    "revision": "c43cd371a49ee4ca17ab3a60e72bdd51",
+    "url": "/img/icons/apple-touch-icon-180x180.png"
+  },
+  {
     "revision": "f69e9969ac20cdee191059ef2a580743",
     "url": "/img/icons/apple-touch-icon-120x120.png"
   },
@@ -120,60 +132,48 @@ self.__precacheManifest = [
     "url": "/img/icons/apple-touch-icon-152x152.png"
   },
   {
-    "revision": "46dca34b047ee268f5793ebc498da47a",
-    "url": "/favicon.ico"
-  },
-  {
-    "revision": "9a2b5c0f19de617685b7b5b42464e7db",
-    "url": "/img/icons/apple-touch-icon-60x60.png"
-  },
-  {
     "revision": "d9923fe9cfa1e44466cf036242af6040",
     "url": "/img/icons/apple-touch-icon-76x76.png"
-  },
-  {
-    "revision": "6470323bbbc9f5aa66bf4cc1ec46cc0d",
-    "url": "/img/icons/apple-touch-icon.png"
-  },
-  {
-    "revision": "3e17a4a142f30aa333d19ac36a9eb4d9",
-    "url": "/img/icons/favicon-16x16.png"
-  },
-  {
-    "revision": "c43cd371a49ee4ca17ab3a60e72bdd51",
-    "url": "/img/icons/apple-touch-icon-180x180.png"
-  },
-  {
-    "revision": "3e17a4a142f30aa333d19ac36a9eb4d9",
-    "url": "/img/icons/favicon-32x32.png"
   },
   {
     "revision": "a888f4a6cf09372619c520f1da54b581",
     "url": "/img/icons/maskable_icon_x384 (1).png"
   },
   {
-    "revision": "b89032a4a5a1879f30ba05a13947f26f",
-    "url": "/img/icons/msapplication-icon-144x144.png"
+    "revision": "058a3335d15a3eb84e7ae3707ba09620",
+    "url": "/img/icons/mstile-150x150.png"
+  },
+  {
+    "revision": "3e17a4a142f30aa333d19ac36a9eb4d9",
+    "url": "/img/icons/favicon-32x32.png"
+  },
+  {
+    "revision": "6470323bbbc9f5aa66bf4cc1ec46cc0d",
+    "url": "/img/icons/apple-touch-icon.png"
   },
   {
     "revision": "2c20f88367b010d66cccb8ab51578ace",
     "url": "/manifest.json"
   },
   {
-    "revision": "058a3335d15a3eb84e7ae3707ba09620",
-    "url": "/img/icons/mstile-150x150.png"
-  },
-  {
-    "revision": "c58c8c5a358d3566dc3785666ba55af8",
-    "url": "/service-worker.js"
+    "revision": "b6216d61c03e6ce0c9aea6ca7808f7ca",
+    "url": "/robots.txt"
   },
   {
     "revision": "f22d501a35a87d9f21701cb031f6ea17",
     "url": "/img/icons/safari-pinned-tab.svg"
   },
   {
-    "revision": "b6216d61c03e6ce0c9aea6ca7808f7ca",
-    "url": "/robots.txt"
+    "revision": "3e17a4a142f30aa333d19ac36a9eb4d9",
+    "url": "/img/icons/favicon-16x16.png"
+  },
+  {
+    "revision": "c58c8c5a358d3566dc3785666ba55af8",
+    "url": "/service-worker.js"
+  },
+  {
+    "revision": "b89032a4a5a1879f30ba05a13947f26f",
+    "url": "/img/icons/msapplication-icon-144x144.png"
   },
   {
     "revision": "203c763c649bff76d9b7fce59466fea7",
