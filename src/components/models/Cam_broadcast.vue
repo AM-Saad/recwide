@@ -6,7 +6,15 @@
     <div class="loading-cam grid" v-if="!ready">
       <img src="@/assets/images/cam_loading.gif" alt="" srcset="" />
       <p v-if="camGranted">Cam Preview is loading...</p>
-      <p v-if="!camGranted" class="c-r">Cannot access to camera</p>
+      <div  v-if="!camGranted" >
+        <p class="c-r">Cannot access to camera</p>
+        <div v-if="!camGranted">
+          <button class="btn" @click="openAllowAccess('Webcam')">
+            Allow access to Camera
+            <p class="font-xl">&#x261C;</p>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -43,7 +51,6 @@ export default {
   },
   destroyed() {
     this.stopBroadcast();
-
   },
   methods: {
     startBroadcast() {
@@ -76,27 +83,26 @@ export default {
             track.stop();
           });
         } catch (error) {
-         return
+          return;
         }
       }
     },
   },
-  watch:{
-    resolution(val){
-      if(val){
-        this.stopBroadcast()
+  watch: {
+    resolution(val) {
+      if (val) {
+        this.stopBroadcast();
         setTimeout(() => {
-            this.startBroadcast()
+          this.startBroadcast();
         }, 1000);
       }
-    }
+    },
   },
 };
 </script>
 
 <style scoped>
 #cam-broadcast_wrapper {
-  box-shadow: var(--shadow);
   border-radius: var(--m-radius);
   width: 100%;
   height: 100%;
@@ -104,8 +110,8 @@ export default {
 }
 #cam-broadcast_wrapper video {
   width: 100%;
-  height: 100%;
   border-radius: var(--m-radius);
+  box-shadow: var(--shadow3);
 }
 #cam-broadcast_wrapper .loading-cam {
   position: absolute;

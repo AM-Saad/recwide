@@ -34,6 +34,8 @@
   margin: var(--m-margin) auto;
   border-radius: var(--m-radius);
   padding: var(--m-padding);
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 ul {
@@ -109,5 +111,10 @@ section h2 {
 @media only screen and (min-width:769px) and (max-width: 1024px) {
   .wrapper {
     width: 95%;
+  }
+}
+@media only screen and (min-width:1024px) and (max-width: 1300px) {
+  .wrapper {
+    width: 90%;
   }
 }

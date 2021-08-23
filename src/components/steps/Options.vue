@@ -137,12 +137,7 @@
       <div class="cam-area" v-if="this.mode != 'screen'">
         <!-- Broadcast -->
         <CamBroadcast v-on:cameraReady="camPrevReady()" />
-        <div v-if="!camGranted">
-          <button class="btn" @click="openAllowAccess('Webcam')">
-            Allow access to Camera
-            <p class="font-xl">&#x261C;</p>
-          </button>
-        </div>
+     
       </div>
     </div>
   </div>

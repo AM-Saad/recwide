@@ -14,6 +14,15 @@
       </div>
       <div class="header-img"></div>
     </section>
+    <div class="ad-container">
+        <Adsense
+          data-ad-client="ca-pub-9947392255163870"
+          data-ad-slot="1234567890"
+          data-ad-format="auto"
+          :data-full-width-responsive="'true'"
+        >
+        </Adsense>
+      </div>
     <div class="wrapper">
       <section id="services" class="">
         <h2>Why Choose Recwide</h2>

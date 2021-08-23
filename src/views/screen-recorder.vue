@@ -8,6 +8,7 @@
       v-on:reRecord="rerecorde"
     ></component>
     <Final v-if="finished" v-on:reRecord="rerecorde"></Final>
+
   </div>
 </template>
 

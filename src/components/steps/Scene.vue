@@ -1,7 +1,7 @@
 <template>
   <div class="step step-scene-select active">
     <h1>Choose Recording Scene</h1>
-    <div id="modes" class="grid g-three">
+    <div id="modes">
       <div
         class="mode"
         :class="{ active: mode == 'screenAndWebcam' }"
@@ -87,10 +87,12 @@ export default {
 
 <style scoped>
 #modes {
-  display: grid;
+  display: flex;
   padding: var(--m-padding);
   margin: var(--m-margin);
   grid-gap: var(--l-margin);
+      flex-wrap: wrap;
+    justify-content: center;
 }
 .mode {
   border-radius: var(--m-radius);
@@ -110,6 +112,7 @@ export default {
   color: #333;
 }
 .mode img {
+  min-width: 200px;
   max-width: 100%;
   height: 150px;
   margin: auto;
