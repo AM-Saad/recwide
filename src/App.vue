@@ -34,7 +34,15 @@
           </router-link>
         </div>
       </div>
-      
+      <div class="ad-container">
+        <Adsense
+          data-ad-client="ca-pub-9947392255163870"
+          data-ad-slot="1234567890"
+          data-ad-format="auto"
+          :data-full-width-responsive="'true'"
+        >
+        </Adsense>
+      </div>
       <router-view />
     </div>
   </div>
