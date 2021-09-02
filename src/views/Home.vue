@@ -6,7 +6,7 @@
 
         <p>
           Screen recorder and webcam recorder have never been this easy, free
-          and timeless befroe
+          and timeless before
         </p>
         <router-link class="btn play-btn" to="/recorder"
           ><i class="fas fa-play"></i
