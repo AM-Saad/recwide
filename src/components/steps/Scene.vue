@@ -5,6 +5,7 @@
       <div
         class="mode"
         :class="{ active: mode == 'screenAndWebcam' }"
+        @dblclick="switchComponent('Options', 'screenAndWebcam')"
         @click="changeScene('screenAndWebcam')"
       >
         <img src="@/assets/images/both.svg" alt="" />
@@ -13,6 +14,7 @@
       <div
         class="mode"
         :class="{ active: mode == 'screen' }"
+        @dblclick="switchComponent('Options', 'screen')"
         @click="changeScene('screen')"
       >
         <img src="@/assets/images/screen.svg" alt="" />
@@ -21,6 +23,7 @@
       <div
         class="mode"
         :class="{ active: mode == 'webcam' }"
+        @dblclick="switchComponent('Options', 'webcam')"
         @click="changeScene('webcam')"
       >
         <img src="@/assets/images/cam.svg" alt="" />
@@ -28,7 +31,7 @@
         <h3>Webcam Only</h3>
       </div>
     </div>
-    <button class="btn btn-big" @click="switchComponent('Options')">
+    <button class="btn-gradient btn btn-big" @click="switchComponent('Options')">
       Next Step
     </button>
   </div>
@@ -75,7 +78,11 @@ export default {
     }
   },
   methods: {
-    switchComponent(comp) {
+    switchComponent(comp, mode) {
+      if(mode){
+      this.$store.commit("changeMode", mode);
+
+      }
       this.$emit("switch", comp);
     },
     changeScene(mode) {

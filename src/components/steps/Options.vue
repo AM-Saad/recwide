@@ -28,7 +28,7 @@
               class="options-select"
               :class="[
                 {
-                  active: recordingSettings == 'Microphone + System audio',
+                  active: audioSettings == 'Microphone + System audio',
                 },
                 { none: mode == 'webcam' },
               ]"
@@ -43,7 +43,7 @@
               <div
                 v-if="
                   !micGranted &&
-                  recordingSettings == 'Microphone + System audio'
+                  audioSettings == 'Microphone + System audio'
                 "
               >
                 <p
@@ -58,7 +58,7 @@
           <div>
             <div
               class="options-select"
-              :class="[{ active: recordingSettings == 'Microphone' }]"
+              :class="[{ active: audioSettings == 'Microphone' }]"
               @click="changeSoundOpts('Microphone')"
             >
               <div class="flex">
@@ -67,7 +67,7 @@
                 </div>
                 <span>Microphone</span>
               </div>
-              <div v-if="!micGranted && recordingSettings == 'Microphone'">
+              <div v-if="!micGranted && audioSettings == 'Microphone'">
                 <p
                   class="f-center m-t-3 c-r"
                   @click="openAllowAccess('Microphone')"
@@ -81,7 +81,7 @@
             <div
               class="options-select flex"
               :class="[
-                { active: recordingSettings == 'System audio' },
+                { active: audioSettings == 'System audio' },
                 { none: mode == 'webcam' },
               ]"
               @click="changeSoundOpts('System audio')"
@@ -96,7 +96,7 @@
           <div>
             <div
               class="options-select flex"
-              :class="{ active: recordingSettings == 'No audio' }"
+              :class="{ active: audioSettings == 'No audio' }"
               @click="changeSoundOpts('No audio')"
             >
               <div class="icon">
@@ -119,14 +119,14 @@
             </select>
           </div>
           <button
-            class="btn btn-big"
+            class="btn btn-gradient btn btn-gradient-big"
             v-if="dontWaitCamPrev"
             @click="startRec()"
           >
             Start Recording
           </button>
           <button
-            class="btn btn-big"
+            class="btn btn-gradient btn btn-gradient-big"
             style="opacity: 0.5"
             v-if="!dontWaitCamPrev"
           >
@@ -164,7 +164,7 @@ export default {
   },
   computed: {
     ...mapState([
-      "recordingSettings",
+      "audioSettings",
       "mode",
       "micGranted",
       "camGranted",
@@ -204,7 +204,7 @@ export default {
       if (
         this.mode === "screenAndWebcam" &&
         (!this.camGranted ||
-          (!this.micGranted && this.recordingSettings !== "No audio"))
+          (!this.micGranted && this.audioSettings !== "No audio"))
       ) {
         this.needPermissions = true;
       } else if (
@@ -214,8 +214,8 @@ export default {
         this.needPermissions = true;
       } else if (
         this.mode === "screen" &&
-        (this.recordingSettings === "Microphone + System audio" ||
-          this.recordingSettings === "Microphone")
+        (this.audioSettings === "Microphone + System audio" ||
+          this.audioSettings === "Microphone")
       ) {
         if (!this.micGranted) {
           this.needPermissions = true;
@@ -277,7 +277,7 @@ export default {
     },
   },
   watch: {
-    recordingSettings() {
+    audioSettings() {
       this.checkIfNeedPermissions();
     },
     camGranted(val) {

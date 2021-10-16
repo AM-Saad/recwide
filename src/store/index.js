@@ -13,7 +13,7 @@ export default new Vuex.Store({
     msg: null,
     networkconnections: true,
     mode: 'screenAndWebcam',
-    recordingSettings: 'Microphone + System audio',
+    audioSettings: 'Microphone + System audio',
     camGranted: false,
     micGranted: false,
     blobs: [],
@@ -43,11 +43,11 @@ export default new Vuex.Store({
     changeMode(state, mode) {
       state.mode = mode
       if (mode === 'webcam') {
-        state.recordingSettings = 'Microphone'
+        state.audioSettings = 'Microphone'
       }
     },
     recSettings(state, mode) {
-      state.recordingSettings = mode
+      state.audioSettings = mode
     },
     newBlob(state, blob) {
       state.blobs.push(blob)
@@ -77,7 +77,7 @@ export default new Vuex.Store({
       state.screenIsReady = false
       state.blobs = []
       state.mode = 'screen'
-      state.recordingSettings = 'Microphone + System audio'
+      state.audioSettings = 'Microphone + System audio'
       state.resolution = 1080
     },
     changeResolution(state,val) {

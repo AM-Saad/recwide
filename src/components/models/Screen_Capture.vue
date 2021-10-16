@@ -23,7 +23,7 @@ export default {
   computed: {
     ...mapState([
       "mode",
-      "recordingSettings",
+      "audioSettings",
       "finished",
       "camerror",
       "micGranted",
@@ -51,17 +51,17 @@ export default {
 
       let options = {};
 
-      if (this.recordingSettings === "Microphone + System audio") {
+      if (this.audioSettings === "Microphone + System audio") {
         options = {
           video: { video: this.resolution, audio: true },
           audio: { audio: true },
         };
-      } else if (this.recordingSettings === "Microphone") {
+      } else if (this.audioSettings === "Microphone") {
         options = {
           video: { video: this.resolution },
           audio: { audio: true },
         };
-      } else if (this.recordingSettings === "System audio") {
+      } else if (this.audioSettings === "System audio") {
         options = {
           video: { video: this.resolution, audio: true },
           audio: { audio: false },
@@ -158,7 +158,7 @@ export default {
         window.screenStream
           .getVideoTracks()[0]
           .addEventListener("ended", () => _component.$emit("forceStopCam"));
-        if (this.recordingSettings !== "No audio") {
+        if (this.audioSettings !== "No audio") {
           window.screenStream.getVideoTracks()[0].onended = function () {
             _component.stopRecording();
           };

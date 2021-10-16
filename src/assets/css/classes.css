@@ -335,10 +335,9 @@
 }
 
 .btn {
-  background-image: -webkit-linear-gradient(left, var(--main-color), #ffac70);
   border: 1px solid var(--main-color);
   border-radius: 50px;
-  color: #fff;
+  color: #222;
   /* font-family: arial,sans-serif; */
   font-size: 16px;
   margin: 11px 4px;
@@ -354,7 +353,7 @@
   text-decoration: none;
 }
 
-.btn:hover {
+.btn-gradient:hover {
   background-image: -webkit-linear-gradient(right, var(--main-color), #ffac70);
   border: 1px solid #c6c6c6;
   /* box-shadow: 0 1px 1px rgba(0,0,0,.1); */
@@ -362,7 +361,7 @@
 
 .btn-small {
   height: 30px;
-  width: 150px;
+  width: 12vmax;
   max-width: 100%;
   font-size: 14px;
 }
@@ -399,6 +398,11 @@
 .btn-success {
   background-image: -webkit-linear-gradient(top, #67ff89, #3eec65);
   border-color: #63ff75;
+}
+
+.btn-gradient{
+  background-image: -webkit-linear-gradient(left, var(--main-color), #ffac70) !important;
+
 }
 
 .bg-w {
@@ -692,11 +696,7 @@
   border-radius: 18px;
 }
 
-.form-group {
-  margin: var(--scnd-margin) 0;
-  position: relative;
-  align-items: center;
-}
+
 
 .toggle-switch input[type=checkbox] {
   display: none

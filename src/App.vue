@@ -16,14 +16,14 @@
               alt=""
           /></router-link>
         </div>
-        <!-- <div v-if="!isAuth" class="flex">
-          <router-link class="btn btn-small btn-light" to="/auth/login"
+        <div v-if="!isAuth" class="flex">
+          <router-link class="btn btn-small" to="/auth/login"
             >Login</router-link
           >
-          <router-link class="btn btn-small" to="/auth/signup"
+          <router-link class="btn-gradient btn btn-small" to="/auth/signup"
             >Signup</router-link
           >
-        </div> -->
+        </div>
         <div v-if="isAuth">
           <router-link to="/account" class="flex">
             <img
@@ -34,7 +34,7 @@
           </router-link>
         </div>
       </div>
-      <div class="ad-container">
+      <!-- <div class="ad-container">
         <Adsense
           data-ad-client="ca-pub-9947392255163870"
           data-ad-slot="1234567890"
@@ -42,7 +42,7 @@
           :data-full-width-responsive="'true'"
         >
         </Adsense>
-      </div>
+      </div> -->
       <router-view />
     </div>
   </div>
@@ -79,15 +79,13 @@ export default {
   -moz-osx-font-smoothing: grayscale;
 }
 #nav {
-  padding: 30px;
+  padding: 3vmin 3vw;
   background-color: #fff;
 }
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
   text-decoration: none;
-  margin: 0 var(--m-margin);
 }
 
 #nav a.router-link-exact-active {

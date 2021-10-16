@@ -10,6 +10,7 @@
     >
       <div class="">
         <h3>Sign up</h3>
+        <p class="hint">By register you will be able to save your projects and retrive them anytime you need it.</p>
         <p class="signup-error" style="color: red; margin-top: 10px"></p>
 
         <div class="form-group">
@@ -19,7 +20,7 @@
             id="name-client"
             name="name"
             class="form-control"
-            placeholder="Name"
+            placeholder="Add Your Name..."
             autocomplete="off"
             v-model="name"
           />
@@ -31,7 +32,7 @@
             id="email-client"
             name="email"
             class="form-control"
-            placeholder="Email address"
+            placeholder="Add Your Email address..."
             autocomplete="false | unknown-autocomplete-value"
             v-model="email"
           />
@@ -43,16 +44,22 @@
             id="password-client"
             name="password"
             class="form-control"
-            placeholder="Password"
+            placeholder="Write Your Password..."
             v-model="password"
             autocomplete="false | unknown-autocomplete-value"
           />
         </div>
-        <a @click="toggleForms('login', 'signup')">
+        <a v-if="!loading" @click="toggleForms('login', 'signup')">
           Already have account
           <b>Login</b>
         </a>
-        <input type="submit" value="Sign up" class="btn" />
+        <input v-if="!loading" type="submit" value="Sign up" class="btn btn-gradient" />
+           <button disabled="disabled" class="btn btn-gradient" v-if="loading">
+          <div class="spinner">
+  <div class="double-bounce1"></div>
+  <div class="double-bounce2"></div>
+</div>
+        </button>
       </div>
     </form>
     <form
@@ -65,6 +72,7 @@
     >
       <div class="">
         <h3>Login</h3>
+        <p class="hint">Enter your account the see your projects</p>
         <p class="login-error" style="color: red; margin-top: 10px"></p>
         <p class="login-success" style="color: green; margin-top: 10px"></p>
 
@@ -75,7 +83,7 @@
             id="login-email-client"
             name="email"
             class="form-control"
-            placeholder="Email address"
+            placeholder="Add Your Email Address..."
             autocomplete="false | unknown-autocomplete-value"
             v-model="email"
           />
@@ -87,16 +95,22 @@
             id="login-password-client"
             name="password"
             class="form-control"
-            placeholder="Password"
+            placeholder="Write Your Password..."
             v-model="password"
             autocomplete="false | unknown-autocomplete-value"
           />
         </div>
-        <a @click="toggleForms('signup', 'login')">
+        <a v-if="!loading" @click="toggleForms('signup', 'login')">
           You dont have account
           <b>Sign up</b>
         </a>
-        <input type="submit" value="Login" class="btn" />
+        <input v-if="!loading" type="submit" value="Login" class="btn btn-gradient" />
+        <button disabled="disabled" class="btn btn-gradient" v-if="loading">
+          <div class="spinner">
+  <div class="double-bounce1"></div>
+  <div class="double-bounce2"></div>
+</div>
+        </button>
       </div>
     </form>
   </div>
@@ -110,7 +124,7 @@ export default {
       name: "",
       email: "",
       password: "",
-      loading: false,
+      loading: false
     };
   },
   mounted() {
@@ -127,25 +141,26 @@ export default {
           "Please add your informations ");
       }
       this.loading = true;
-      const res = await this.$store.dispatch({
-        type: "user/signup",
-        data: {
-          name: this.name,
-          email: this.email,
-          password: this.password,
-        },
-      });
-      if (!res.state) {
-        this.loading = false;
-        return (document.querySelector(".signup-error").innerHTML = res.msg);
-      }
-      this.loading = false;
+      // const res = await this.$store.dispatch({
+      //   type: "user/signup",
+      //   data: {
+      //     name: this.name,
+      //     email: this.email,
+      //     password: this.password,
+      //   },
+      // });
+      // if (!res.state) {
+      //   this.loading = false;
+      //   return (document.querySelector(".signup-error").innerHTML = res.msg);
+      // }
+      // this.loading = false;
 
-      document.querySelector(".login-success").innerHTML =
-        "Thank you, please login now";
       this.$refs.login.classList.add("block");
       this.$refs.signup.classList.remove("block");
       this.toggleForms("login", "signup");
+      document.querySelector(".login-success").innerHTML =
+        "Thank you, please login now";
+    
     },
     async login() {
       this.resetFeedbackMsgs();
@@ -158,8 +173,8 @@ export default {
         type: "user/login",
         data: {
           email: this.email,
-          password: this.password,
-        },
+          password: this.password
+        }
       });
       if (!res.state) {
         this.loading = false;
@@ -173,31 +188,50 @@ export default {
 
       this.$refs[visible].classList.add("block");
       this.$refs[hide].classList.remove("block");
+
+        window.history.pushState({ pageTitle: "Login" }, "", `/auth/${visible}`);
     },
     resetFeedbackMsgs() {
       document.querySelector(".login-success").innerHTML = "";
       document.querySelector(".login-error").innerHTML = "";
       document.querySelector(".signup-error").innerHTML = "";
-    },
+    }
   },
   watch: {
-    "$route.params.type": function (type) {
+    "$route.params.type": function(type) {
       if (type == "signup") {
         this.toggleForms("signup", "login");
       } else {
         this.toggleForms("login", "signup");
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style>
+<style scoped>
+h3 {
+  font-size: 53px;
+  font-weight: bolder;
+  color: #444;
+  margin-bottom: var(--m-margin);
+}
+.hint {
+  color: #888;
+}
 form {
+  width: 80%;
   background-color: #fff;
-  padding: var(--m-padding);
+  padding: var(--l-padding);
   box-shadow: var(--shadow3);
   text-align: left;
-  margin: var(--l-margin) 0;
+  margin: var(--l-margin) auto;
+  border-radius: var(--m-radius);
+}
+@media screen and (min-width: 320px) and (max-width: 720px) {
+  form {
+    width: 95%;
+    padding: var(--m-padding);
+  }
 }
 </style>

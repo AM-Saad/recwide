@@ -21,7 +21,7 @@
         loop="loop"
       ></video>
       <div class="flex f-space-between">
-        <button class="btn" @click="gotit">Got it</button>
+        <button class="btn btn-gradient" @click="gotit">Got it</button>
       </div>
     </div>
   </div>

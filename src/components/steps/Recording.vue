@@ -33,7 +33,7 @@
       <h3 class="f-center m-medium">Recording in Progress</h3>
       <Counting />
 
-      <button class="recording-btn" @click="stopRecording">
+      <button class="recording-btn btn-gradient" @click="stopRecording">
         <i class="far fa-stop-circle"></i>
       </button>
     </div>
@@ -73,7 +73,7 @@ export default {
   computed: {
     ...mapState([
       "mode",
-      "recordingSettings",
+      "audioSettings",
       "blobs",
       "finished",
       "camIsReady",
@@ -83,7 +83,7 @@ export default {
   },
 
   created() {
-    this.checkIfNeedGuide(this.recordingSettings);
+    this.checkIfNeedGuide(this.audioSettings);
     try {
       window.boradcast.getTracks().forEach((track) => {
         track.stop();
@@ -224,7 +224,7 @@ export default {
   margin: auto;
   border-radius: var(--m-radius);
 }
-.recording-btn {
+.recording-btn btn-gradient {
   color: red;
   font-size: 51px;
   border: 0;

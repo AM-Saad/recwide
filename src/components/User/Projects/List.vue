@@ -7,6 +7,7 @@
     </div>
     <div v-if="videos.length == 0">
         You dont have videos yet..
+        <a>Create new Now</a>
     </div>
   </div>
 </template>

@@ -17,14 +17,14 @@
         </select>
       </div>
       <a
-        class="btn btn-big"
+        class="btn btn-gradient btn btn-gradient-big"
         download="ams-recorder.webm"
         name="ams-recorder.webm"
         ref="downloadButton"
         @click="download"
         >Download</a
       >
-      <!-- <a class="btn" @click="saveVideo">Save</a> -->
+      <!-- <a class="btn btn-gradient" @click="saveVideo">Save</a> -->
     </div>
     <p class="footer-copyright">
       Designed and developed by

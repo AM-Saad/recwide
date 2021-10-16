@@ -9,7 +9,7 @@
       <div  v-if="!camGranted" >
         <p class="c-r">Cannot access to camera</p>
         <div v-if="!camGranted">
-          <button class="btn" @click="openAllowAccess('Webcam')">
+          <button class="btn btn-gradient" @click="openAllowAccess('Webcam')">
             Allow access to Camera
             <p class="font-xl">&#x261C;</p>
           </button>
@@ -35,7 +35,7 @@ export default {
   computed: {
     ...mapState([
       "mode",
-      "recordingSettings",
+      "audioSettings",
       "camerror",
       "camGranted",
       "resolution",
