@@ -6,7 +6,7 @@
 
         <p>
           Screen recorder and webcam recorder have never been this easy, free
-          and timeless before
+          and timeless befo re
         </p>
         <router-link class="btn play-btn" to="/recorder"
           ><i class="fas fa-play"></i
@@ -135,11 +135,13 @@ export default {
 }
 
 .header-intro p {
-  color: #222;
-  margin: var(--m-margin);
-  font-size: 22px;
-  margin-bottom: var(--l-margin);
-  text-align: center;
+color: #555;
+    font-size: 26px;
+    margin-bottom: var(--l-margin);
+    text-align: center;
+    width: 52%;
+    margin: var(--m-margin) auto;
+    line-height: 1.7;
 }
 
 .header img {
@@ -286,8 +288,9 @@ footer {
 
 @media only screen and (max-width: 768px) {
   .header-intro p {
-    margin: var(--s-margin);
+    margin: var(--s-margin) auto;
     font-size: 17px;
+    width: 80%;
   }
   section h2 {
     font-size: 30px;
