@@ -20,18 +20,28 @@
           <router-link class="btn btn-small" to="/auth/login"
             >Login</router-link
           >
-          <router-link class="btn-gradient btn btn-small" to="/auth/signup"
+          <router-link class="btn btn-small btn-gradient" to="/auth/signup"
             >Signup</router-link
           >
         </div>
         <div v-if="isAuth">
-          <router-link to="/account" class="flex">
+       
+
+          <ul id="top-menu">
+ 
+            <div class="flex">
+                
+                <i class="fas fa-bell menu_icons_item"></i>
+                  <router-link to="/projects" class="flex">
             <img
               style="height: 40px"
               src="@/assets/images/logo-geek.png"
               alt=""
             />
           </router-link>
+                <i class="fas fa-download menu_icons_item none  install-btn" id="install-btn"></i>
+            </div>
+        </ul>
         </div>
       </div>
       <!-- <div class="ad-container">
@@ -57,7 +67,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapState("user", ["isAuth", "user"]),
+    ...mapState("user", ["isAuth", "user"])
   },
   components: {},
   created() {
@@ -67,8 +77,8 @@ export default {
   methods: {
     logout() {
       localStorage.removeItem("uid");
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -86,9 +96,5 @@ export default {
 #nav a {
   font-weight: bold;
   text-decoration: none;
-}
-
-#nav a.router-link-exact-active {
-  color: var(--main-color);
 }
 </style>

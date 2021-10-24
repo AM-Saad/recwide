@@ -6,8 +6,9 @@ const state = {
   isAuth: false,
   jwt: localStorage.getItem('jwt'),
   user: null,
+  userName:null,
   fetching: true,
-  videos: [],
+  projects: [],
 };
 
 export default {

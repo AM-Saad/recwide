@@ -4,10 +4,15 @@
         <div class="wrapper">
         <AuthNav></AuthNav>
       <main class="">
-        <h2>My Projects</h2>
-      <List :projects="projects" v-if="!fetching"/>
+        <h2> {{project.name}}</h2>
+        
     <div v-if="fetching">Loading...</div>
-
+  <div class=" grid g-two">
+    <div class="video-wrapper" v-for="i in project.videos" :key="i._id">
+      <video :src="url+i.url"></video>
+      <a download :href="url+i.url" class="btn btn-small btn-success">Download</a>
+    </div>
+  </div>
       </main>
         </div>
     </div>
@@ -22,17 +27,20 @@ import { mapState } from "vuex";
 
 export default {
   data() {
-    return {};
+    return {
+      project: null
+    };
   },
   components: {
-    List,
     AuthNav
   },
   computed: {
-    ...mapState("user", ["projects", "fetching"])
+    ...mapState("user", ["projects", "fetching"]),
+    ...mapState(["url"])
   },
-  created() {
-    this.getProjects();
+  async created() {
+    await this.getProjects();
+    this.filterProject(this.$route.params.id);
   },
   methods: {
     async getProjects() {
@@ -41,6 +49,9 @@ export default {
         await this.$store.dispatch({ type: "user/getProjects" });
         this.$store.commit("user/fetching", false);
       }
+    },
+    filterProject(id) {
+      this.project = this.projects.find(p => p._id.toString() === id);
     }
   },
   watch: {
@@ -53,5 +64,11 @@ export default {
 };
 </script>
 
-<style>
+<style >
+.video-wrapper{
+  width: 100%
+}
+video{
+width: 100%;
+}
 </style>

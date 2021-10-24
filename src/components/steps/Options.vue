@@ -21,7 +21,7 @@
     <div class="grid step" :class="{ 'g-two': mode !== 'screen' }">
       <div class="step-options">
         <!-- <h2>Recording Settings</h2> -->
-        <div class="options">
+        <div class="">
           <h3>Audio Recording Options</h3>
           <div>
             <div

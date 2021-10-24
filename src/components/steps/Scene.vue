@@ -31,7 +31,7 @@
         <h3>Webcam Only</h3>
       </div>
     </div>
-    <button class="btn-gradient btn btn-big" @click="switchComponent('Options')">
+    <button class="btn-gradient btn m-auto" @click="switchComponent('Options')">
       Next Step
     </button>
   </div>
@@ -115,7 +115,7 @@ export default {
 .mode:hover,
 .mode.active {
   border-color: var(--main-color);
-  background-color: #eee;
+  background-image: linear-gradient(148deg, #e5e5e5, transparent);
   color: #333;
 }
 .mode img {

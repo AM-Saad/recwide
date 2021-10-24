@@ -16,15 +16,31 @@
           <option value="mp4">Mp4</option>
         </select>
       </div>
+      <div class="flex f-center">
       <a
-        class="btn btn-gradient btn btn-gradient-big"
+        class="btn btn"
         download="ams-recorder.webm"
         name="ams-recorder.webm"
         ref="downloadButton"
         @click="download"
         >Download</a
       >
-      <!-- <a class="btn btn-gradient" @click="saveVideo">Save</a> -->
+      <a class="btn btn-gradient" v-if="isAuth" @click="openSaveModel()">Save</a>
+      <a class="btn btn-gradient" v-if="!isAuth" @click="openAuthFormModel()">Register to save...</a>
+      </div>
+
+      <SaveProject 
+      v-if="saveTheProject"
+      v-on:cancel="closeSaveModel"
+      v-on:finished="reRecord"
+
+      :videotype="videotype"
+      />
+      
+      <AuthForm 
+      v-if="register"
+      v-on:cancel="closeAuthFormModel"
+      />
     </div>
     <p class="footer-copyright">
       Designed and developed by
@@ -35,6 +51,9 @@
 
 <script>
 import Videos from "@/components/models/Videos";
+import SaveProject from "@/components/Popups/Save_Project";
+import AuthForm from "@/components/Popups/Auth";
+
 
 import { mapState } from "vuex";
 export default {
@@ -42,16 +61,22 @@ export default {
   data() {
     return {
       loading: true,
+      saveTheProject: false,
+      register: false,
       allVideos: [],
       converted: false,
-      videotype: "webm",
+      videotype: "webm" 
     };
   },
   components: {
     Videos,
+    SaveProject,
+    AuthForm
   },
   computed: {
     ...mapState(["mode", "blobs"]),
+    ...mapState("user", ["isAuth", "user"]),
+
   },
   mounted() {
     this.createRenderUrl();
@@ -85,19 +110,7 @@ export default {
 
       document.body.removeChild(temporaryDownloadLink);
     },
-    async saveVideo() {
-      let blobs = [];
-      for (var n = 0; n < this.blobs.length; n++) {
-        let obj = this.blobs[n];
-        let blob = new Blob(obj.chunks, { type: `video/mp4` });
-        blobs.push(blob);
-      }
 
-      await this.$store.dispatch({
-        type: "user/saveVideo",
-        data: blobs,
-      });
-    },
     async createChunkUrls(chunks, mimeType, name) {
       let blob = new Blob(chunks, { type: `video/${mimeType}` });
       let url = window.URL.createObjectURL(blob);
@@ -113,7 +126,20 @@ export default {
       this.converted = true;
       this.loading = false;
     },
-  },
+    closeSaveModel() {
+      this.saveTheProject = false;
+    },
+    openSaveModel() {
+      this.saveTheProject = true;
+    },
+
+    closeAuthFormModel() {
+      this.register = false;
+    },
+    openAuthFormModel() {
+      this.register = true;
+    }
+  }
 };
 </script>
 

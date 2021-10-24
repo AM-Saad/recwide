@@ -14,7 +14,7 @@ const authenticate = (state, authData) => {
 
 const loginToStore = (state) => {
   state.jwt = localStorage.getItem('ut')
-  state.user = localStorage.getItem('u')
+  state.userName = localStorage.getItem('u')
   state.isAuth = true
 
 }
@@ -23,6 +23,9 @@ const logout = (state) => {
 
   localStorage.removeItem('jwt')
   localStorage.removeItem('sessionExpiryDate')
+  localStorage.removeItem('ut')
+  localStorage.removeItem("uexpiryd")
+  localStorage.removeItem("u")
   // state.user = null
   state.jwt = null
   // state.expiryDate = null
@@ -32,9 +35,12 @@ const logout = (state) => {
 
 
 
-const updatevideos = (state, videos) => {
-  console.log(videos);
-  state.videos = videos.videos
+const updateProjects = (state, projects) => {
+  state.projects = projects
+
+}
+const updateUser = (state, user) => {
+  state.user = user
 
 }
 
@@ -43,9 +49,7 @@ const newvideo = (state, video) => {
 
 }
 const fetching = (state, status) => {
-  console.log(status);
   state.fetching = status
-
 }
 
 
@@ -55,5 +59,5 @@ const fetching = (state, status) => {
 
 
 export default {
-  authenticate, loginToStore, logout, updatevideos, fetching, newvideo
+  authenticate, loginToStore, updateUser, logout, updateProjects, fetching, newvideo
 };
