@@ -94,7 +94,7 @@ export default {
   },
   props: ["allVideos"],
   computed: {
-    ...mapState(["mode", "blobs"]),
+    ...mapState(["mode", "blobs", "videos"]),
   },
   mounted() {
     let ready = this.addVidsUrl();
@@ -312,7 +312,7 @@ export default {
 <style scoped>
 .finle_videos {
   position: relative;
-  width: 90%;
+  width: 100%;
   display: block;
   margin: var(--l-margin) auto;
 }
@@ -324,18 +324,15 @@ export default {
   height: 150px;
   width: unset;
   z-index: 99999999;
-  border: 2.3px dashed var(--main-color);
+  border: 1.8px dashed var(--main-color);
 }
 
 .video-player {
   position: relative;
   width: 100%;
   box-shadow: var(--shadow);
-  border-radius: var(--l-radius);
+  border-radius: var(--m-radius);
   overflow: hidden;
-}
-.video-player {
-  border-radius: var(--l-radius);
 }
 #controls {
   position: absolute;

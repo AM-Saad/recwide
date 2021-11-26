@@ -1,5 +1,10 @@
 <template>
-  <div :class="{ loader: loading }">
+  <div class="backdrop">
+    <div class="inner">
+              <div class="title" >
+        You need to register first to be able to save your project
+      </div>
+        <div :class="{ loader: loading }">
     <form
       method="post"
       action="/form"
@@ -10,7 +15,6 @@
     >
       <div class="">
         <h3>Sign up</h3>
-        <p class="hint">By register you will be able to save your projects and retrive them anytime you need it.</p>
         <p class="signup-error" style="color: red; margin-top: 10px"></p>
 
         <div class="form-group">
@@ -47,16 +51,21 @@
           />
         </div>
         <a v-if="!loading" @click="toggleForms('login', 'signup')">
-          Already have an account
+          Already have and account
           <b>Login</b>
         </a>
-        <input v-if="!loading" type="submit" value="Sign up" class="btn btn-gradient" />
-           <button disabled="disabled" class="btn btn-gradient" v-if="loading">
+              <div class="f-center flex m-large mt-large ">
+        <button class="btn" @click="cancel">Cancel</button>
+
+        <input v-if="!loading" type="submit" value="Signup" class="btn btn-gradient" />
+        <button disabled="disabled" class="btn btn-gradient" v-if="loading">
           <div class="spinner">
-  <div class="double-bounce1"></div>
-  <div class="double-bounce2"></div>
-</div>
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+          </div>
         </button>
+
+        </div>
       </div>
     </form>
     <form
@@ -69,7 +78,6 @@
     >
       <div class="">
         <h3>Login</h3>
-        <p class="hint">Enter your account the see your projects</p>
         <p class="login-error" style="color: red; margin-top: 10px"></p>
         <p class="login-success" style="color: green; margin-top: 10px"></p>
 
@@ -96,10 +104,10 @@
           />
         </div>
       <div class="form-group">
-        <label for="login-rememberMe-client">Remember Me</label>
+        <label for="login-rememberMe">Remember Me</label>
                <input
             type="checkbox"
-            id="login-rememberMe-client"
+            id="login-rememberMe"
             name="rememberMe"
             v-model="rememberMe"
           />
@@ -108,23 +116,34 @@
           You don't have an account
           <b>Sign up</b>
         </a>
+        <div class="f-center flex m-large mt-large ">
+
+        <button class="btn " @click="cancel">Cancel</button>
+
         <input v-if="!loading" type="submit" value="Login" class="btn btn-gradient" />
         <button disabled="disabled" class="btn btn-gradient" v-if="loading">
-            <div class="spinner">
+          <div class="spinner">
             <div class="double-bounce1"></div>
             <div class="double-bounce2"></div>
-        </div>
+          </div>
         </button>
+        </div>
       </div>
     </form>
+  </div>
+   
+    </div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
-  name: "AuthForms",
+  name: "Permissions",
   data() {
     return {
+      dontShow: false,
       name: "",
       email: "",
       password: "",
@@ -132,12 +151,19 @@ export default {
       loading: false
     };
   },
+  computed: {
+    ...mapState(["micGranted", "camGranted"]),
+    ...mapState("user", ["isAuth", "user"])
+  },
   mounted() {
     let authtype = this.$route.params.type || "login";
     this.$refs[authtype].classList.add("block");
   },
-  created() {},
   methods: {
+    cancel() {
+      this.$emit("cancel");
+    },
+
     async signup() {
       this.resetFeedbackMsgs();
 
@@ -186,7 +212,7 @@ export default {
         return (document.querySelector(".login-error").innerHTML = res.msg);
       }
       localStorage.setItem("uid", res.json._id);
-      return this.$router.push("/projects");
+      this.cancel();
     },
     toggleForms(visible, hide) {
       this.resetFeedbackMsgs();
@@ -202,48 +228,75 @@ export default {
       document.querySelector(".signup-error").innerHTML = "";
     }
   },
-  watch: {
-    "$route.params.type": function(type) {
-      if (type == "signup") {
-        this.toggleForms("signup", "login");
-      } else {
-        this.toggleForms("login", "signup");
-      }
-    }
-  }
+  watch: {}
 };
 </script>
 
 <style scoped>
-h3 {
-  font-size: 53px;
-  font-weight: bolder;
-  color: #444;
-  margin-bottom: var(--m-margin);
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.782);
+  z-index: 999999999;
 }
-.hint {
-  color: #999;
-  font-size: 16px;
-}
-form {
-  width: 80%;
+.inner {
   background-color: #fff;
+  border-radius: var(--l-radius);
+  border: 1px solid #ccc;
   padding: var(--l-padding);
-  box-shadow: var(--shadow3);
-  text-align: left;
-  margin: var(--l-margin) auto;
-  border-radius: var(--m-radius);
+  position: absolute;
+  width: 40%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.inner .title {
+  margin: var(--m-margin) 0;
+  font-size: 18px;
+  color: #444;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+.inner .desc {
+  margin: var(--m-margin) 0;
+}
+.inner video {
+  margin: auto;
+  display: block;
+  max-width: 90%;
 }
 form a b {
   cursor: pointer;
 }
 form a b:hover {
-  color: #444;
+  color: #888;
 }
-@media screen and (min-width: 320px) and (max-width: 720px) {
-  form {
-    width: 95%;
-    padding: var(--m-padding);
+.form-group {
+  margin: var(--m-margin) 0;
+  margin-bottom: 20px;
+}
+.form-group label {
+  font-size: 20px;
+}
+
+.form-control {
+  width: 100%;
+  height: 50px;
+  padding: var(--m-padding);
+  border: 0;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  font-size: 22px;
+  color: #222;
+  background: #e8f0fe;
+  border-radius: var(--l-radius);
+}
+@media only screen and (max-width: 1025px) and (min-width: 320px) {
+  .inner {
+    width: 90%;
   }
 }
 </style>

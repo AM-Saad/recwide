@@ -40,7 +40,6 @@
   opacity: .8;
 }
 
-.scaleable {}
 
 .slideable {
   z-index: 4;
@@ -335,16 +334,18 @@
 }
 
 .btn {
+  background-color: #f9f9f9;
   border: 1px solid var(--main-color);
   border-radius: 50px;
-  color: #222;
+  color: #333;
   /* font-family: arial,sans-serif; */
   font-size: 16px;
   margin: 11px 4px;
   padding: 0 12px;
   line-height: 13px;
-  height: 36px;
+  height: 45px;
   width: 200px;
+  font-weight: bold;
   text-align: center;
   cursor: pointer;
   display: flex;
@@ -353,14 +354,9 @@
   text-decoration: none;
 }
 
-.btn-gradient:hover {
-  background-image: -webkit-linear-gradient(right, var(--main-color), #ffac70);
-  border: 1px solid #c6c6c6;
-  /* box-shadow: 0 1px 1px rgba(0,0,0,.1); */
-}
 
 .btn-small {
-  height: 30px;
+  height: 35px;
   width: 12vmax;
   max-width: 100%;
   font-size: 14px;
@@ -379,30 +375,37 @@
 }
 
 .btn-info {
-  background-image: -webkit-linear-gradient(top, #00d9ff, #03b7ee);
+  background-color: #03b7ee;
   border-color: #639eff;
 }
 
 .btn-danger {
-  background-image: -webkit-linear-gradient(top, #ff001b, #ee031b);
+  background-color: #ee031b;
   border-color: #ff001b;
   color: white !important;
 }
 
 .btn-alert {
-  background-image: -webkit-linear-gradient(top, #fff700, #eee603);
+  background-color: #eee603;
   border-color: #fff700;
   color: #000 !important;
 }
 
 .btn-success {
-  background-image: -webkit-linear-gradient(top, #67ff89, #3eec65);
-  border-color: #63ff75;
+  background-color:#6fff8f;
+  border-color: #3cff53;
 }
 
 .btn-gradient{
   background-image: -webkit-linear-gradient(left, var(--main-color), #ffac70) !important;
+color: #fff
+}
 
+
+.btn-gradient:hover {
+  background-image: -webkit-linear-gradient(right,var(--main-color), #ffac70) !important;
+  border: 1px solid #c6c6c6;
+  /* box-shadow: 0 1px 1px rgba(0,0,0,.1); */
 }
 
 .bg-w {
@@ -774,7 +777,7 @@
   transform: translateY(0);
 }
 
-@media only screen and (max-width: 767px) and (min-width: 320px) {
+@media only screen and (max-width: 768px) and (min-width: 320px) {
   .slide-menu {
     margin-left: -220px;
   }

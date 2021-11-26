@@ -33,7 +33,7 @@
       <h3 class="f-center m-medium">Recording in Progress</h3>
       <Counting />
 
-      <button class="recording-btn btn-gradient" @click="stopRecording">
+      <button class="recording-btn " @click="stopRecording">
         <i class="far fa-stop-circle"></i>
       </button>
     </div>
@@ -215,6 +215,10 @@ export default {
 </script>
 
 <style scoped>
+.wrapper {
+  width: 75% !important;
+  margin: var(--m-margin) auto !important;
+}
 .recording-box {
   background: #fff;
   padding: var(--l-padding);
@@ -224,7 +228,7 @@ export default {
   margin: auto;
   border-radius: var(--m-radius);
 }
-.recording-btn btn-gradient {
+.recording-btn  {
   color: red;
   font-size: 51px;
   border: 0;

@@ -17,6 +17,7 @@ export default new Vuex.Store({
     camGranted: false,
     micGranted: false,
     blobs: [],
+    videos:[],
     finished: false,
     camerror: false,
     camIsReady: false,

@@ -53,18 +53,36 @@ export default new Router({
     {
       path: '/projects',
       name: 'projects',
-      component: () => import( /* webpackChunkName: "projects" */ './views/Projects.vue')
+      component: () => import( /* webpackChunkName: "projects" */ './views/Projects.vue'),
+      meta: {
+        requiredAuth: true,
+      }
+    },
+    {
+      path: '/project/:id',
+      name: 'project',
+      component: () => import( /* webpackChunkName: "projects" */ './views/Project.vue'),
+      meta: {
+        requiredAuth: true,
+      }
     },
     {
       path: '/editor',
       name: 'editor',
-      component: () => import( /* webpackChunkName: "editor" */ './views/Editor.vue')
+      component: () => import( /* webpackChunkName: "editor" */ './views/Editor.vue'),
+      meta: {
+        requiredAuth: true,
+      }
     },
     {
-      path: '/account',
-      name: 'account',
-      component: () => import( /* webpackChunkName: "account" */ './views/Account.vue')
+      path: '/settings',
+      name: 'settings',
+      component: () => import( /* webpackChunkName: "settings" */ './views/Settings.vue'),
+      meta: {
+        requiredAuth: true,
+      }
     },
   ],
 
 })
+

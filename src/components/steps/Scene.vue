@@ -31,7 +31,7 @@
         <h3>Webcam Only</h3>
       </div>
     </div>
-    <button class="btn-gradient btn btn-big" @click="switchComponent('Options')">
+    <button class="btn-gradient btn m-auto" @click="switchComponent('Options')">
       Next Step
     </button>
   </div>
@@ -42,23 +42,24 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      step: "First",
+      step: "First"
     };
   },
   computed: {
-    ...mapState(["mode"]),
+    ...mapState(["mode"])
   },
   created() {
+    console.log("creaedddd");
     this.$emit("reRecord");
 
-    navigator.permissions.query({ name: "camera" }).then((res) => {
+    navigator.permissions.query({ name: "camera" }).then(res => {
       if (res.state == "granted") {
         this.$store.commit("camGranted", true);
       } else {
         this.$store.commit("camGranted", false);
       }
     });
-    navigator.permissions.query({ name: "microphone" }).then((res) => {
+    navigator.permissions.query({ name: "microphone" }).then(res => {
       if (res.state == "granted") {
         this.$store.commit("micGranted", true);
       } else {
@@ -67,10 +68,10 @@ export default {
     });
 
     try {
-      window.camstream.getTracks().forEach((track) => {
+      window.camstream.getTracks().forEach(track => {
         track.stop();
       });
-      window.boradcast.getTracks().forEach((track) => {
+      window.boradcast.getTracks().forEach(track => {
         track.stop();
       });
     } catch (error) {
@@ -79,16 +80,15 @@ export default {
   },
   methods: {
     switchComponent(comp, mode) {
-      if(mode){
-      this.$store.commit("changeMode", mode);
-
+      if (mode) {
+        this.$store.commit("changeMode", mode);
       }
       this.$emit("switch", comp);
     },
     changeScene(mode) {
       this.$store.commit("changeMode", mode);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -98,8 +98,8 @@ export default {
   padding: var(--m-padding);
   margin: var(--m-margin);
   grid-gap: var(--l-margin);
-      flex-wrap: wrap;
-    justify-content: center;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .mode {
   border-radius: var(--m-radius);
@@ -115,7 +115,7 @@ export default {
 .mode:hover,
 .mode.active {
   border-color: var(--main-color);
-  background-color: #eee;
+  background-image: linear-gradient(148deg, #e5e5e5, transparent);
   color: #333;
 }
 .mode img {
