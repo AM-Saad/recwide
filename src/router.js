@@ -1,8 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
+import { request } from "./api/request"
 Vue.use(Router)
+let all = []
+const projects = async () => {
+  all = await request(`http://localhost:3000/user/allprojects`, 'get', {}, true, null)
+}
+projects()
 
+console.log(all)
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -64,14 +70,11 @@ export default new Router({
       component: () => import( /* webpackChunkName: "projects" */ './views/Project.vue'),
       meta: {
         requiredAuth: true,
-        slugs: [
-          {
-            type: 'Get',
-            title: ":slug",
-            category: 'projects',
-          },
-
-        ]
+        sitemap: {
+          slugs: [
+            
+          ]
+        }
       }
     },
     {
