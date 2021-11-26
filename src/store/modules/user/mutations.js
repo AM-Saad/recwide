@@ -1,5 +1,4 @@
 const authenticate = (state, data) => {
-  console.log(data);
 
   state.jwt = data.res.token
   state.user = data.res.user.name

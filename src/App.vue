@@ -92,8 +92,6 @@ export default {
   },
   watch:{
     "$route":function(val){
-      console.log(val);
-      
       if(val.name === 'account' || val.name === 'settings' || val.name === 'projects' || val.name === 'project'){
         this.showMenuBtn = true
       }else{

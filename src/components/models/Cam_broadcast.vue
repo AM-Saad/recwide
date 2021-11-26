@@ -58,13 +58,10 @@ export default {
     async startBroadcast() {
       try {
         
-          console.log(navigator.mediaDevices);
-          
         const stream = await navigator.mediaDevices.getUserMedia({
           audio: true,
           video: this.resolution
         });
-        console.log(stream);
         
         this.ready = true;
         this.$emit("cameraReady");
@@ -72,7 +69,6 @@ export default {
         window.boradcast = stream;
         gumVideo.srcObject = stream;
       } catch (error) {
-        console.log(error)
         if (error.name === "NotAllowedError") {
           this.ready = false;
           this.$emit("accessField");
