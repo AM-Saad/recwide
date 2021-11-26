@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{name:'project', params:{id:project._id}}" class="project">
+  <router-link :to="{name:'project', params:{slug:project.slug}}" class="project">
 
     <!-- <img class="project-icon" src="@/assets/images/nav/record_g.png" /> -->
        <div class="flex f-space-between">
