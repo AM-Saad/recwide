@@ -1,34 +1,52 @@
 <template>
   <div class="backdrop">
     <div class="inner">
-      <div class="title" >
+      <div class="inner-title" >
         Create New Project
       </div>
+   
+     
     <div>
-        <input type="text" name="name" id="name" class="form-control" placeholder="Add Project Name.." v-model="name" autoComplete="false">
-      <p class="video-error c-r"></p>
-    </div>
-    <div>
-        <div class="progress-bar">
+     <div class="flex f-space-between">
+
+              <div class="mb">
+
+                  <span id='Uploaded' class="none"> <span id='mb'>{{this.totalMbDone}}</span>/{{this.totalMBSize }} MB</span>
+              </div>
+                 <div class="circulr">
+            <span class="title timer" data-from="0" :data-to="this.currentPercent" data-speed="800"><span v-if="!uploaded">{{currentFileIndex}}</span> <span v-if="uploaded">{{currentFileIndex + 1}}</span> / {{this.blobs.length}}</span>
+        </div>
+            </div>
+        <div class="progress-bar"  :style="'--progress:'+ '00.' + this.currentPercent">
             <div class="box">
-                <p class="loading-text">Loading <span id="percent">:0</span>%</p>
-                <p class="done-text">Video Successfully Uploaded 🎉</p>
+                <p :class="{'none' : uploaded}" class="loading-text">Loading <span id="percent">:0</span>%</p>
+                <p :class="{'done-text' : !uploaded}">Video('s) Successfully Uploaded 🎉</p>
                 <div class="box-front"></div>
                 <div class="box-bottom"></div>
             </div>
-            <div class="mb">
-
-                <span id='Uploaded'> <span id='mb'>{{this.totalMbDone}}</span>/{{this.totalMBSize }} MB</span>
-            </div>
+           
         </div>
     
         <span id='UploadArea'>
         </span>
-
+      <div v-if="!uploading && !saving && uploaded && !saved">
+        <input type="text" name="name" id="name" class="form-control" placeholder="Add Project Name.." v-model="name" autoComplete="false">
+      <p class="video-error c-r"></p>
+    </div>
     </div>
       <div class="flex f-space-between">
         <button class="btn " @click="cancel">Cancel</button>
-        <button class="btn btn-gradient" @click="startUploading">Save Project</button>
+        <button class="btn btn-gradient" @click="startUploading" v-if="!uploading && !saving && !uploaded && isAuth">Upload Videos</button>
+        <button class="btn btn-gradient" @click="register" v-if="!isAuth">Login To Upload</button>
+        <button class="btn btn-info" @click="submitPorject" v-if="!uploading && !saving && uploaded && !saved">Save Project</button>
+        <button class="btn btn-success"  v-if="saved && isAuth">Saved!</button>
+        <button class="btn btn-info" disabled v-if="saving">
+          <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+          </div>
+        </button>
+        
       </div>
     </div>
   </div>
@@ -46,6 +64,10 @@ export default {
       name: "",
       socket: null,
       uploading: false,
+      uploadError: false,
+      uploaded: false,
+      saving: false,
+      saved: false,
       fReader: null,
       totalSize: 0,
       totalMBSize: 0,
@@ -54,7 +76,9 @@ export default {
       currentFile: null,
       currentFileIndex: 0,
       lastPercent: 0,
-      videosNames: []
+      currentPercent: 0,
+      videosNames: [],
+      cancled: false
     };
   },
   props: ["videotype"],
@@ -68,50 +92,67 @@ export default {
       "videos",
       "url",
       "resolution"
-    ])
+    ]),
+    ...mapState("user", ["isAuth", "user"])
   },
   created() {
     this.socket = io(`${this.url}/video`);
     let _comp = this;
 
     this.socket.on("more-data", function(data) {
-      let percentage = Math.floor(data["Percent"]);
+      if (!_comp.cancled) {
+        console.log("More Data...");
+        let percentage = Math.floor(data["Percent"]);
 
-      _comp.updateProgressBar(percentage);
+        _comp.updateProgressBar(percentage);
+        _comp.calcMegabytesDone()
 
-      let Place = data["Place"] * 524288; //The Next Blocks Starting Position
-      let NewFile; //The Variable that will hold the new Block of Data
-      if (_comp.currentFile.webkitSlice) {
-        NewFile = _comp.currentFile.webkitSlice(
-          Place,
-          Place + Math.min(524288, _comp.currentFile.size - Place)
-        );
-      } else {
-        NewFile = _comp.currentFile.slice(
-          Place,
-          Place + Math.min(524288, _comp.currentFile.size - Place)
-        );
+        let Place = data["Place"] * 524288; //The Next Blocks Starting Position
+        let NewFile; //The Variable that will hold the new Block of Data
+        if (_comp.currentFile.webkitSlice) {
+          NewFile = _comp.currentFile.webkitSlice(
+            Place,
+            Place + Math.min(524288, _comp.currentFile.size - Place)
+          );
+        } else {
+          NewFile = _comp.currentFile.slice(
+            Place,
+            Place + Math.min(524288, _comp.currentFile.size - Place)
+          );
+        }
+
+        _comp.fReader.readAsBinaryString(NewFile);
       }
-
-      _comp.fReader.readAsBinaryString(NewFile);
     });
 
     this.socket.on("Done", function() {
       if (_comp.blobs.length > _comp.currentFileIndex + 1) {
-        console.log("Start Second Video");
+        setTimeout(()=>{
 
+        console.log("Start Second Video");
         _comp.currentFileIndex = _comp.currentFileIndex + 1;
         _comp.startUploading();
+        }, 1000)
       } else {
-        console.log("All Done");
-        return _comp.submitVideo();
+        _comp.uploaded = true;
+        _comp.uploading = false;
+        _comp.currentPercent = "99";
+        _comp.videosNames.forEach(function(value, i) {
+          console.log(i);
+          localStorage.removeItem(`video/${i}`);
+        });
+        this.totalMbDone =  Math.round( this.currentPercent / 100.0 * this.currentFile.size / 1048576 );
       }
+    });
+    this.socket.on("error", function() {
+      _comp.uploadError = true;
     });
     this.checkBroswerSupport();
   },
   methods: {
     cancel() {
       this.$emit("cancel");
+      this.cancled = true;
     },
 
     checkBroswerSupport() {
@@ -131,31 +172,16 @@ export default {
       }
     },
     startUploading() {
-      if (!this.name) {
-        return (document.querySelector(".video-error").innerHTML =
-          "Please add project name. ");
-      }
+    
+
       this.uploading = true;
       const _comp = this;
+      this.cancled = false;
 
-      var today = new Date();
-      var date =
-        today.getFullYear() +
-        "_" +
-        (today.getMonth() + 1) +
-        "_" +
-        today.getDate();
-      var time =
-        today.getHours() + "_" + today.getMinutes() + "_" + today.getSeconds();
+      const { selectedFile, name } = this.getReadyToUploadVideo();
 
-      var name = date + "_" + time;
       this.videosNames.push(name);
-      let obj = this.blobs[_comp.currentFileIndex];
-      let blob = new Blob(obj.chunks, { type: `video/${_comp.videotype}` });
 
-      let selectedFile = new File([blob], name + "." + _comp.videotype, {
-        type: `video/${_comp.videotype}`
-      });
       this.currentFile = selectedFile;
 
       _comp.fReader = new FileReader();
@@ -166,43 +192,49 @@ export default {
           Data: evnt.target.result
         });
       };
-      this.socket.emit("start", {
-        Name: this.currentFile.name,
-        Size: selectedFile.size
+      _comp.socket.emit("start", {
+        Name: _comp.currentFile.name,
+        Size: _comp.currentFile.size
       });
     },
 
     updateProgressBar(percent) {
       this.lastPercent = this.lastPercent;
-      percent = this.lastPercent + percent;
+      this.currentPercent = percent;
+
       let bar = document.getElementsByClassName("progress-bar")[0];
-      if (percent >= 0.45) {
+      if (this.currentPercent >= 0.45) {
         // $(".box p").addClass("c-b");
       }
-      bar.style = `--progress: 00.${percent}`;
+      bar.style = `--progress: 00.${this.currentPercent}`;
+
       document.getElementById("percent").innerHTML =
-        Math.round(percent * 100) / 100;
+        Math.round(this.currentPercent * 100) / 100;
 
-      let MBDone = Math.round(
-        percent / 100.0 * this.currentFile.size / 1048576
-      );
-
-      this.totalMbDone = this.totalMbDone + MBDone;
     },
-    async submitVideo() {
+    async submitPorject() {
+        if (!this.name)
+        return (document.querySelector(".video-error").innerHTML =
+          "Please add project name. ");
       let bar = document.getElementsByClassName("progress-bar")[0];
       bar.classList.add("done");
-      bar.style = `--progress: 1`;
-      document.getElementById("percent").innerHTML = "100";
 
+      bar.style = `--progress: 1`;
+      this.currentPercent = "100";
+
+      document.getElementById("percent").innerHTML = "100";
+      this.totalMbDone = this.totalMBSize;
+
+      this.saving = true;
       //   $(".file__value").remove();
-      var today = new Date();
-      var date =
+      const today = new Date();
+      const date =
         today.getFullYear() +
         "/" +
         (today.getMonth() + 1) +
         "/" +
         today.getDate();
+
       const res = await this.$store.dispatch({
         type: "user/saveProject",
         data: {
@@ -215,14 +247,20 @@ export default {
           date: date
         }
       });
+      this.saving = false;
 
       if (!res.state) {
         return (document.querySelector(".video-error").innerHTML = res.msg);
       }
-      window.onbeforeunload = null;
 
-      this.$emit("finished");
-      return this.$router.push("/projects");
+      window.onbeforeunload = null;
+      window.onbeforeunload = false;
+      this.saved = true;
+
+      setTimeout(() => {
+        this.$emit("finished");
+        return this.$router.push(`/project/${res.json.projectId}`);
+      }, 100);
     },
     calcMegabytes() {
       const _comp = this;
@@ -243,6 +281,59 @@ export default {
         this.totalSize += blob.size;
       }
       this.totalMBSize = Math.ceil(this.totalSize / 1048576);
+    },
+    calcMegabytesDone(){
+
+      console.log(this.totalMbDone)
+      let MBDone = Math.round( this.currentPercent / 100.0 * this.currentFile.size / 1048576 );
+      console.log(this.totalMbDone)
+      const total = this.totalMbDone +MBDone
+      console.log("tota;", total)
+      this.totalMbDone = total;
+      console.log(this.totalMbDone)
+
+      console.log(MBDone)
+    
+    },
+    createVideoNameAndSaveToStorage() {
+      var today = new Date();
+      var date =
+        today.getFullYear() +
+        "_" +
+        (today.getMonth() + 1) +
+        "_" +
+        today.getDate();
+      var time =
+        today.getHours() + "_" + today.getMinutes() + "_" + today.getSeconds();
+
+      var random_number = Math.floor(Math.random() * 10);
+
+      let completeName = date + "_" + time + random_number;
+
+      localStorage.setItem(`video/${this.currentFileIndex}`, completeName);
+      return completeName;
+    },
+    getReadyToUploadVideo() {
+      const alreadyStarted = localStorage.getItem(
+        `video/${this.currentFileIndex}`
+      );
+
+      let name;
+
+      if (!alreadyStarted) {
+        name = this.createVideoNameAndSaveToStorage();
+      } else {
+        name = alreadyStarted;
+      }
+      let obj = this.blobs[this.currentFileIndex];
+      let blob = new Blob(obj.chunks, { type: `video/${this.videotype}` });
+      const selectedFile = new File([blob], name + "." + this.videotype, {
+        type: `video/${this.videotype}`
+      });
+      return { selectedFile, name };
+    },
+    register(){
+      this.$emit('register')
     }
   },
   watch: {}
@@ -270,14 +361,15 @@ export default {
   top: 50%;
   transform: translate(-50%, -50%);
 }
-.inner .title {
+.inner-title {
   font-weight: bold;
   margin: var(--m-margin) 0;
   font-size: 22px;
 }
 input[type="text"] {
   height: 80px;
-  margin-bottom: var(--l-margin);
+  margin-top: var(--s-margin);
+  margin-bottom: var(--m-margin);
 }
 @media only screen and (max-width: 767px) and (min-width: 320px) {
   .inner {
@@ -320,70 +412,18 @@ input[type="text"] {
   min-height: 40vh;
 }
 
-.file {
-  position: relative;
-  max-width: 100%;
-  font-size: 1.0625rem;
-  font-weight: 600;
-}
-
-.file__input,
-.file__value {
-  background-color: rgba(255, 255, 255, 0.1);
-  margin-bottom: 0.875rem;
-  color: rgba(255, 255, 255, 0.3);
-  padding: 0.9375rem 1.0625rem;
-}
-
-.file__input--file {
-  position: absolute;
-  opacity: 0;
-}
-
-.file__input--label {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0;
-  cursor: pointer;
-}
-
-.file__input--label:after {
-  content: attr(data-text-btn);
-  border-radius: 3px;
-  background-color: #536480;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.18);
-  padding: 0.9375rem 1.0625rem;
-  margin: -0.9375rem -1.0625rem;
-  color: white;
-  cursor: pointer;
-}
-
-.file__value {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: rgba(255, 255, 255, 0.809);
-}
-
-.file__value:hover:after {
-  color: white;
-}
-
-.file__value:after {
-  content: "X";
-  cursor: pointer;
-}
-
-.file__value:after:hover {
-  color: white;
-}
-
-.file__remove {
-  display: block;
-  width: 20px;
-  height: 20px;
-  border: 1px solid #000;
+.circulr {
+color: #fff;
+    line-height: 50px;
+    height: 35px;
+    width: 35px;
+    background: #000;
+    line-height: 35px;
+    margin-top: 10px;
+    text-align: center;
+    border-radius: 50px;
+    padding: 1px;
+    font-size: 13px;
 }
 
 .progress-bar {

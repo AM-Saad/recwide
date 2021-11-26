@@ -1,6 +1,6 @@
 
 .opened-menu #dashboard-menu {
-  margin-right: 0;
+  margin-left: 0;
 }
 
 #top-menu, #dashboard-menu_header {
@@ -33,13 +33,11 @@
 /* Styling Side Menu */
 
 .dashboard-menu-icon {
-  font-size: 1em;
-  color: #fff;
+  font-size: 1.2em;
   cursor: pointer;
-  padding: 1px 7px;
-  border: 1px solid #555;
   border-radius: var(--s-radius);
-  background-color: var(--scnd-color);
+  box-shadow: var(--shadow2);
+
 }
 
 #dashboard-menu {
@@ -54,7 +52,7 @@
   width: 260px;
   transition: 0.3s all ease-in-out;
   z-index: 1;
-  margin-right: -270px;
+  margin-left: -270px;
   padding-top: 0;
   box-shadow: var(--shadow3);
 }

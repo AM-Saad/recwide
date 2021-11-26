@@ -5,8 +5,7 @@ import store from "./store";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import "@/assets/css/classes.css"
 import "@/assets/css/main.css"
-import "@/assets/css/main_dashboard.css"
-import "@/assets/css/dashboardnav.css"
+
 import Ads from 'vue-google-adsense'
 import './registerServiceWorker'
 

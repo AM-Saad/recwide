@@ -1,8 +1,17 @@
 <template>
   <router-link :to="{name:'project', params:{id:project._id}}" class="project">
-    <img src="@/assets/images/nav/record_g.png" />
-   <h3> {{ project.name }}</h3>
-    <span>{{project.date}}</span>
+
+    <!-- <img class="project-icon" src="@/assets/images/nav/record_g.png" /> -->
+       <div class="flex f-space-between">
+   <h3 class="project-title"> {{ project.name }}</h3>
+      <img class="project-mode" v-if="project.mode === 'screenAndWebcam'" src="@/assets/images/both.svg">
+      <img class="project-mode" v-if="project.mode === 'screen'" src="@/assets/images/screen.svg">
+      <img class="project-mode" v-if="project.mode === 'webcam'" src="@/assets/images/cam.svg">
+    </div>
+  <div class="flex">
+    <span>{{project.res}}</span>
+  </div>
+    <span class="project-date">{{project.date}}</span>
   </router-link>
 </template>
 
@@ -19,7 +28,7 @@ export default {
   computed: {
     ...mapState("user", ["projects", "fetching", "isAuth"])
   },
-  methods: {}
+
 };
 </script>
 

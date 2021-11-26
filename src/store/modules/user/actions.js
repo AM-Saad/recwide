@@ -11,7 +11,7 @@ const checkAuth = (res, dispatch) => {
 
 const login = async ({ commit, rootState }, { data }) => {
   const res = await Auth.login(data, rootState.url)
-  res.state && commit('authenticate', res.json)
+  res.state && commit('authenticate', { res: res.json, info: data })
   return res
 };
 
@@ -28,14 +28,14 @@ const getUser = async ({ commit, state, rootState, dispatch }) => {
   res.state && commit('updateUser', res.json.user)
   return res.state
 };
-const changeInfo = async ({ commit,state, rootState, dispatch }, { data }) => {
+const changeInfo = async ({ commit, state, rootState, dispatch }, { data }) => {
 
   const res = await User.changeInfo(rootState.url, state.jwt, data)
   checkAuth(res, dispatch)
   res.state && commit('updateUser', res.json.user)
   return res
 };
-const changePassword = async ({ commit,state, rootState, dispatch }, { data }) => {
+const changePassword = async ({ commit, state, rootState, dispatch }, { data }) => {
 
   const res = await User.changePassword(rootState.url, state.jwt, data)
   checkAuth(res, dispatch)
@@ -57,6 +57,14 @@ const saveProject = async ({ commit, state, rootState, dispatch }, { data }) => 
   res.state && commit('updateProjects', res.json.projects)
   return res
 };
+const deleteProject = async ({ commit, state, rootState, dispatch }, { id }) => {
+
+  const res = await User.deleteProject(rootState.url, state.jwt, id)
+  checkAuth(res, dispatch)
+  // !res.state && commit('msg', { msg: res.msg, type: 'warning' }, { root: true })
+  res.state && commit('updateProjects', res.json.projects)
+  return res
+};
 
 const logout = async ({ commit }) => {
   commit('logout')
@@ -73,5 +81,6 @@ export default {
   signup,
   getUser,
   getProjects,
-  saveProject
+  saveProject,
+  deleteProject
 };

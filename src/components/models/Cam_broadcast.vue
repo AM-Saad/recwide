@@ -7,11 +7,10 @@
       <img src="@/assets/images/cam_loading.gif" alt="" srcset="" />
       <p v-if="camGranted">Cam Preview is loading...</p>
       <div  v-if="!camGranted" >
-        <p class="c-r">Cannot access to camera</p>
-        <div v-if="!camGranted">
-          <button class="btn btn-gradient" @click="openAllowAccess('Webcam')">
+        <p class="c-r f-center">Cannot access to camera</p>
+        <div>
+          <button class="btn btn-gradient font-m" @click="openAllowAccess('Webcam')">
             Allow access to Camera
-            <p class="font-xl">&#x261C;</p>
           </button>
         </div>
       </div>
@@ -28,7 +27,7 @@ export default {
       ready: false,
       camMediaSource: null,
       finished: false,
-      recordedCamBlobs: [],
+      recordedCamBlobs: []
     };
   },
   props: ["recording"],
@@ -38,8 +37,8 @@ export default {
       "audioSettings",
       "camerror",
       "camGranted",
-      "resolution",
-    ]),
+      "resolution"
+    ])
   },
   created() {
     // if (this.camGranted) {
@@ -53,40 +52,46 @@ export default {
     this.stopBroadcast();
   },
   methods: {
-    startBroadcast() {
-      navigator.mediaDevices
-        .getUserMedia({
+    openAllowAccess() {
+      this.$emit("AllowAccess");
+    },
+    async startBroadcast() {
+      try {
+        
+          console.log(navigator.mediaDevices);
+          
+        const stream = await navigator.mediaDevices.getUserMedia({
           audio: true,
-          video: this.resolution,
-        })
-        .then((stream) => {
-          this.ready = true;
-          this.$emit("cameraReady");
-          var gumVideo = document.querySelector("#cam-broadcast");
-          window.boradcast = stream;
-          gumVideo.srcObject = stream;
-        })
-        .catch((error) => {
-          if (error.name === "NotAllowedError") {
-            this.ready = false;
-
-            this.$emit("accessField");
-          }
+          video: this.resolution
         });
+        console.log(stream);
+        
+        this.ready = true;
+        this.$emit("cameraReady");
+        var gumVideo = document.querySelector("#cam-broadcast");
+        window.boradcast = stream;
+        gumVideo.srcObject = stream;
+      } catch (error) {
+        console.log(error)
+        if (error.name === "NotAllowedError") {
+          this.ready = false;
+          this.$emit("accessField");
+        }
+      }
     },
     stopBroadcast() {
       if (this.camGranted) {
         try {
           this.ready = false;
 
-          window.boradcast.getTracks().forEach((track) => {
+          window.boradcast.getTracks().forEach(track => {
             track.stop();
           });
         } catch (error) {
           return;
         }
       }
-    },
+    }
   },
   watch: {
     resolution(val) {
@@ -96,8 +101,8 @@ export default {
           this.startBroadcast();
         }, 1000);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

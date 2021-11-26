@@ -215,6 +215,10 @@ export default {
 </script>
 
 <style scoped>
+.wrapper {
+  width: 75% !important;
+  margin: var(--m-margin) auto !important;
+}
 .recording-box {
   background: #fff;
   padding: var(--l-padding);

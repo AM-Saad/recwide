@@ -136,7 +136,7 @@
       </div>
       <div class="cam-area" v-if="this.mode != 'screen'">
         <!-- Broadcast -->
-        <CamBroadcast v-on:cameraReady="camPrevReady()" />
+        <CamBroadcast v-on:cameraReady="camPrevReady()" v-on:AllowAccess="openAllowAccess('Webcam')" />
      
       </div>
     </div>
@@ -307,6 +307,7 @@ h3 {
   border-radius: var(--m-radius);
   background: #fff;
   color: #000;
+  box-shadow: var(--shadow3)
 }
 .options-select {
   padding: var(--s-padding);
@@ -339,7 +340,8 @@ h3 {
   margin-top: var(--l-margin);
   text-align: center;
 }
-@media only screen and (max-width: 767px) and (min-width: 320px) {
+@media only screen and (max-width: 1024px) and (min-width: 320px) {
+
   .step-options {
     width: 100%;
   }

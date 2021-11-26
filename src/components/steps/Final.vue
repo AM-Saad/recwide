@@ -26,14 +26,14 @@
         >Download</a
       >
       <a class="btn btn-gradient" v-if="isAuth" @click="openSaveModel()">Save</a>
-      <a class="btn btn-gradient" v-if="!isAuth" @click="openAuthFormModel()">Register to save...</a>
+      <a class="btn btn-gradient" v-if="!isAuth" @click="openAuthFormModel()">Login To Save...</a>
       </div>
 
       <SaveProject 
       v-if="saveTheProject"
       v-on:cancel="closeSaveModel"
       v-on:finished="reRecord"
-
+      v-on:register="openAuthFormModel"
       :videotype="videotype"
       />
       
@@ -54,7 +54,6 @@ import Videos from "@/components/models/Videos";
 import SaveProject from "@/components/Popups/Save_Project";
 import AuthForm from "@/components/Popups/Auth";
 
-
 import { mapState } from "vuex";
 export default {
   name: "Finle",
@@ -65,7 +64,7 @@ export default {
       register: false,
       allVideos: [],
       converted: false,
-      videotype: "webm" 
+      videotype: "webm"
     };
   },
   components: {
@@ -75,8 +74,7 @@ export default {
   },
   computed: {
     ...mapState(["mode", "blobs"]),
-    ...mapState("user", ["isAuth", "user"]),
-
+    ...mapState("user", ["isAuth", "user"])
   },
   mounted() {
     this.createRenderUrl();
@@ -144,6 +142,10 @@ export default {
 </script>
 
 <style scoped>
+.wrapper {
+  width: 75% !important;
+  margin: var(--m-margin) auto !important;
+}
 .head i {
   color: var(--main-color);
   margin-right: var(--m-margin);

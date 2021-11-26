@@ -4,7 +4,10 @@
         <div class="wrapper">
         <AuthNav></AuthNav>
       <main class="">
-        <h2>My Account</h2>
+            <div class="dashborad-header">
+              <a>My Account.</a>
+        <h2> Settings</h2>
+            </div>
         <form @submit.prevent="changeInfo()">
                         <h3>Change Info</h3>
                 <p class="info-error" style="color: red; margin-top: 10px"></p>
@@ -57,9 +60,9 @@
 </template>
 
 <script>
-import List from "@/components/User/Projects/List.vue";
 import AuthNav from "@/components/User/Common/AuthNav.vue";
-
+import "@/assets/css/main_dashboard.css"
+import "@/assets/css/dashboardnav.css"
 import { mapState } from "vuex";
 
 export default {
@@ -74,7 +77,6 @@ export default {
     };
   },
   components: {
-    List,
     AuthNav
   },
   computed: {
@@ -139,12 +141,11 @@ export default {
       if (!res.state) {
         return (document.querySelector(".pass-error").innerHTML = res.msg);
       }
-      this.newpassword = null
-      this.password = null
-      this.confpassword = null
+      this.newpassword = null;
+      this.password = null;
+      this.confpassword = null;
 
-      document.querySelector(".pass-success").innerHTML =
-        "Password changed.";
+      document.querySelector(".pass-success").innerHTML = "Password changed.";
     },
     resetFeedbackMsgs() {
       document.querySelector(".info-success").innerHTML = "";
@@ -165,7 +166,7 @@ export default {
 
 <style scoped>
 form {
-  margin: 20px;
+  margin: 20px 0;
   background: #fff;
   padding: var(--m-padding);
   border-radius: 12px;

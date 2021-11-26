@@ -39,9 +39,20 @@ export default {
 </script>
 
 <style >
-h2 {
+.dashborad-header {
   margin-left: 5px;
   margin-bottom: var(--l-margin);
+}
+.dashborad-header a{
+  color: #888;
+  font-weight: bold
+}
+.dashborad-header h2{
+
+    margin: var(--m-margin) 0;
+    font-size: 26px;
+    color: #333;
+
 }
 .project {
   position: relative;
@@ -67,35 +78,39 @@ h2 {
   box-shadow: -3px -4px 9px 0px rgb(163 163 163 / 11%);
 }
 
-.project img{
+.project-icon{
   height: 30px;
 }
-.project h3{
+.project-mode{
+  height: 25px;
+  filter: grayscale()
+}
+.project-title{
     margin: var(--m-margin) 0;
     font-size: 17px;
     color: #444;
 }
-.project span{
+.project-date{
   display: block;
-  font-weight: bold;
   color: #555;
   text-align: right;
-  font-size: 14px;
-  letter-spacing: .7px
+  font-size: 13px;
+  letter-spacing: .2px
 }
 .new-project {
   border: 1.8px dashed #ccc;
   background-color: #eee;
 }
 .new-project .button {
-  background-color: blue;
-  padding: var(--m-padding);
-  position: absolute;
-  top: 60%;
-  left: 50%;
-  transform: translate(-50%, -60%);
-  border-radius: var(--m-radius);
-  color: #fff;
-  font-size: 12px;
+    background-color: blue;
+    padding: var(--m-padding) 7px;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -60%);
+    transform: translate(-50%, -60%);
+    border-radius: var(--m-radius);
+    color: #fff;
+    font-size: 11px;
 }
 </style>

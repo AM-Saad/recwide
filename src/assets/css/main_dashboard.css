@@ -75,17 +75,15 @@ ul {
 }
 
 .wrapper {
-  width: 100%;
+  /* width: 100%;
   height: auto;
-  margin: 5px auto 60px 0px;
+  margin: 5px auto 60px 0px; */
   overflow: hidden;
   /* float: right; */
   transition: .2s all ease-in-out;
 }
 
-.opened-menu .wrapper {
-  width: calc(100% - 260px);
-}
+
 
 .wrapper-body {
   padding: 1.5rem 2rem 5rem 2rem;
@@ -257,10 +255,14 @@ section.head h2 {
 }
 
 main {
-  width: 80%;
+  width: 100%;
   float: right;
   position: relative;
   padding: var(--m-padding);
+  transition: .2s all ease-in-out;
+}
+.opened-menu main {
+  width: calc(100% - 27vmin);
 }
 
 .content-desc {

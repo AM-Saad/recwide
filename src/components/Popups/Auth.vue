@@ -103,6 +103,15 @@
             autocomplete="false | unknown-autocomplete-value"
           />
         </div>
+      <div class="form-group">
+        <label for="login-rememberMe">Remember Me</label>
+               <input
+            type="checkbox"
+            id="login-rememberMe"
+            name="rememberMe"
+            v-model="rememberMe"
+          />
+      </div>
         <a v-if="!loading" @click="toggleForms('signup', 'login')">
           You don't have an account
           <b>Sign up</b>
@@ -138,6 +147,7 @@ export default {
       name: "",
       email: "",
       password: "",
+      rememberMe: false,
       loading: false
     };
   },
@@ -193,7 +203,8 @@ export default {
         type: "user/login",
         data: {
           email: this.email,
-          password: this.password
+          password: this.password,
+          rememberMe: this.rememberMe
         }
       });
       if (!res.state) {
@@ -257,11 +268,11 @@ export default {
   display: block;
   max-width: 90%;
 }
-form a b{
+form a b {
   cursor: pointer;
 }
-form a b:hover{
-  color: #888
+form a b:hover {
+  color: #888;
 }
 .form-group {
   margin: var(--m-margin) 0;

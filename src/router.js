@@ -75,9 +75,9 @@ export default new Router({
       }
     },
     {
-      path: '/account',
-      name: 'account',
-      component: () => import( /* webpackChunkName: "account" */ './views/Account.vue'),
+      path: '/settings',
+      name: 'settings',
+      component: () => import( /* webpackChunkName: "settings" */ './views/Settings.vue'),
       meta: {
         requiredAuth: true,
       }

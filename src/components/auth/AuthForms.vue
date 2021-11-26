@@ -95,6 +95,15 @@
             autocomplete="false | unknown-autocomplete-value"
           />
         </div>
+      <div class="form-group">
+        <label for="login-rememberMe-client">Remember Me</label>
+               <input
+            type="checkbox"
+            id="login-rememberMe-client"
+            name="rememberMe"
+            v-model="rememberMe"
+          />
+      </div>
         <a v-if="!loading" @click="toggleForms('signup', 'login')">
           You don't have an account
           <b>Sign up</b>
@@ -119,11 +128,12 @@ export default {
       name: "",
       email: "",
       password: "",
+      rememberMe: false,
       loading: false
     };
   },
   mounted() {
-    let authtype = this.$route.params.type || 'login';
+    let authtype = this.$route.params.type || "login";
     this.$refs[authtype].classList.add("block");
   },
   created() {},
@@ -141,8 +151,8 @@ export default {
         data: {
           name: this.name,
           email: this.email,
-          password: this.password,
-        },
+          password: this.password
+        }
       });
       if (!res.state) {
         this.loading = false;
@@ -155,7 +165,6 @@ export default {
       this.toggleForms("login", "signup");
       document.querySelector(".login-success").innerHTML =
         "Thank you, please login now";
-    
     },
     async login() {
       this.resetFeedbackMsgs();
@@ -168,7 +177,8 @@ export default {
         type: "user/login",
         data: {
           email: this.email,
-          password: this.password
+          password: this.password,
+          rememberMe: this.rememberMe
         }
       });
       if (!res.state) {
@@ -184,7 +194,7 @@ export default {
       this.$refs[visible].classList.add("block");
       this.$refs[hide].classList.remove("block");
 
-        window.history.pushState({ pageTitle: "Login" }, "", `/auth/${visible}`);
+      window.history.pushState({ pageTitle: "Login" }, "", `/auth/${visible}`);
     },
     resetFeedbackMsgs() {
       document.querySelector(".login-success").innerHTML = "";
@@ -212,8 +222,8 @@ h3 {
   margin-bottom: var(--m-margin);
 }
 .hint {
-color: #999;
-    font-size: 16px;
+  color: #999;
+  font-size: 16px;
 }
 form {
   width: 80%;
@@ -224,11 +234,11 @@ form {
   margin: var(--l-margin) auto;
   border-radius: var(--m-radius);
 }
-form a b{
+form a b {
   cursor: pointer;
 }
-form a b:hover{
-color: #444
+form a b:hover {
+  color: #444;
 }
 @media screen and (min-width: 320px) and (max-width: 720px) {
   form {
