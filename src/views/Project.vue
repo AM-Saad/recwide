@@ -53,12 +53,12 @@ export default {
     ...mapState("user", ["projects", "fetching"]),
     ...mapState(["url"]),
     project() {
-      return this.projects.find(p => p._id.toString() === this.currentId);
+      return this.projects.find(p => p.slug.toString() === this.currentId);
     }
   },
   async created() {
     await this.getProjects();
-    this.currentId = this.$route.params.id;
+    this.currentId = this.$route.params.slug;
     this.$store.commit("user/fetching", false);
   },
   methods: {

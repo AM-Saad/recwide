@@ -32,19 +32,19 @@ export default new Router({
     {
       path: '/auth/:type',
       name: 'auth',
-      meta:{
-        sitemap:{
+      meta: {
+        sitemap: {
           slugs: [
             {
-                type:'login',
-                title:"login",
-                category: 'auth',
+              type: 'login',
+              title: "login",
+              category: 'auth',
             },
             {
-              type:'signup',
-              title:"signup",
+              type: 'signup',
+              title: "signup",
               category: 'auth',
-          }
+            }
           ]
         }
       },
@@ -59,11 +59,19 @@ export default new Router({
       }
     },
     {
-      path: '/project/:id',
+      path: '/project/:slug',
       name: 'project',
       component: () => import( /* webpackChunkName: "projects" */ './views/Project.vue'),
       meta: {
         requiredAuth: true,
+        slugs: [
+          {
+            type: 'Get',
+            title: ":slug",
+            category: 'projects',
+          },
+
+        ]
       }
     },
     {
