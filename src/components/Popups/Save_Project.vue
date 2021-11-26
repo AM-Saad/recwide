@@ -101,7 +101,6 @@ export default {
 
     this.socket.on("more-data", function(data) {
       if (!_comp.cancled) {
-        console.log("More Data...");
         let percentage = Math.floor(data["Percent"]);
 
         _comp.updateProgressBar(percentage);
@@ -129,7 +128,6 @@ export default {
       if (_comp.blobs.length > _comp.currentFileIndex + 1) {
         setTimeout(()=>{
 
-        console.log("Start Second Video");
         _comp.currentFileIndex = _comp.currentFileIndex + 1;
         _comp.startUploading();
         }, 1000)
@@ -138,7 +136,6 @@ export default {
         _comp.uploading = false;
         _comp.currentPercent = "99";
         _comp.videosNames.forEach(function(value, i) {
-          console.log(i);
           localStorage.removeItem(`video/${i}`);
         });
         this.totalMbDone =  Math.round( this.currentPercent / 100.0 * this.currentFile.size / 1048576 );
@@ -164,7 +161,6 @@ export default {
       function Ready() {
         if (window.File && window.FileReader) {
           //These are the relevant HTML5 objects that we are going to use
-          console.log("ready");
         } else {
           document.getElementById("UploadArea").innerHTML =
             "Your Browser Doesn't Support The File API Please Update Your Browser";
@@ -284,15 +280,9 @@ export default {
     },
     calcMegabytesDone(){
 
-      console.log(this.totalMbDone)
       let MBDone = Math.round( this.currentPercent / 100.0 * this.currentFile.size / 1048576 );
-      console.log(this.totalMbDone)
       const total = this.totalMbDone +MBDone
-      console.log("tota;", total)
       this.totalMbDone = total;
-      console.log(this.totalMbDone)
-
-      console.log(MBDone)
     
     },
     createVideoNameAndSaveToStorage() {

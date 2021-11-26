@@ -49,7 +49,6 @@ export default {
     ...mapState(["mode"])
   },
   created() {
-    console.log("creaedddd");
     this.$emit("reRecord");
 
     navigator.permissions.query({ name: "camera" }).then(res => {

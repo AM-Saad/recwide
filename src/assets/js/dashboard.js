@@ -50,7 +50,6 @@ $(document).ready(function () {
 
 
     function closeForm() {
-        console.log('here');
         $('.pop-up_container_form').removeClass('animate_form')
         setTimeout(() => $('.pop-up_container').addClass('none'), 100);
     }
