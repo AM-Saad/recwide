@@ -1,15 +1,19 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import user from './modules/user';
+import meetings from './modules/meetings';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
     user: user,
+    meetings: meetings,
   },
   state: {
-    url: "https://server.recwide.com",
+    // url: "https://server.recwide.com",
+    url: "http://localhost:3000",
+    jwt: localStorage.getItem('ut'),
     msg: null,
     networkconnections: true,
     mode: 'screenAndWebcam',
@@ -17,7 +21,7 @@ export default new Vuex.Store({
     camGranted: false,
     micGranted: false,
     blobs: [],
-    videos:[],
+    videos: [],
     finished: false,
     camerror: false,
     camIsReady: false,
@@ -81,7 +85,7 @@ export default new Vuex.Store({
       state.audioSettings = 'Microphone + System audio'
       state.resolution = 1080
     },
-    changeResolution(state,val) {
+    changeResolution(state, val) {
       state.resolution = state.resolutions.find(
         (i) => i.height === val
       );
@@ -91,7 +95,7 @@ export default new Vuex.Store({
   actions: {
     async checkConnection({ state }) {
 
-    await fetch("http://info.cern.ch/")
+      await fetch("http://info.cern.ch/")
       state.networkconnections = !state.networkconnections
     },
 

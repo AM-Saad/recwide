@@ -4,11 +4,9 @@ import mutations from './mutations';
 
 const state = {
   isAuth: false,
-  jwt: localStorage.getItem('jwt'),
-  user: null,
-  userName:null,
+  jwt: localStorage.getItem('ut'),
   fetching: true,
-  projects: [],
+  meetings: [],
 };
 
 export default {

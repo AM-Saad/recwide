@@ -46,22 +46,22 @@ ul {
   margin-bottom: 20px;
   position: relative;
   align-items: center;
+  display: flex;
+  flex-wrap: wrap;
 }
 .form-group label{
   font-size: 25px;
   color: #555
 }
 .form-control {
-  width: 100%;
-  height: 50px;
-  padding: var(--m-padding);
-  border: 0;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-  font-size: 18px;
-  color: #222;
-  background: #e8f0fe;
-  border-radius: var(--l-radius);
+  padding: var(--s-padding);
+  background-color: #fff;
+  margin-bottom: var(--m-margin);
+  border-radius: var(--s-radius);
+  border: 1px solid #fff;
+  cursor: pointer;
+  color: #333;
+  border-color: var(--main-color);
 }
 
 input:focus {

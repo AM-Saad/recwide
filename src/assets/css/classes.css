@@ -336,7 +336,7 @@
 .btn {
   background-color: #f9f9f9;
   border: 1px solid var(--main-color);
-  border-radius: 50px;
+  border-radius: 6px;
   color: #333;
   /* font-family: arial,sans-serif; */
   font-size: 16px;
@@ -353,7 +353,9 @@
   justify-content: space-around;
   text-decoration: none;
 }
-
+.btn:hover {
+  opacity: .7;
+}
 
 .btn-small {
   height: 35px;

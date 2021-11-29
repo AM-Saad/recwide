@@ -6,5 +6,5 @@ const articleById = (state) => (id) => {
 
 export default {
   articleById,
-  checkauthintecated
+
 };
