@@ -1,19 +1,19 @@
 <template>
   <div>
 
-    <div v-if="projects.length > 0" class="content grid g-three p-large">
-      <Project v-for="project in projects" :project="project" :key="project._id" />
-      <router-link to="/recorder" class="item-box new-item">
+    <div v-if="meetings.length > 0" class="content grid g-three p-large">
+      <Meeting v-for="meeting in meetings" :meeting="meeting" :key="meeting._id" />
+      <router-link to="/new-meeting" class="item-box new-item">
         <div class="button">
-        Create New Project
+        Create New Meeting
         </div>
       </router-link>
     </div>
-    <div v-if="projects.length == 0">
+    <div v-if="meetings.length == 0">
         <div  class="content grid g-three p-large">
-           <router-link to="/recorder" class="item-box new-item">
+           <router-link to="/new-meeting" class="item-box new-item">
         <div class="button">
-        Create New Project
+        Create New Meeting
         </div>
       </router-link>
         </div>
@@ -23,16 +23,16 @@
 </template>
 
 <script>
-import Project from "@/components/User/Projects/Project.vue";
+import Meeting from "@/components/Meetings/Meeting.vue";
 
 export default {
   name: "List",
   data() {
     return {};
   },
-  props: ["projects"],
+  props: ["meetings"],
   components: {
-    Project
+    Meeting
   },
   methods: {}
 };
@@ -54,6 +54,4 @@ export default {
     color: #333;
 
 }
-
-
 </style>

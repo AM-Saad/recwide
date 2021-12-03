@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import AuthNav from "@/components/User/Common/AuthNav.vue";
+import AuthNav from "@/components/Common/AuthNav.vue";
 import "@/assets/css/main_dashboard.css";
 import "@/assets/css/dashboardnav.css";
 import { mapState } from "vuex";

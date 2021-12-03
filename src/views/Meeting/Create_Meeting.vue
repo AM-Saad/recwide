@@ -64,8 +64,7 @@
 
 <script>
 import timeZones from "../../constants/time-zones.json";
-import AuthNav from "@/components/User/Common/AuthNav.vue";
-
+import AuthNav from "@/components/Common/AuthNav.vue";
 import "@/assets/css/main_dashboard.css";
 import "@/assets/css/dashboardnav.css";
 export default {
@@ -103,7 +102,6 @@ export default {
       });
       if(res){
         this.$router.push("/meeting");
-
       }
     }
   }
@@ -126,4 +124,3 @@ label {
   margin-top: var(--l-margin);
 }
 </style>
-

@@ -6,9 +6,9 @@
       <main class="">
             <div class="dashborad-header">
               <a>My Account</a>
-        <h2>My Projects</h2>
+        <h2>My Meetings</h2>
 </div>
-      <List :projects="projects" v-if="!fetching"/>
+      <List :meetings="meetings" v-if="!fetching"/>
     <div v-if="fetching">Loading...</div>
 
       </main>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import List from "@/components/User/Projects/List.vue";
+import List from "@/components/Meetings/List.vue";
 import AuthNav from "@/components/Common/AuthNav.vue";
 import "@/assets/css/main_dashboard.css"
 import "@/assets/css/dashboardnav.css"
@@ -33,17 +33,17 @@ export default {
     AuthNav
   },
   computed: {
-    ...mapState("user", ["projects", "fetching"])
+    ...mapState("meetings", ["meetings", "fetching"])
   },
   created() {
-    this.getProjects();
+    this.getMeetings();
   },
   methods: {
-    async getProjects() {
-      if (this.projects.length === 0) {
-        this.$store.commit("user/fetching", true);
-        await this.$store.dispatch({ type: "user/getProjects" });
-        this.$store.commit("user/fetching", false);
+    async getMeetings() {
+      if (this.meetings.length === 0) {
+        this.$store.commit("meetings/fetching", true);
+        await this.$store.dispatch({ type: "meetings/getMeetings" });
+        this.$store.commit("meetings/fetching", false);
       }
     }
   },

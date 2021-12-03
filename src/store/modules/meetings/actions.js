@@ -17,7 +17,15 @@ const createMeeting = async ({ commit, rootState, state }, { data }) => {
   return res
 };
 
+const getMeetings = async ({ commit, state, rootState, dispatch }) => {
+  const res = await Meeting.getAll(rootState.url, state.jwt)
+  checkAuth(res, dispatch)
+  // !res.state && commit('msg', { msg: res.msg, type: 'warning' }, { root: true })
+  res.state && commit('updateMeetings', res.json.meetings)
+  return res.state ? true : false
+};
 
 export default {
-  createMeeting
+  createMeeting,
+  getMeetings
 }

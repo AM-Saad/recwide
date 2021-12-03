@@ -94,6 +94,27 @@ export default new Router({
       }
     },
     {
+      path: '/meetings',
+      name: 'meetings',
+      component: () => import( /* webpackChunkName: "settings" */ './views/Meeting/Meetings.vue'),
+      meta: {
+        requiredAuth: true,
+      }
+    },
+    {
+      path: '/meetings/:id',
+      name: 'meeting',
+      component: () => import( /* webpackChunkName: "projects" */ './views/Meeting/Meeting.vue'),
+      meta: {
+        requiredAuth: true,
+        sitemap: {
+          slugs: [
+            
+          ]
+        }
+      }
+    },
+    {
       path: '/new-meeting',
       name: 'new-meeting',
       component: () => import( /* webpackChunkName: "settings" */ './views/Meeting/Create_Meeting.vue'),

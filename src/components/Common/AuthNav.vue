@@ -50,6 +50,11 @@ export default {
           image: "projects"
         },
         {
+          name: "meetings",
+          active: true,
+          image: "meetings"
+        },
+        {
           name: "settings",
           active: false,
           image: "settings"
