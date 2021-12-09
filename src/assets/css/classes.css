@@ -359,7 +359,7 @@
 
 .btn-small {
   height: 35px;
-  width: 12vmax;
+  width: 10vmax;
   max-width: 100%;
   font-size: 14px;
 }
@@ -701,7 +701,12 @@ color: #fff
   border-radius: 18px;
 }
 
-
+.opacity-5{
+  opacity: .5;
+}
+.opacity-7{
+  opacity: .7;
+}
 
 .toggle-switch input[type=checkbox] {
   display: none

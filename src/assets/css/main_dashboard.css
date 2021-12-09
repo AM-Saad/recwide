@@ -265,7 +265,8 @@ main {
   width: calc(100% - 27vmin);
 }
 .content{
-  grid-gap: 10px
+  grid-gap: 10px;
+  grid-template-rows: 135px;
 }
 
 .item-box{

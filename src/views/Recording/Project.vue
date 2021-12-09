@@ -98,7 +98,7 @@ export default {
 };
 </script>
 
-<style >
+<style scoped>
 .video-wrapper {
   width: 94%;
   margin: var(--m-margin) 0;
@@ -109,5 +109,9 @@ export default {
 }
 video {
   width: 100%;
+}
+
+.btn-danger{
+  margin-right: 30px
 }
 </style>

@@ -52,6 +52,8 @@ export default {
     this.$emit("reRecord");
 
     navigator.permissions.query({ name: "camera" }).then(res => {
+      console.log(res)
+
       if (res.state == "granted") {
         this.$store.commit("camGranted", true);
       } else {
@@ -66,16 +68,16 @@ export default {
       }
     });
 
-    try {
-      window.camstream.getTracks().forEach(track => {
-        track.stop();
-      });
-      window.boradcast.getTracks().forEach(track => {
-        track.stop();
-      });
-    } catch (error) {
-      return;
-    }
+    // try {
+    //   window.camstream.getTracks().forEach(track => {
+    //     track.stop();
+    //   });
+    //   window.boradcast.getTracks().forEach(track => {
+    //     track.stop();
+    //   });
+    // } catch (error) {
+    //   return;
+    // }
   },
   methods: {
     switchComponent(comp, mode) {

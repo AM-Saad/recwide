@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{name:'meeting', params:{slug:meeting._id}}" class="item-box">
+  <router-link :to="{name:'meeting', params:{id:meeting._id}}" class="item-box">
 
     <!-- <img class="meeting-icon" src="@/assets/images/nav/record_g.png" /> -->
        <div class="flex f-space-between">

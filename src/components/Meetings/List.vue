@@ -41,7 +41,6 @@ export default {
 <style >
 .dashborad-header {
   margin-left: 5px;
-  margin-bottom: var(--l-margin);
 }
 .dashborad-header a{
   color: #888;

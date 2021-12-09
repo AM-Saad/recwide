@@ -3,7 +3,7 @@ const allRoutes = require('./src/router')
 const routes = allRoutes.default.options.routes
 module.exports = {
   devServer:{
-    port:9090
+    port:4000
   },
   publicPath: '/',
   pluginOptions: {

@@ -20,7 +20,6 @@
 
 <script>
 import { mapState } from "vuex";
-
 export default {
   data() {
     return {
@@ -63,6 +62,7 @@ export default {
           video: this.resolution
         });
         
+        console.log(stream)
         this.ready = true;
         this.$emit("cameraReady");
         var gumVideo = document.querySelector("#cam-broadcast");
@@ -79,7 +79,6 @@ export default {
       if (this.camGranted) {
         try {
           this.ready = false;
-
           window.boradcast.getTracks().forEach(track => {
             track.stop();
           });

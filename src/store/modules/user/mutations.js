@@ -1,8 +1,9 @@
 const authenticate = (state, data) => {
-
+  console.log( data.res.user._id)
   state.jwt = data.res.token
-  state.user = data.res.user.name
+  state.userName = data.res.user.name
   state.isAuth = true
+  state.userId = data.res.user._id
   const remainingMilliseconds = 60 * 60 * 1000;
   state.sessionExpiryDate = new Date(
     new Date().getTime() + remainingMilliseconds
@@ -11,12 +12,14 @@ const authenticate = (state, data) => {
   localStorage.setItem('ut', state.jwt)
   localStorage.setItem('keepSession', data.info.rememberMe)
   localStorage.setItem('uexpiryd', state.sessionExpiryDate)
-  localStorage.setItem('u', state.user)
+  localStorage.setItem('un', state.userName)
+  localStorage.setItem('uid', state.userId)
 }
 
 const loginToStore = (state) => {
   state.jwt = localStorage.getItem('ut')
-  state.userName = localStorage.getItem('u')
+  state.userName = localStorage.getItem('un')
+  state.userId = localStorage.getItem('uid')
   state.isAuth = true
 
 }
@@ -28,7 +31,8 @@ const logout = (state) => {
   localStorage.removeItem('ut')
   localStorage.removeItem('keepSession')
   localStorage.removeItem("uexpiryd")
-  localStorage.removeItem("u")
+  localStorage.removeItem("un")
+  localStorage.removeItem("uid")
   // state.user = null
   state.jwt = null
   // state.expiryDate = null

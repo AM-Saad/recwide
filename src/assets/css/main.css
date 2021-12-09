@@ -48,20 +48,23 @@ ul {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
+  justify-content: start;
 }
 .form-group label{
   font-size: 25px;
-  color: #555
+  color: #555;
+  width: 200px
 }
 .form-control {
   padding: var(--s-padding);
   background-color: #fff;
-  margin-bottom: var(--m-margin);
+  margin: var(--m-margin);
   border-radius: var(--s-radius);
   border: 1px solid #fff;
-  cursor: pointer;
   color: #333;
   border-color: var(--main-color);
+  width: 257px;
+  max-width: 100%;
 }
 
 input:focus {

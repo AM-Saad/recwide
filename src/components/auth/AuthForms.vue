@@ -74,6 +74,7 @@
         <p class="login-success" style="color: green; margin-top: 10px"></p>
 
         <div class="form-group">
+          <label for="login-email-client">Email</label>
           <input
             type="email"
             id="login-email-client"
@@ -85,6 +86,8 @@
           />
         </div>
         <div class="form-group">
+          <label for="login-password-client">Password</label>
+
           <input
             type="password"
             id="login-password-client"

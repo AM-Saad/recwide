@@ -7,6 +7,7 @@ const state = {
   jwt: localStorage.getItem('ut'),
   fetching: true,
   meetings: [],
+  currentMeeting:null
 };
 
 export default {

@@ -1,0 +1,443 @@
+<template>
+ <!-- <div id="cam-broadcast_wrapper">
+    <video id="user-broadcast" muted autoplay :class="{none: !camReady}">
+      Your browser doesn't support the video tag
+    </video>
+    <div class="loading-cam grid" >
+      <img v-if="camGranted && !camReady" src="@/assets/images/cam_loading.gif" alt="" srcset="" />
+      <p v-if="camGranted && !camReady">Cam Preview is loading...</p>
+      <div v-if="!camGranted" >
+        <p class="c-r f-center">Cannot access to camera</p>
+        <div>
+          <button class="btn btn-small font-s" @click="openAllowAccess('Webcam')">
+            Allow access to Camera
+          </button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <div>
+ <div class="header">
+      <div class="logo">
+        <div class="header__back" @click="Toggle()">
+          <i class="fas fa-angle-left"></i>
+        </div>
+        <h3>Video Chat</h3>
+      </div>
+    </div>  
+    <div class="main">  
+    <div class="main__left">
+      <div class="videos__group">
+        <div id="video-grid">
+
+        </div>
+      </div>
+      <div class="options">
+        <div class="options__left">
+          <div id="stopVideo" class="options__button">
+            <i class="fa fa-video-camera"></i>
+          </div>
+          <div id="muteButton" class="options__button">
+            <i class="fa fa-microphone"></i>
+          </div>
+          <div id="showChat" class="options__button" @click="showChat()">
+            <i class="fa fa-comment"></i>
+          </div>
+        </div>
+        <div class="options__right">
+          <div id="inviteButton" class="options__button">
+            <i class="fas fa-user-plus"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="main__right">
+      <div class="main__chat_window">
+          <div class="messages">
+
+          </div>
+      </div>
+      <div class="main__message_container">
+        <input id="chat_message" type="text" autocomplete="off" placeholder="Type message here...">
+        <div id="send" class="options__button">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+</template>
+
+<script>
+import { mapState } from "vuex";
+import io from "socket.io-client";
+import Peer from "peerjs";
+export default {
+  data() {
+    return {
+      camMediaSource: null,
+      mediaCamRecorder: null,
+      recordedCamBlobs: [],
+      camReady: false,
+      socket: null
+    };
+  },
+  props: ["recording", "start", "stopCam", "ready"],
+  computed: {
+    ...mapState("user", ["userId", "userName"]),
+    ...mapState("meetings", ["meetings", "fetching", "currentMeeting"]),
+    ...mapState([
+      "mode",
+      "audioSettings",
+      "micGranted",
+      "camGranted",
+      "resolution",
+      "url",
+      "jwt"
+    ])
+  },
+  async mounted() {
+    this.socket = io(`${this.url}/meeting/connect`);
+
+    const videoGrid = document.getElementById("video-grid");
+    const myVideo = document.createElement("video");
+    const showChat = document.querySelector("#showChat");
+    const backBtn = document.querySelector(".header__back");
+    myVideo.muted = true;
+
+    var peer = new Peer(undefined, {
+      path: "/peerjs",
+      host: "/",
+      port: "443"
+    });
+
+    let meetingId = this.$route.params.id;
+
+    const user = this.userName;
+    console.log(this.currentMeeting);
+    let myVideoStream;
+    navigator.mediaDevices
+      .getUserMedia({
+        audio: true,
+        video: true
+      })
+      .then(stream => {
+        myVideoStream = stream;
+        addVideoStream(myVideo, stream);
+        this.socket.emit(
+          "join-room",
+          meetingId,
+          this.userId,
+          this.userName
+        );
+
+        peer.on("call", call => {
+          console.log('New Call...')
+          call.answer(stream);
+          const video = document.createElement("video");
+          call.on("stream", userVideoStream => {
+            addVideoStream(video, userVideoStream);
+          });
+        });
+
+        this.socket.on("user-connected", userId => {
+          console.log("use Connected");
+          connectToNewUser(userId, stream);
+        });
+      });
+
+    const connectToNewUser = (userId, stream) => {
+      const call = peer.call(userId, stream);
+      const video = document.createElement("video");
+      console.log(call)
+      call.on("stream", userVideoStream => {
+        addVideoStream(video, userVideoStream);
+      });
+    };
+
+    peer.on("open", id => {
+      console.log("opened");
+      this.socket.emit("join-room", meetingId, this.userId, user);
+    });
+
+    const addVideoStream = (video, stream) => {
+      video.srcObject = stream;
+      video.addEventListener("loadedmetadata", () => {
+        video.play();
+        console.log(videoGrid);
+        videoGrid.append(video);
+      });
+    };
+
+    let text = document.querySelector("#chat_message");
+    let send = document.getElementById("send");
+    let messages = document.querySelector(".messages");
+
+    const inviteButton = document.querySelector("#inviteButton");
+    const muteButton = document.querySelector("#muteButton");
+    const stopVideo = document.querySelector("#stopVideo");
+
+    this.socket.on("createMessage", (message, userName) => {
+      messages.innerHTML =
+        messages.innerHTML +
+        `<div class="message">
+        <b><i class="far fa-user-circle"></i> <span> ${
+          userName === user ? "me" : userName
+        }</span> </b>
+        <span>${message}</span>
+    </div>`;
+    });
+  },
+  destroyed() {},
+  methods: {
+    Toggle() {
+      document.querySelector(".main__left").style.display = "flex";
+      document.querySelector(".main__left").style.flex = "1";
+      document.querySelector(".main__right").style.display = "none";
+      document.querySelector(".header__back").style.display = "none";
+    },
+    showChat() {
+      document.querySelector(".main__right").style.display = "flex";
+      document.querySelector(".main__right").style.flex = "1";
+      document.querySelector(".main__left").style.display = "none";
+      document.querySelector(".header__back").style.display = "block";
+    },
+    send() {
+      if (text.value.length !== 0) {
+        this.socket.emit("message", text.value);
+        text.value = "";
+      }
+    },
+    text() {
+      if (e.key === "Enter" && text.value.length !== 0) {
+        this.socket.emit("message", text.value);
+        text.value = "";
+      }
+    },
+    mute() {
+      const enabled = myVideoStream.getAudioTracks()[0].enabled;
+      if (enabled) {
+        myVideoStream.getAudioTracks()[0].enabled = false;
+        html = `<i class="fas fa-microphone-slash"></i>`;
+        muteButton.classList.toggle("background__red");
+        muteButton.innerHTML = html;
+      } else {
+        myVideoStream.getAudioTracks()[0].enabled = true;
+        html = `<i class="fas fa-microphone"></i>`;
+        muteButton.classList.toggle("background__red");
+        muteButton.innerHTML = html;
+      }
+    },
+    stopVideo() {
+      const enabled = myVideoStream.getVideoTracks()[0].enabled;
+      if (enabled) {
+        myVideoStream.getVideoTracks()[0].enabled = false;
+        html = `<i class="fas fa-video-slash"></i>`;
+        stopVideo.classList.toggle("background__red");
+        stopVideo.innerHTML = html;
+      } else {
+        myVideoStream.getVideoTracks()[0].enabled = true;
+        html = `<i class="fas fa-video"></i>`;
+        stopVideo.classList.toggle("background__red");
+        stopVideo.innerHTML = html;
+      }
+    }
+  }
+};
+</script>
+
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+:root {
+  --main-darklg: #1d2635;
+  --main-dark: #161d29;
+  --primary-color: #2f80ec;
+  --main-light: #eeeeee;
+  font-family: "Poppins", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 8vh;
+  position: relative;
+  width: 100%;
+  background-color: var(--main-darklg);
+}
+
+.logo > h3 {
+  color: var(--main-light);
+}
+
+.main {
+  overflow: hidden;
+  height: 92vh;
+  display: flex;
+}
+
+.main__left {
+  flex: 0.7;
+  display: flex;
+  flex-direction: column;
+}
+
+.videos__group {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--main-dark);
+}
+
+video {
+  height: 300px;
+  border-radius: 1rem;
+  margin: 0.5rem;
+  width: 400px;
+  object-fit: cover;
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+}
+
+.options {
+  padding: 1rem;
+  display: flex;
+  background-color: var(--main-darklg);
+}
+
+.options__left {
+  display: flex;
+}
+
+.options__right {
+  margin-left: auto;
+}
+
+.options__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-color);
+  height: 50px;
+  border-radius: 5px;
+  color: var(--main-light);
+  font-size: 1.2rem;
+  width: 50px;
+  margin: 0 0.5rem;
+}
+
+.background__red {
+  background-color: #f6484a;
+}
+
+.main__right {
+  display: flex;
+  flex-direction: column;
+  flex: 0.3;
+  background-color: #242f41;
+}
+
+.main__chat_window {
+  flex-grow: 1;
+  overflow-y: scroll;
+}
+
+.main__chat_window::-webkit-scrollbar {
+  display: none;
+}
+
+.main__message_container {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main__message_container > input {
+  height: 50px;
+  flex: 1;
+  font-size: 1rem;
+  border-radius: 5px;
+  padding-left: 20px;
+  border: none;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  margin: 1.5rem;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+}
+
+.message > b {
+  color: #eeeeee;
+  display: flex;
+  align-items: center;
+  text-transform: capitalize;
+}
+
+.message > b > i {
+  margin-right: 0.7rem;
+  font-size: 1.5rem;
+}
+
+.message > span {
+  background-color: #eeeeee;
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+#video-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#showChat {
+  display: none;
+}
+
+.header__back {
+  display: none;
+  position: absolute;
+  font-size: 1.3rem;
+  top: 17px;
+  left: 28px;
+  color: #fff;
+}
+
+@media (max-width: 700px) {
+  .main__right {
+    display: none;
+  }
+  .main__left {
+    width: 100%;
+    flex: 1;
+  }
+
+  video {
+    height: auto;
+    width: 100%;
+  }
+
+  #showChat {
+    display: flex;
+  }
+}
+</style>
+

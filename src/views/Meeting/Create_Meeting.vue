@@ -101,7 +101,7 @@ export default {
         data: this.form
       });
       if(res){
-        this.$router.push("/meeting");
+        this.$router.push("/meetings");
       }
     }
   }

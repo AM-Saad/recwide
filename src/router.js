@@ -3,10 +3,6 @@ import Router from 'vue-router'
 import { request } from "./api/request"
 Vue.use(Router)
 let all = []
-const projects = async () => {
-  all = await request(`http://localhost:3000/user/allprojects`, 'get', {}, true, null)
-}
-projects()
 
 console.log(all)
 export default new Router({
@@ -115,9 +111,35 @@ export default new Router({
       }
     },
     {
+      path: '/meetings/:id/start',
+      name: 'start-meeting',
+      component: () => import( /* webpackChunkName: "Start_Meeting" */ './views/Meeting/Start_Meeting.vue'),
+      meta: {
+        requiredAuth: true,
+        sitemap: {
+          slugs: [
+            
+          ]
+        }
+      }
+    },
+    {
+      path: '/meetings/:id/join',
+      name: 'join-meeting',
+      component: () => import( /* webpackChunkName: "join_Meeting" */ './views/Meeting/Join_Meeting.vue'),
+      meta: {
+        requiredAuth: true,
+        sitemap: {
+          slugs: [
+            
+          ]
+        }
+      }
+    },
+    {
       path: '/new-meeting',
       name: 'new-meeting',
-      component: () => import( /* webpackChunkName: "settings" */ './views/Meeting/Create_Meeting.vue'),
+      component: () => import( /* webpackChunkName: "Create_Meeting" */ './views/Meeting/Create_Meeting.vue'),
       meta: {
         requiredAuth: true,
       }
@@ -125,7 +147,7 @@ export default new Router({
     {
       path: '/join-meeting',
       name: 'join-meeting',
-      component: () => import( /* webpackChunkName: "settings" */ './views/Meeting/Join_Meeting.vue'),
+      component: () => import( /* webpackChunkName: "Join_Meeting" */ './views/Meeting/Join_Meeting.vue'),
       meta: {
         requiredAuth: true,
       }
@@ -133,7 +155,15 @@ export default new Router({
     {
       path: '/start-meeting',
       name: 'start-meeting',
-      component: () => import( /* webpackChunkName: "settings" */ './views/Meeting/Start_Meeting.vue'),
+      component: () => import( /* webpackChunkName: "Start_Meeting" */ './views/Meeting/Start_Meeting.vue'),
+      meta: {
+        requiredAuth: true,
+      }
+    },
+    {
+      path: '/broadcasting/:id',
+      name: 'broadcasting',
+      component: () => import( /* webpackChunkName: "broadcasting" */ './views/Meeting/Broadcasting.vue'),
       meta: {
         requiredAuth: true,
       }

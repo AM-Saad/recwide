@@ -12,8 +12,10 @@ export default new Vuex.Store({
   },
   state: {
     // url: "https://server.recwide.com",
+    // url: "http://192.168.1.6:3000",
     url: "http://localhost:3000",
     jwt: localStorage.getItem('ut'),
+    user:null,
     msg: null,
     networkconnections: true,
     mode: 'screenAndWebcam',

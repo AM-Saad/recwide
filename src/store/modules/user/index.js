@@ -9,6 +9,7 @@ const state = {
   userName:null,
   fetching: true,
   projects: [],
+  userId:localStorage.getItem('uid')
 };
 
 export default {

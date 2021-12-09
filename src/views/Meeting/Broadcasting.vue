@@ -2,37 +2,11 @@
   <div>
     <div>
         <div class="wrapper">
-        <AuthNav></AuthNav>
         <main class="">
-    <Allowaccess
-      v-on:close="closeAllowAccess"
-      v-if="showAllowAccess"
-      :requestedGuide="requestedGuide"
-    />
-            <div class="dashborad-header">
-                <a>My Meetings</a>
-                <div v-if="!currentMeeting">Loading...</div>
-              <div class="flex f-end" v-if="currentMeeting">
-
-              <h2> </h2>
-           
-              <button v-if="micGranted" @click="(() =>{this.start = true})"  class="btn btn btn-success" >Join</button>
-        
-              <button  v-if="!micGranted" @click="(() =>{this.showAllowAccess = true})"  class="btn btn btn-success" :class="{ 'opacity-5': !micGranted }">Join</button>
-              <button v-if="deleteing" class="btn btn-small btn-success">
-                <div class="spinner">
-                    <div class="double-bounce1"></div>
-                    <div class="double-bounce2"></div>
-                </div>
-              </button>
-            </div> 
-            </div>
+ 
+         
             <div class="">
-                <MeetingBroadcast :ready="ready" :start="start" v-on:AllowAccess="openAllowAccess('Webcam')"/>
-                <SendInvitation
-                    v-on:cancel="closeSendInvitation"
-                    v-if="showSendInvitationModel"
-                    :meeting="currentMeeting" />
+                <MeetingBroadcast :ready="ready" v-on:AllowAccess="openAllowAccess('Webcam')"/>
             </div>
         </main>
         </div>
@@ -49,6 +23,7 @@ import "@/assets/css/main_dashboard.css";
 import "@/assets/css/dashboardnav.css";
 import { mapState } from "vuex";
 import { setTimeout } from "timers";
+import io from "socket.io-client";
 import Allowaccess from "@/components/Popups/Allow_access.vue";
 
 export default {
@@ -59,10 +34,9 @@ export default {
       starting: false,
       showSendInvitationModel: false,
       socket: null,
+      ready: false,
       requestedGuide: null,
-      showAllowAccess: false,
-      start: false,
-      ready:false
+      showAllowAccess: false
     };
   },
   components: {
@@ -74,52 +48,18 @@ export default {
   computed: {
     ...mapState("meetings", ["meetings", "fetching", "currentMeeting"]),
     ...mapState(["url"]),
-    ...mapState([
-      "mode",
-      "audioSettings",
-      "micGranted",
-      "camGranted",
-      "resolution"
-    ])
+
   },
   async created() {
-    this.$store.commit("meetings/fetching", true);
-    await this.getMeetings();
-    this.currentId = this.$route.params.id;
-    const currentMeeting = this.meetings.find(
-      p => p._id.toString() === this.currentId
-    );
-    await this.$store.dispatch({
-      type: "meetings/currentMeeting",
-      currentMeeting
-    });
 
-    navigator.permissions.query({ name: "camera" }).then(res => {
-      if (res.state == "granted") {
-        this.$store.commit("camGranted", true);
-      } else {
-        this.$store.commit("camGranted", false);
-      }
-    });
-    navigator.permissions.query({ name: "microphone" }).then(res => {
-      if (res.state == "granted") {
-        this.$store.commit("micGranted", true);
-      } else {
-        this.$store.commit("micGranted", false);
-      }
-    });
-    // if (this.micGranted) {
-      this.ready = true;
-    // }
+
+    this.socket = io(`${this.url}/meeting/start`);
+
+    this.socket.emit("register", this.currentMeeting._id);
   },
   methods: {
-    async getMeetings() {
-      if (this.meetings.length === 0) {
-        await this.$store.dispatch({ type: "meetings/getMeetings" });
-      }
-      this.$store.commit("meetings/fetching", false);
-    },
-    async deleteMeeting(e, id) {
+ 
+    async endMeeting(e, id) {
       if (confirm("Do you really want to cancel this meeting?")) {
         this.deleteing = true;
         const res = await this.$store.dispatch({
@@ -138,9 +78,7 @@ export default {
         e.preventDefault();
       }
     },
-    closeSendInvitation() {
-      this.showSendInvitationModel = false;
-    },
+  
     openAllowAccess(requestedGuide) {
       this.requestedGuide = requestedGuide;
       this.showAllowAccess = true;
@@ -154,17 +92,10 @@ export default {
       if (!val) {
         this.$router.push("/");
       }
-    },
-    micGranted(val) {
-      if (val) {
-        this.ready = true;
-      }
     }
   }
 };
 </script>
-
-
 
 <style scoped>
 .meeting-wrapper {
