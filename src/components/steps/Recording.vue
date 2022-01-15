@@ -61,14 +61,14 @@ export default {
       allowGuide: false,
       needGuide:
         localStorage.getItem("dontshowguideagain") == "true" ? false : true,
-      showGuide: false,
+      showGuide: false
     };
   },
   components: {
     Counting,
     ScreenCapture,
     CamRecording,
-    Guide,
+    Guide
   },
   computed: {
     ...mapState([
@@ -79,28 +79,31 @@ export default {
       "camIsReady",
       "screenIsReady",
       "resolution"
-    ]),
+    ])
   },
 
   created() {
     this.checkIfNeedGuide(this.audioSettings);
     try {
-      window.boradcast.getTracks().forEach((track) => {
+      window.boradcast.getTracks().forEach(track => {
         track.stop();
       });
     } catch (error) {
-      return
+      return;
     }
-    window.onbeforeunload = function () {
+    window.onbeforeunload = function() {
       return "Are you sure you want to close the window?";
     };
   },
   destroyed() {
-    window.onbeforeunload = null
+    window.onbeforeunload = null;
   },
   methods: {
     checkIfNeedGuide(val) {
-      if ((val === "Microphone + System audio" || val === "System audio") && this.needGuide) {
+      if (
+        (val === "Microphone + System audio" || val === "System audio") &&
+        this.needGuide
+      ) {
         this.showGuide = true;
         this.allowGuide = true;
       } else {
@@ -190,27 +193,27 @@ export default {
     },
 
     pushCamFile(val) {
-      const exist = this.blobs.find((b) => b.name === "camRecording");
+      const exist = this.blobs.find(b => b.name === "camRecording");
       if (!exist) {
         this.$store.commit("newBlob", { chunks: val, name: "camRecording" });
         this.checkFinished();
       }
     },
     pushScreenFile(val) {
-      const exist = this.blobs.find((b) => b.name === "screenRecording");
+      const exist = this.blobs.find(b => b.name === "screenRecording");
       if (!exist) {
         this.$store.commit("newBlob", { chunks: val, name: "screenRecording" });
         this.checkFinished();
       }
-    },
+    }
   },
   watch: {
     recording(val) {
       if (val == true) {
         this.start = true;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -228,7 +231,7 @@ export default {
   margin: auto;
   border-radius: var(--m-radius);
 }
-.recording-btn  {
+.recording-btn {
   color: red;
   font-size: 51px;
   border: 0;

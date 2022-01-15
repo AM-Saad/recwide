@@ -14,18 +14,7 @@
         id="main_video"
         width="100%"
         :ref="mode == 'webcam' ? 'camRecording' : 'screenRecording'"
-      >
-        <!-- <source
-            src="https://lab.devaradise.com/html5-video-player/file/video.mp4"
-            type="video/mp4"
-          />
-          <source
-            src="https://lab.devaradise.com/html5-video-player/file/video.ogg"
-            type="video/ogg"
-          /> -->
-
-        Your browser is not support video tag.
-      </video>
+      > Your browser is not support video tag </video>
 
       <div id="controls">
         <button

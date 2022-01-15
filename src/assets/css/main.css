@@ -48,8 +48,10 @@ ul {
   align-items: center;
 }
 .form-group label{
-  font-size: 25px;
-  color: #555
+  font-size: 21px;
+  color: #555;
+  margin-right: 7px;
+  
 }
 .form-control {
   width: 100%;

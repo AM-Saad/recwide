@@ -30,7 +30,6 @@ export default {
       recordedCamBlobs: []
     };
   },
-  props: ["recording"],
   computed: {
     ...mapState([
       "mode",
@@ -57,12 +56,9 @@ export default {
     },
     async startBroadcast() {
       try {
-        
         const stream = await navigator.mediaDevices.getUserMedia({
-          audio: true,
           video: this.resolution
         });
-        
         this.ready = true;
         this.$emit("cameraReady");
         var gumVideo = document.querySelector("#cam-broadcast");
@@ -93,9 +89,7 @@ export default {
     resolution(val) {
       if (val) {
         this.stopBroadcast();
-        setTimeout(() => {
-          this.startBroadcast();
-        }, 1000);
+        setTimeout(() => this.startBroadcast(), 1000);
       }
     }
   }
