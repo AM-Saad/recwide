@@ -8,7 +8,7 @@
           Screen recorder and webcam recorder have never been this easy, free
           and timeless befo re
         </p>
-        <router-link class="btn play-btn" to="/recorder"
+        <router-link class=" btn play-btn-gradient" to="/recorder"
           ><i class="fas fa-play"></i
         ></router-link>
       </div>
@@ -120,7 +120,7 @@ export default {
   name: "home",
   components: {},
   computed: {},
-  created() {},
+  created() {}
 };
 </script>
 
@@ -135,13 +135,13 @@ export default {
 }
 
 .header-intro p {
-color: #555;
-    font-size: 26px;
-    margin-bottom: var(--l-margin);
-    text-align: center;
-    width: 52%;
-    margin: var(--m-margin) auto;
-    line-height: 1.7;
+  color: #555;
+  font-size: 26px;
+  margin-bottom: var(--l-margin);
+  text-align: center;
+  width: 52%;
+  margin: var(--m-margin) auto;
+  line-height: 1.7;
 }
 
 .header img {
@@ -150,7 +150,7 @@ color: #555;
   margin: auto;
 }
 
-.header .play-btn {
+.header .play-btn-gradient {
   height: 140px;
   width: 140px;
   margin: auto;
@@ -212,12 +212,14 @@ color: #555;
 
 .services-item p {
   color: #f9f9f9;
-  font-size: 16px;
-  text-align: center;
+  font-size: 17px;
+  text-align: left;
+  line-height: 1.4;
   margin: var(--m-margin);
+  font-weight: 600;
 }
 .services-item h5 {
-  color: #222;
+  color: #333;
   font-weight: bold;
   font-size: 22px;
   text-align: center;

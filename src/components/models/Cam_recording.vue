@@ -15,7 +15,7 @@ export default {
   },
   props: ["recording", "start", "stopCam"],
   computed: {
-    ...mapState(["mode", "recordingSettings", "micGranted", "camGranted", "resolution"]),
+    ...mapState(["mode", "audioSettings", "micGranted", "camGranted", "resolution"]),
   },
   async created() {
     if (this.camGranted) {
@@ -41,7 +41,7 @@ export default {
     async startCambroadcast() {
       let ready;
       let constraints;
-      if (this.recordingSettings == "No audio") {
+      if (this.audioSettings == "No audio") {
         constraints = {
           video: this.resolution,
         };

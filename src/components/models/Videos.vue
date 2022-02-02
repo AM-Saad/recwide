@@ -14,18 +14,7 @@
         id="main_video"
         width="100%"
         :ref="mode == 'webcam' ? 'camRecording' : 'screenRecording'"
-      >
-        <!-- <source
-            src="https://lab.devaradise.com/html5-video-player/file/video.mp4"
-            type="video/mp4"
-          />
-          <source
-            src="https://lab.devaradise.com/html5-video-player/file/video.ogg"
-            type="video/ogg"
-          /> -->
-
-        Your browser is not support video tag.
-      </video>
+      > Your browser is not support video tag </video>
 
       <div id="controls">
         <button
@@ -94,7 +83,7 @@ export default {
   },
   props: ["allVideos"],
   computed: {
-    ...mapState(["mode", "blobs"]),
+    ...mapState(["mode", "blobs", "videos"]),
   },
   mounted() {
     let ready = this.addVidsUrl();
@@ -312,7 +301,7 @@ export default {
 <style scoped>
 .finle_videos {
   position: relative;
-  width: 90%;
+  width: 100%;
   display: block;
   margin: var(--l-margin) auto;
 }
@@ -324,18 +313,15 @@ export default {
   height: 150px;
   width: unset;
   z-index: 99999999;
-  border: 2.3px dashed var(--main-color);
+  border: 1.8px dashed var(--main-color);
 }
 
 .video-player {
   position: relative;
   width: 100%;
   box-shadow: var(--shadow);
-  border-radius: var(--l-radius);
+  border-radius: var(--m-radius);
   overflow: hidden;
-}
-.video-player {
-  border-radius: var(--l-radius);
 }
 #controls {
   position: absolute;

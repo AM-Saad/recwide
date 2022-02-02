@@ -1,6 +1,7 @@
-const authenticate = (state, authData) => {
-  state.jwt = authData.token
-  state.user = authData.user.name
+const authenticate = (state, data) => {
+
+  state.jwt = data.res.token
+  state.user = data.res.user.name
   state.isAuth = true
   const remainingMilliseconds = 60 * 60 * 1000;
   state.sessionExpiryDate = new Date(
@@ -8,13 +9,14 @@ const authenticate = (state, authData) => {
   );
 
   localStorage.setItem('ut', state.jwt)
+  localStorage.setItem('keepSession', data.info.rememberMe)
   localStorage.setItem('uexpiryd', state.sessionExpiryDate)
   localStorage.setItem('u', state.user)
 }
 
 const loginToStore = (state) => {
   state.jwt = localStorage.getItem('ut')
-  state.user = localStorage.getItem('u')
+  state.userName = localStorage.getItem('u')
   state.isAuth = true
 
 }
@@ -23,6 +25,10 @@ const logout = (state) => {
 
   localStorage.removeItem('jwt')
   localStorage.removeItem('sessionExpiryDate')
+  localStorage.removeItem('ut')
+  localStorage.removeItem('keepSession')
+  localStorage.removeItem("uexpiryd")
+  localStorage.removeItem("u")
   // state.user = null
   state.jwt = null
   // state.expiryDate = null
@@ -32,9 +38,12 @@ const logout = (state) => {
 
 
 
-const updatevideos = (state, videos) => {
-  console.log(videos);
-  state.videos = videos.videos
+const updateProjects = (state, projects) => {
+  state.projects = projects
+
+}
+const updateUser = (state, user) => {
+  state.user = user
 
 }
 
@@ -43,9 +52,7 @@ const newvideo = (state, video) => {
 
 }
 const fetching = (state, status) => {
-  console.log(status);
   state.fetching = status
-
 }
 
 
@@ -55,5 +62,5 @@ const fetching = (state, status) => {
 
 
 export default {
-  authenticate, loginToStore, logout, updatevideos, fetching, newvideo
+  authenticate, loginToStore, updateUser, logout, updateProjects, fetching, newvideo
 };

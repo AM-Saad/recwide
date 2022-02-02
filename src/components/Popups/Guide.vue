@@ -21,7 +21,7 @@
           />
           <label for="dontShow">Don't Show Again</label>
         </div>
-        <button class="btn" @click="gotit">Got it</button>
+        <button class="btn btn-gradient" @click="gotit">Got it</button>
       </div>
     </div>
   </div>

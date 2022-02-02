@@ -30,7 +30,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["mode", "recordingSettings", "finished"]),
+    ...mapState(["mode", "audioSettings", "finished"]),
   },
   components: {
     Scene,
@@ -70,7 +70,7 @@ h1 {
   align-items: center;
   /* box-shadow: var(--shadow3); */
 }
-.step .btn {
+.step .btn btn-gradient {
   margin: auto;
   margin-top: var(--m-margin);
 }

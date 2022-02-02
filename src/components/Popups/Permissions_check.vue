@@ -110,8 +110,8 @@
       </div>
 
       <div class="flex f-space-between">
-        <button class="btn btn-info" @click="gotit">Check Permissions</button>
-        <button class="btn" @click="continueToRec">Continue Recording</button>
+        <button class="btn btn-gradient btn btn-gradient-info" @click="gotit">Check Permissions</button>
+        <button class="btn btn-gradient" @click="continueToRec">Continue Recording</button>
       </div>
     </div>
   </div>

@@ -33,7 +33,7 @@
       <h3 class="f-center m-medium">Recording in Progress</h3>
       <Counting />
 
-      <button class="recording-btn" @click="stopRecording">
+      <button class="recording-btn " @click="stopRecording">
         <i class="far fa-stop-circle"></i>
       </button>
     </div>
@@ -61,46 +61,49 @@ export default {
       allowGuide: false,
       needGuide:
         localStorage.getItem("dontshowguideagain") == "true" ? false : true,
-      showGuide: false,
+      showGuide: false
     };
   },
   components: {
     Counting,
     ScreenCapture,
     CamRecording,
-    Guide,
+    Guide
   },
   computed: {
     ...mapState([
       "mode",
-      "recordingSettings",
+      "audioSettings",
       "blobs",
       "finished",
       "camIsReady",
       "screenIsReady",
       "resolution"
-    ]),
+    ])
   },
 
   created() {
-    this.checkIfNeedGuide(this.recordingSettings);
+    this.checkIfNeedGuide(this.audioSettings);
     try {
-      window.boradcast.getTracks().forEach((track) => {
+      window.boradcast.getTracks().forEach(track => {
         track.stop();
       });
     } catch (error) {
-      return
+      return;
     }
-    window.onbeforeunload = function () {
+    window.onbeforeunload = function() {
       return "Are you sure you want to close the window?";
     };
   },
   destroyed() {
-    window.onbeforeunload = null
+    window.onbeforeunload = null;
   },
   methods: {
     checkIfNeedGuide(val) {
-      if ((val === "Microphone + System audio" || val === "System audio") && this.needGuide) {
+      if (
+        (val === "Microphone + System audio" || val === "System audio") &&
+        this.needGuide
+      ) {
         this.showGuide = true;
         this.allowGuide = true;
       } else {
@@ -190,31 +193,35 @@ export default {
     },
 
     pushCamFile(val) {
-      const exist = this.blobs.find((b) => b.name === "camRecording");
+      const exist = this.blobs.find(b => b.name === "camRecording");
       if (!exist) {
         this.$store.commit("newBlob", { chunks: val, name: "camRecording" });
         this.checkFinished();
       }
     },
     pushScreenFile(val) {
-      const exist = this.blobs.find((b) => b.name === "screenRecording");
+      const exist = this.blobs.find(b => b.name === "screenRecording");
       if (!exist) {
         this.$store.commit("newBlob", { chunks: val, name: "screenRecording" });
         this.checkFinished();
       }
-    },
+    }
   },
   watch: {
     recording(val) {
       if (val == true) {
         this.start = true;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style scoped>
+.wrapper {
+  width: 75% !important;
+  margin: var(--m-margin) auto !important;
+}
 .recording-box {
   background: #fff;
   padding: var(--l-padding);

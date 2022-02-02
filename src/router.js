@@ -1,8 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
+import { request } from "./api/request"
 Vue.use(Router)
+let all = []
+const projects = async () => {
+  all = await request(`http://localhost:3000/user/allprojects`, 'get', {}, true, null)
+}
+projects()
 
+console.log(all)
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -27,44 +33,99 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/screen-recorder.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/Recording/screen-recorder.vue')
     },
     {
       path: '/auth/:type',
       name: 'auth',
-      meta:{
-        sitemap:{
+      meta: {
+        sitemap: {
           slugs: [
             {
-                type:'login',
-                title:"login",
-                category: 'auth',
+              type: 'login',
+              title: "login",
+              category: 'auth',
             },
             {
-              type:'signup',
-              title:"signup",
+              type: 'signup',
+              title: "signup",
               category: 'auth',
-          }
+            }
           ]
         }
       },
-      component: () => import( /* webpackChunkName: "auth" */ './views/Auth.vue')
+      component: () => import( /* webpackChunkName: "auth" */ './views/User/Auth.vue')
     },
     {
       path: '/projects',
       name: 'projects',
-      component: () => import( /* webpackChunkName: "projects" */ './views/Projects.vue')
+      component: () => import( /* webpackChunkName: "projects" */ './views/Recording/Projects.vue'),
+      meta: {
+        requiredAuth: true,
+      }
+    },
+    {
+      path: '/project/:slug',
+      name: 'project',
+      component: () => import( /* webpackChunkName: "projects" */ './views/Recording/Project.vue'),
+      meta: {
+        requiredAuth: true,
+        sitemap: {
+          slugs: [
+            
+          ]
+        }
+      }
     },
     {
       path: '/editor',
       name: 'editor',
-      component: () => import( /* webpackChunkName: "editor" */ './views/Editor.vue')
+      component: () => import( /* webpackChunkName: "editor" */ './views/Recording/Editor.vue'),
+      meta: {
+        requiredAuth: true,
+      }
     },
     {
-      path: '/account',
-      name: 'account',
-      component: () => import( /* webpackChunkName: "account" */ './views/Account.vue')
+      path: '/settings',
+      name: 'settings',
+      component: () => import( /* webpackChunkName: "settings" */ './views/User/Settings.vue'),
+      meta: {
+        requiredAuth: true,
+      }
+    },
+    {
+      path: '/new-meeting',
+      name: 'new-meeting',
+      component: () => import( /* webpackChunkName: "settings" */ './views/Meeting/Create_Meeting.vue'),
+      meta: {
+        requiredAuth: true,
+      }
+    },
+    {
+      path: '/join-meeting',
+      name: 'join-meeting',
+      component: () => import( /* webpackChunkName: "settings" */ './views/Meeting/Join_Meeting.vue'),
+      meta: {
+        requiredAuth: true,
+      }
+    },
+    {
+      path: '/start-meeting',
+      name: 'start-meeting',
+      component: () => import( /* webpackChunkName: "settings" */ './views/Meeting/Start_Meeting.vue'),
+      meta: {
+        requiredAuth: true,
+      }
+    },
+    {
+      path: '/meeting/:id',
+      name: 'meeting',
+      component: () => import( /* webpackChunkName: "settings" */ './views/Meeting/Meeting.vue'),
+      meta: {
+        requiredAuth: true,
+      }
     },
   ],
 
 })
+
