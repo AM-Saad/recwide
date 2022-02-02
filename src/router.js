@@ -4,7 +4,6 @@ import { request } from "./api/request"
 Vue.use(Router)
 
 
-console.log(all)
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
