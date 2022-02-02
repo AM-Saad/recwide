@@ -56,7 +56,7 @@ export default {
     startBroadcast() {
       navigator.mediaDevices
         .getUserMedia({
-          audio: true,
+          audio: false,
           video: this.resolution,
         })
         .then((stream) => {
