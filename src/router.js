@@ -2,11 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { request } from "./api/request"
 Vue.use(Router)
-let all = []
-const projects = async () => {
-  all = await request(`http://localhost:3000/user/allprojects`, 'get', {}, true, null)
-}
-projects()
+
 
 console.log(all)
 export default new Router({
@@ -117,14 +113,14 @@ export default new Router({
         requiredAuth: true,
       }
     },
-    {
-      path: '/meeting/:id',
-      name: 'meeting',
-      component: () => import( /* webpackChunkName: "settings" */ './views/Meeting/Meeting.vue'),
-      meta: {
-        requiredAuth: true,
-      }
-    },
+    // {
+    //   path: '/meeting/:id',
+    //   name: 'meeting',
+    //   component: () => import( /* webpackChunkName: "settings" */ './views/Meeting/Meeting.vue'),
+    //   meta: {
+    //     requiredAuth: true,
+    //   }
+    // },
   ],
 
 })
