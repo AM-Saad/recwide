@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["account"],{"77be":function(n,u,c){"use strict";c.r(u);var e,l,o=c("2877"),t={},a=Object(o["a"])(t,e,l,!1,null,null,null);u["default"]=a.exports}}]);
-//# sourceMappingURL=account.689c5d70.js.map
