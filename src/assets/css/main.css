@@ -210,7 +210,7 @@ section h2 {
   }
   section {
     padding: var(--m-padding);
-    margin: var(--l-margin) 3px;
+    margin: var(--l-margin) 3px !important;
   }
   #menu {
     display: none;

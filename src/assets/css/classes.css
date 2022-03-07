@@ -364,9 +364,9 @@
 
 .btn-big {
   height: 80px;
-  width: 220px;
+  min-width: 240px;
   max-width: 100%;
-  font-size: 22px;
+  font-size: 18px;
 }
 
 .btn-light {

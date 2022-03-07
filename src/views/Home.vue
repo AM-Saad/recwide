@@ -5,17 +5,39 @@
         <img src="@/assets/images/full_logo.png" alt="" srcset="" />
 
         <p>
-          Screen recorder and webcam recorder have never been this easy, free
-          and timeless befo re
+          Screen recorder has never been this easy, free
+          and timeless before
         </p>
-        <router-link class=" btn play-btn-gradient" to="/recorder"
-          ><i class="fas fa-play"></i
-        ></router-link>
+        <div class="flex f-center">
+
+        <router-link class=" btn btn-gradient btn-big" to="/recorder"
+          >Start Record For Free<i class="fas fa-play"></i
+        >
+        </router-link>
+        </div>
       </div>
       <div class="header-img"></div>
     </section>
 
     <div class="wrapper">
+      <section id="companies">
+        <div class="companies-list flex f-space-between">
+            <div>
+              <img src="@/assets/images/brands/youtube.png" alt="" srcset="">
+            </div>
+            <div>
+              <img src="@/assets/images/brands/tiktok.png" alt="" srcset="">
+            </div>
+            <div>
+              <img src="@/assets/images/brands/twitch.png" alt="" srcset="">
+
+            </div>
+            <div>
+              <img src="@/assets/images/brands/instagram.png" alt="" srcset="">
+            </div>
+        
+        </div>
+      </section>
       <section id="services" class="">
         <h2>Why Choose Recwide</h2>
 
@@ -107,7 +129,7 @@
     </footer>
     <p class="footer-copyright">
       Designed and developed by
-      <a style="color: #fff" href="https://amsstudio.me">AMS-Studio</a>
+      <a style="color: #fff" href="https://amsaad.co">AMSaad</a>
     </p>
   </div>
 </template>
@@ -132,6 +154,7 @@ export default {
   position: relative;
   z-index: 2;
   margin-top: 0;
+  margin-bottom: 0;
 }
 
 .header-intro p {
@@ -145,7 +168,7 @@ export default {
 }
 
 .header img {
-  max-width: 100%;
+  max-width: 50%;
   display: block;
   margin: auto;
 }
@@ -242,6 +265,13 @@ section#signup p span {
   color: var(--main-color);
   font-weight: bold;
 }
+.companies-list {
+  flex-wrap: wrap;
+  grid-gap: 20px;
+}
+#companies img {
+  height: 40px;
+}
 
 footer {
   position: relative;
@@ -289,6 +319,9 @@ footer {
 }
 
 @media only screen and (max-width: 768px) {
+  .header img {
+  max-width:100%
+}
   .header-intro p {
     margin: var(--s-margin) auto;
     font-size: 17px;
@@ -299,6 +332,9 @@ footer {
   }
   section#signup p {
     font-size: 22px;
+  }
+  .companies-list {
+    justify-content: center !important
   }
   .footer-wrapper ul li a {
     font-size: 18px;
