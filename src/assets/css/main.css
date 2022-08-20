@@ -48,9 +48,11 @@ ul {
   align-items: center;
 }
 .form-group label{
-  font-size: 21px;
+  font-size: 18px;
+  display: block;
   color: #555;
-  margin-right: 7px;
+  margin-left: 7px;
+  margin-bottom: 7px;
   
 }
 .form-control {
@@ -67,7 +69,7 @@ ul {
 }
 
 input:focus {
-  outline: 0;
+  /* outline: 0; */
 }
 
 
@@ -118,27 +120,48 @@ input:focus {
 
 .form-control:hover::-webkit-input-placeholder,
 .form-control:focus::-webkit-input-placeholder {
-  font-size:0
+  font-size:10px
 }
 
 .form-control:hover:-moz-placeholder,
 .form-control:focus:-moz-placeholder {
   /* Firefox 18- */
-  font-size:0
+  font-size:10px
+
 }
 
 .form-control:hover::-moz-placeholder,
 .form-control:focus::-moz-placeholder {
   /* Firefox 19+ */
-  font-size:0
+  font-size:10px
+
 }
 
 .form-control:hover:-ms-input-placeholder,
 .form-control:focus:-ms-input-placeholder {
-  font-size:0
+  font-size:10px
 }
 
+.toggle-forms{
+  background-color: transparent;
+  border: 0;
+}
 
+.dashborad-header {
+  margin-left: 5px;
+  margin-bottom: var(--l-margin);
+}
+.dashborad-header a{
+  color: #888;
+  font-weight: bold
+}
+.dashborad-header h2{
+
+    margin: var(--m-margin) 0;
+    font-size: 26px;
+    color: #333;
+
+}
 
 .spinner {
   width: 35px;
@@ -193,6 +216,8 @@ section h2 {
 }
 .goBack{
   cursor: pointer;
+  background-color: transparent;
+  border: 0;
 }
 
 .footer-copyright {

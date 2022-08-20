@@ -9,7 +9,8 @@ export default new Vuex.Store({
     user: user,
   },
   state: {
-    url: "https://server.recwide.com",
+    // url: "https://server.recwide.com",
+    url: "http://localhost:3000",
     msg: null,
     networkconnections: true,
     mode: 'screenAndWebcam',

@@ -1,59 +1,42 @@
 <template>
   <div>
-
     <div v-if="projects.length > 0" class="content grid g-three p-large">
-      <Project v-for="project in projects" :project="project" :key="project._id" />
+      <Project
+        v-for="project in projects"
+        :project="project"
+        :key="project._id"
+      />
       <router-link to="/recorder" class="project new-project">
         <div class="button">
-        Create New Project
+          Create New Project
         </div>
       </router-link>
     </div>
     <div v-if="projects.length == 0">
-        <div  class="content grid g-three p-large">
-           <router-link to="/recorder" class="project new-project">
-        <div class="button">
-        Create New Project
-        </div>
-      </router-link>
-        </div>
+      <div class="content grid g-three p-large">
+        <router-link to="/recorder" class="project new-project">
+          <div class="button">
+            Create New Project
+          </div>
+        </router-link>
+      </div>
     </div>
   </div>
-
 </template>
 
 <script>
-import Project from "@/components/User/Projects/Project.vue";
+import Project from "@/components/user/projects/Project.vue";
 
 export default {
   name: "List",
-  data() {
-    return {};
-  },
   props: ["projects"],
   components: {
-    Project
+    Project,
   },
-  methods: {}
 };
 </script>
 
-<style >
-.dashborad-header {
-  margin-left: 5px;
-  margin-bottom: var(--l-margin);
-}
-.dashborad-header a{
-  color: #888;
-  font-weight: bold
-}
-.dashborad-header h2{
-
-    margin: var(--m-margin) 0;
-    font-size: 26px;
-    color: #333;
-
-}
+<style>
 .project {
   position: relative;
   padding: var(--m-padding);
@@ -78,39 +61,39 @@ export default {
   box-shadow: -3px -4px 9px 0px rgb(163 163 163 / 11%);
 }
 
-.project-icon{
+.project-icon {
   height: 30px;
 }
-.project-mode{
+.project-mode {
   height: 25px;
-  filter: grayscale()
+  filter: grayscale();
 }
-.project-title{
-    margin: var(--m-margin) 0;
-    font-size: 17px;
-    color: #444;
+.project-title {
+  margin: var(--m-margin) 0;
+  font-size: 17px;
+  color: #444;
 }
-.project-date{
+.project-date {
   display: block;
   color: #555;
   text-align: right;
   font-size: 13px;
-  letter-spacing: .2px
+  letter-spacing: 0.2px;
 }
 .new-project {
   border: 1.8px dashed #ccc;
   background-color: #eee;
 }
 .new-project .button {
-    background-color: blue;
-    padding: var(--m-padding) 7px;
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -60%);
-    transform: translate(-50%, -60%);
-    border-radius: var(--m-radius);
-    color: #fff;
-    font-size: 11px;
+  background-color: blue;
+  padding: var(--m-padding) 7px;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -60%);
+  transform: translate(-50%, -60%);
+  border-radius: var(--m-radius);
+  color: #fff;
+  font-size: 11px;
 }
 </style>

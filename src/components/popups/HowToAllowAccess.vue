@@ -1,26 +1,26 @@
 <template>
   <div class="backdrop">
     <div class="inner">
-      <div class="title">Check "Share Audio" Box</div>
+      <div class="title">Get {{ requestedGuide }} Permission</div>
       <div class="desc">
-        Please check "Share Audio" box to record system audio.
+        Please click the lock button in the browser address bar to set
+        permissions.
       </div>
       <video
-        src="@/assets/videos/share-sound.mp4"
+        v-if="(requestedGuide === 'Microphone')"
+        src="@/assets/videos/allow-mic.mp4"
+        muted
+        autoplay
+        loop="loop"
+      ></video>
+        <video
+        v-if="requestedGuide === 'Webcam'"
+        src="@/assets/videos/allow-cam.mp4"
         muted
         autoplay
         loop="loop"
       ></video>
       <div class="flex f-space-between">
-        <div class="flex">
-          <input
-            @click="dontShow = !dontShow"
-            type="checkbox"
-            name=""
-            id="dontShow"
-          />
-          <label for="dontShow">Don't Show Again</label>
-        </div>
         <button class="btn btn-gradient" @click="gotit">Got it</button>
       </div>
     </div>
@@ -29,27 +29,16 @@
 
 <script>
 export default {
-  name: "Guide",
+  name: "HowToAllowAccess",
   data() {
-    return {
-      dontShow: false,
-    };
+    return {};
   },
   created() {
-    localStorage.setItem("guideDismissed", false);
   },
+  props: ["requestedGuide"],
   methods: {
     gotit() {
-      this.$emit("gotit");
-    },
-  },
-  watch: {
-    dontShow(val) {
-      if (val == true) {
-        localStorage.setItem("guideDismissed", true);
-      } else {
-        localStorage.setItem("guideDismissed", false);
-      }
+      this.$emit("close");
     },
   },
 };
@@ -64,7 +53,6 @@ export default {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.782);
   z-index: 999999;
-
 }
 .inner {
   background-color: #fff;
@@ -86,12 +74,9 @@ export default {
   margin: var(--m-margin) 0;
 }
 .inner video {
-    margin: auto;
-    display: block;
-    max-width: 90%;
-    box-shadow: 0 0 6px -1px #999;
-    padding: 12px;
-    border-radius: 10px;
+  margin: auto;
+  display: block;
+  max-width: 90%;
 }
 @media only screen and (max-width: 767px) and (min-width: 320px) {
   .inner {

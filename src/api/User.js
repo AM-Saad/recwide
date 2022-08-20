@@ -10,6 +10,4 @@ export default class User {
     static async changePassword(url, jwt, data) { return await request(`${url}/user/password`, 'put', JSON.stringify(data), true, jwt) }
 
 
-
-
 }

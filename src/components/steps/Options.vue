@@ -1,114 +1,31 @@
 <template>
   <div>
     <div class="head">
-      <div class="goBack" @click="switchComponent('Scene')">
+      <button tabindex="7" type="button" class="goBack" @click="switchComponent('Scene')">
         <i class="fas fa-arrow-left icon"></i>
         <span>Back To Recording Scene</span>
-      </div>
+      </button>
     </div>
-    <Allowaccess
-      v-on:close="closeAllowAccess"
+
+    <HowToAllowAccess
+      @close="showAllowAccess = false"
       v-if="showAllowAccess"
       :requestedGuide="requestedGuide"
     />
-
-    <Permissions
-      v-on:gotit="closePermissions"
-      v-if="showPermissions"
-      v-on:continueToRec="continueToRec"
+    <CheckPremissions
+      @gotit="shouldCheckPermissions = false"
+      v-show="shouldCheckPermissions"
+      @continueToRec="continueToRec"
     />
 
     <div class="grid step" :class="{ 'g-two': mode !== 'screen' }">
       <div class="step-options">
-        <!-- <h2>Recording Settings</h2> -->
-        <div class="">
-          <h3>Audio Recording Options</h3>
-          <div>
-            <div
-              class="options-select"
-              :class="[
-                {
-                  active: audioSettings == 'Microphone + System audio',
-                },
-                { none: mode == 'webcam' },
-              ]"
-              @click="changeSoundOpts('Microphone + System audio')"
-            >
-              <div class="flex">
-                <div class="icon">
-                  <i class="fas fa-volume-up"></i>
-                </div>
-                <span>Microphone + System audio</span>
-              </div>
-              <div
-                v-if="
-                  !micGranted &&
-                  audioSettings == 'Microphone + System audio'
-                "
-              >
-                <p
-                  class="f-center m-t-3 c-r"
-                  @click="openAllowAccess('Microphone')"
-                >
-                  Allow access to mic
-                </p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div
-              class="options-select"
-              :class="[{ active: audioSettings == 'Microphone' }]"
-              @click="changeSoundOpts('Microphone')"
-            >
-              <div class="flex">
-                <div class="icon">
-                  <i class="fas fa-microphone-alt"></i>
-                </div>
-                <span>Microphone</span>
-              </div>
-              <div v-if="!micGranted && audioSettings == 'Microphone'">
-                <p
-                  class="f-center m-t-3 c-r"
-                  @click="openAllowAccess('Microphone')"
-                >
-                  Allow access to mic
-                </p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div
-              class="options-select flex"
-              :class="[
-                { active: audioSettings == 'System audio' },
-                { none: mode == 'webcam' },
-              ]"
-              @click="changeSoundOpts('System audio')"
-            >
-              <div class="icon">
-                <i class="fas fa-bullhorn"></i>
-              </div>
-              <span>System audio</span>
-            </div>
-            <!---->
-          </div>
-          <div>
-            <div
-              class="options-select flex"
-              :class="{ active: audioSettings == 'No audio' }"
-              @click="changeSoundOpts('No audio')"
-            >
-              <div class="icon">
-                <i class="fas fa-volume-mute"></i>
-              </div>
-              <span>No audio</span>
-            </div>
-            <!---->
-          </div>
+        <div>
+          <AudioOptions @openAllowAccess="openAllowAccess" />
+
           <div class="grid">
             <h3 for="resolution">Resolution</h3>
-            <select class="options-select active" id="resolution" v-model="currentResolution">
+            <select id="resolution" v-model="currentResolution" tabindex="5">
               <option
                 v-for="i in resolutions"
                 :key="i.height"
@@ -118,36 +35,41 @@
               </option>
             </select>
           </div>
+
           <button
             class="btn btn-gradient btn btn-gradient-big"
-            v-if="dontWaitCamPrev"
-            @click="startRec()"
+            v-if="shouldNotWaitThePreview"
+            @click="proceed()"
+            tabindex="6"
           >
             Start Recording
           </button>
           <button
             class="btn btn-gradient btn btn-gradient-big"
             style="opacity: 0.5"
-            v-if="!dontWaitCamPrev"
+            tabindex="6"
+            v-if="!shouldNotWaitThePreview"
           >
             Start Recording
           </button>
         </div>
       </div>
-      <div class="cam-area" v-if="this.mode != 'screen'">
-        <!-- Broadcast -->
-        <CamBroadcast v-on:cameraReady="camPrevReady()" v-on:AllowAccess="openAllowAccess('Webcam')" />
-     
+
+      <div class="cam-preview-area" v-if="this.mode != 'screen'">
+        <CamPreview
+          v-on:cameraReady="camPrevReady()"
+          v-on:AllowAccess="openAllowAccess('Webcam')"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import CamBroadcast from "@/components/models/Cam_broadcast.vue";
-import Allowaccess from "@/components/Popups/Allow_access.vue";
-import Permissions from "@/components/Popups/Permissions_check.vue";
-
+import CamPreview from "@/components/recording/CamPreview.vue";
+import HowToAllowAccess from "@/components/popups/HowToAllowAccess.vue";
+import CheckPremissions from "@/components/popups/CheckPremissions.vue";
+import AudioOptions from "@/components/AudioOptions.vue";
 import { mapState } from "vuex";
 
 export default {
@@ -155,8 +77,8 @@ export default {
   data() {
     return {
       needPermissions: false,
-      showPermissions: false,
-      dontWaitCamPrev: false,
+      shouldCheckPermissions: false,
+      shouldNotWaitThePreview: false,
       showAllowAccess: false,
       requestedGuide: "",
       currentResolution: 1080,
@@ -170,74 +92,44 @@ export default {
       "camGranted",
       "resolutions",
     ]),
+    premissionsForModes: function() {
+      return {
+        screenAndWebcam:
+          !this.camGranted ||
+          (!this.micGranted && this.audioSettings !== "No audio"),
+        webcam:
+          !this.camGranted ||
+          (!this.micGranted && this.audioSettings == "Microphone"),
+        screen:
+          (this.audioSettings === "Microphone + System audio" ||
+            this.audioSettings === "Microphone") &&
+          !this.micGranted,
+      };
+    },
   },
   components: {
-    CamBroadcast,
-    Allowaccess,
-    Permissions,
+    CamPreview,
+    HowToAllowAccess,
+    CheckPremissions,
+    AudioOptions,
   },
-  mounted() {},
-  created() {
 
-    if (
-      this.mode === "screen" ||
-      (this.mode === "screenAndWebcam" && !this.camGranted)
-    ) {
-      this.dontWaitCamPrev = true;
-    }
-    this.checkIfNeedPermissions();
-    try {
-      window.camstream.getTracks().forEach((track) => {
-        track.stop();
-      });
-      window.boradcast.getTracks().forEach((track) => {
-        track.stop();
-      });
-    } catch (error) {
-      return
-    }
-      this.$store.commit("changeResolution", this.currentResolution);
-
-  },
   methods: {
-    checkIfNeedPermissions() {
-      if (
-        this.mode === "screenAndWebcam" &&
-        (!this.camGranted ||
-          (!this.micGranted && this.audioSettings !== "No audio"))
-      ) {
-        this.needPermissions = true;
-      } else if (
-        this.mode === "webcam" &&
-        (!this.camGranted || !this.micGranted)
-      ) {
-        this.needPermissions = true;
-      } else if (
-        this.mode === "screen" &&
-        (this.audioSettings === "Microphone + System audio" ||
-          this.audioSettings === "Microphone")
-      ) {
-        if (!this.micGranted) {
-          this.needPermissions = true;
-        } else {
-          this.needPermissions = false;
-          this.readyToStart += 1;
-        }
-      } else {
-        this.needPermissions = false;
-
-        this.readyToStart += 1;
+    checkIfMissingPermissions() {
+      if (this.premissionsForModes[this.mode]) {
+        return (this.needPermissions = true);
       }
+      this.needPermissions = false;
+      this.readyToStart += 1;
     },
-    startRec() {
+    proceed() {
       if (this.needPermissions) {
-        this.showPermissions = true;
-      } else {
-        this.$emit("switch", "Recording");
+        return (this.shouldCheckPermissions = true);
       }
+      this.$emit("switch", "Recording");
     },
     continueToRec() {
-      this.showPermissions = false;
+      this.shouldCheckPermissions = false;
 
       if (this.mode === "webcam" && !this.camGranted) {
         return (this.showAllowAccess = true);
@@ -257,28 +149,39 @@ export default {
       this.requestedGuide = requestedGuide;
       this.showAllowAccess = true;
     },
-    closeAllowAccess() {
-      this.showAllowAccess = false;
-    },
-
-    closePermissions() {
-      this.showPermissions = false;
-    },
 
     switchComponent(comp) {
       this.$emit("switch", comp);
     },
-    changeSoundOpts(mode) {
-      this.$store.commit("recSettings", mode);
-    },
+
     camPrevReady() {
-      this.dontWaitCamPrev = true;
+      this.shouldNotWaitThePreview = true;
       this.$store.commit("camGranted", true);
     },
   },
+  created() {
+    if (
+      this.mode === "screen" ||
+      (this.mode === "screenAndWebcam" && !this.camGranted)
+    ) {
+      this.shouldNotWaitThePreview = true;
+    }
+    this.checkIfMissingPermissions();
+    try {
+      window.camstream.getTracks().forEach((track) => {
+        track.stop();
+      });
+      window.boradcast.getTracks().forEach((track) => {
+        track.stop();
+      });
+    } catch (error) {
+      return;
+    }
+    this.$store.commit("changeResolution", this.currentResolution);
+  },
   watch: {
     audioSettings() {
-      this.checkIfNeedPermissions();
+      this.checkIfMissingPermissions();
     },
     camGranted(val) {
       if (val) {
@@ -286,7 +189,7 @@ export default {
       }
     },
     currentResolution(val) {
-      this.currentResolution = val
+      this.currentResolution = val;
       this.$store.commit("changeResolution", val);
     },
   },
@@ -307,29 +210,20 @@ h3 {
   border-radius: var(--m-radius);
   background: #fff;
   color: #000;
-  box-shadow: var(--shadow3)
+  box-shadow: var(--shadow3);
 }
-.options-select {
-  padding: var(--s-padding);
+#resolution{
+    padding: var(--s-padding);
   background-color: #fff;
   margin-bottom: var(--m-margin);
   border-radius: var(--s-radius);
-  border: 1px solid #fff;
+  border: 1px solid var(--main-color);
   cursor: pointer;
   color: #333;
 }
-.options-select.active {
-  border-color: var(--main-color);
-  background-color: #eee;
-}
-.options-select:hover {
-  background-color: #eee;
-}
-.cam-area {
+.cam-preview-area {
   height: 100%;
   width: 100%;
-  /* background: #fff; */
-  /* margin: var(--m-margin) auto; */
 }
 .icon {
   margin: 0 var(--s-margin);
@@ -340,8 +234,7 @@ h3 {
   margin-top: var(--l-margin);
   text-align: center;
 }
-@media only screen and (max-width: 1024px) and (min-width: 320px) {
-
+@media only screen and (max-width: 1024px) and (min-width: 280px) {
   .step-options {
     width: 100%;
   }

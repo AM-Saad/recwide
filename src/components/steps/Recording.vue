@@ -1,11 +1,9 @@
 <template>
   <div>
     <div class="containers">
-      <div v-if="allowGuide">
-        <Guide v-on:gotit="closeGuide" v-if="showGuide" />
-      </div>
+      <Guide v-on:gotit="closeGuide" v-if="showGuide" />
 
-      <ScreenCapture
+      <ScreenRecording
         v-if="mode != 'webcam' && readyToStart"
         v-on:ready="screenReady"
         v-on:canceled="canceled"
@@ -32,7 +30,6 @@
     <div v-if="recording" class="recording-box">
       <h3 class="f-center m-medium">Recording in Progress</h3>
       <Counting />
-
       <button class="recording-btn " @click="stopRecording">
         <i class="far fa-stop-circle"></i>
       </button>
@@ -41,10 +38,10 @@
 </template>
 
 <script>
-import Counting from "@/components/models/Counting";
-import ScreenCapture from "@/components/models/Screen_Capture";
-import CamRecording from "@/components/models/Cam_recording";
-import Guide from "@/components/Popups/Guide.vue";
+import Counting from "@/components/recording/Counting";
+import ScreenRecording from "@/components/recording/ScreenRecording";
+import CamRecording from "@/components/recording/CamRecording";
+import Guide from "@/components/popups/Guide.vue";
 
 import { mapState } from "vuex";
 
@@ -58,17 +55,14 @@ export default {
       start: false,
       stopCam: false,
       readyToStart: false,
-      allowGuide: false,
-      needGuide:
-        localStorage.getItem("dontshowguideagain") == "true" ? false : true,
-      showGuide: false
+      showGuide: false,
     };
   },
   components: {
     Counting,
-    ScreenCapture,
+    ScreenRecording,
     CamRecording,
-    Guide
+    Guide,
   },
   computed: {
     ...mapState([
@@ -78,14 +72,14 @@ export default {
       "finished",
       "camIsReady",
       "screenIsReady",
-      "resolution"
-    ])
+      "resolution",
+    ]),
   },
 
   created() {
-    this.checkIfNeedGuide(this.audioSettings);
+    this.shoudDisplayGuide();
     try {
-      window.boradcast.getTracks().forEach(track => {
+      window.boradcast.getTracks().forEach((track) => {
         track.stop();
       });
     } catch (error) {
@@ -99,16 +93,19 @@ export default {
     window.onbeforeunload = null;
   },
   methods: {
-    checkIfNeedGuide(val) {
+    shoudDisplayGuide() {
+      const audio = this.audioSettings;
+      const guideDismissed =
+        localStorage.getItem("guideDismissed") == "true" ? false : true;
+
       if (
-        (val === "Microphone + System audio" || val === "System audio") &&
-        this.needGuide
+        (audio === "Microphone + System audio" || audio === "System audio") &&
+        guideDismissed
       ) {
-        this.showGuide = true;
-        this.allowGuide = true;
-      } else {
+       return this.showGuide = true;
+      } 
+      
         this.readyToStart = true;
-      }
     },
     closeGuide() {
       this.showGuide = false;
@@ -124,21 +121,21 @@ export default {
     canceled(msg) {
       this.$store.commit("camReady", false);
       this.$store.commit("screenReady", false);
-      this.checkReady();
+      this.checkIfReadyToRecord();
       this.$emit("switch", "options", msg);
     },
     screenReady() {
       this.$store.commit("screenReady", true);
-      this.checkReady();
+      this.checkIfReadyToRecord();
     },
     camReady() {
       this.$store.commit("camReady", true);
-      this.checkReady();
+      this.checkIfReadyToRecord();
     },
 
     stopRecording() {
       this.recording = false;
-      this.checkFinished();
+      this.checkIfRecordingIsFinished();
     },
     forceStopCam() {
       this.stopCam = true;
@@ -147,7 +144,8 @@ export default {
       this.accessGranted = false;
       this.$store.commit("camerror", true);
     },
-    checkReady() {
+    // will be ready to record if all required sources is ready (eg. if mode is screenAndWebcam then both the cam and screen should be ready first to start recording)
+    checkIfReadyToRecord() {
       switch (this.mode) {
         case "screen":
           if (this.screenIsReady) {
@@ -169,9 +167,10 @@ export default {
           break;
       }
     },
-    checkFinished() {
+    // will be finished if the blobs contain the total of required files that finished (eg. if the mode is screenAndWebcam then the blobs should have 2 files)
+    checkIfRecordingIsFinished() {
       switch (this.mode) {
-        case "screen":
+        case "screen" || "webcam":
           if (this.blobs.length > 0) {
             this.$store.commit("finished", true);
           }
@@ -181,39 +180,36 @@ export default {
             this.$store.commit("finished", true);
           }
           break;
-        case "webcam":
-          if (this.blobs.length > 0) {
-            this.$store.commit("finished", true);
-          }
-          break;
 
         default:
           break;
       }
     },
-
+    // Getting recording file from the cam component and push to the blobs property that holds the recordes
     pushCamFile(val) {
-      const exist = this.blobs.find(b => b.name === "camRecording");
+      const exist = this.blobs.find((b) => b.name === "camRecording");
       if (!exist) {
         this.$store.commit("newBlob", { chunks: val, name: "camRecording" });
-        this.checkFinished();
+        this.checkIfRecordingIsFinished();
       }
     },
+    // Getting recording file from the screen component and push to the blobs property that holds the recordes
+
     pushScreenFile(val) {
-      const exist = this.blobs.find(b => b.name === "screenRecording");
+      const exist = this.blobs.find((b) => b.name === "screenRecording");
       if (!exist) {
         this.$store.commit("newBlob", { chunks: val, name: "screenRecording" });
-        this.checkFinished();
+        this.checkIfRecordingIsFinished();
       }
-    }
+    },
   },
   watch: {
     recording(val) {
       if (val == true) {
         this.start = true;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

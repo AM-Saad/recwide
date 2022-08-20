@@ -10,7 +10,7 @@
       <div id="nav" class="flex f-space-between">
         <div class="flex">
           <span class="dashboard-menu-icon menu_icons_item">
-                <i class="fas fa-bars" @click="openMenu" v-if="showMenuBtn"></i>
+            <i class="fas fa-bars" @click="openMenu" v-if="showMenuBtn"></i>
           </span>
           <router-link to="/"
             ><img
@@ -28,32 +28,24 @@
           >
         </div>
         <div v-if="isAuth">
-       
-
           <ul id="top-menu">
- 
             <div class="flex">
-                  <router-link to="/projects" class="flex">
-            <img
-              style="height: 40px"
-              src="@/assets/images/logo-geek.png"
-              alt=""
-            />
-          </router-link>
-                <i class="fas fa-download menu_icons_item none  install-btn" id="install-btn"></i>
+              <router-link to="/projects" class="flex">
+                <img
+                  style="height: 40px"
+                  src="@/assets/images/logo-geek.png"
+                  alt=""
+                />
+              </router-link>
+              <i
+                class="fas fa-download menu_icons_item none  install-btn"
+                id="install-btn"
+              ></i>
             </div>
-        </ul>
+          </ul>
         </div>
       </div>
-      <!-- <div class="ad-container">
-        <Adsense
-          data-ad-client="ca-pub-9947392255163870"
-          data-ad-slot="1234567890"
-          data-ad-format="auto"
-          :data-full-width-responsive="'true'"
-        >
-        </Adsense>
-      </div> -->
+
       <router-view />
     </div>
   </div>
@@ -65,21 +57,16 @@ export default {
   name: "App",
   data() {
     return {
-      showMenuBtn:false
+      showMenuBtn: false,
     };
   },
   computed: {
-    ...mapState("user", ["isAuth", "user"]),
- 
-
+    ...mapState("user", ["isAuth"]),
   },
   components: {},
-  mounted(){
-
-  },
+  mounted() {},
   created() {
     let auth = this.$store.getters["user/checkauthintecated"];
-
     auth && this.$store.commit("user/loginToStore");
   },
   methods: {
@@ -88,18 +75,22 @@ export default {
     },
     logout() {
       localStorage.removeItem("uid");
-    }
+    },
   },
-  watch:{
-    "$route":function(val){
-      if(val.name === 'account' || val.name === 'settings' || val.name === 'projects' || val.name === 'project'){
-        this.showMenuBtn = true
-      }else{
-        this.showMenuBtn = false
+  watch: {
+    $route: function(val) {
+      if (
+        val.name === "account" ||
+        val.name === "settings" ||
+        val.name === "projects" ||
+        val.name === "project"
+      ) {
+        this.showMenuBtn = true;
+      } else {
+        this.showMenuBtn = false;
       }
-      
-    }
-  }
+    },
+  },
 };
 </script>
 
