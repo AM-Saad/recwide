@@ -50,9 +50,9 @@
 </template>
 
 <script>
-import Videos from "@/components/models/Videos";
-import SaveProject from "@/components/Popups/Save_Project";
-import AuthForm from "@/components/Popups/Auth";
+import Videos from "@/components/recording/Videos";
+import SaveProject from "@/components/popups/Save_Project";
+import AuthForm from "@/components/popups/Auth";
 
 import { mapState } from "vuex";
 export default {
