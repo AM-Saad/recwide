@@ -50,7 +50,7 @@ export default {
 .project::before {
   content: "";
   position: absolute;
-  left: -1px;
+  left: -2px;
   top: -21px;
   width: 40%;
   height: 20px;
@@ -81,19 +81,24 @@ export default {
   letter-spacing: 0.2px;
 }
 .new-project {
-  border: 1.8px dashed #ccc;
-  background-color: #eee;
+  border: 1.8px dashed rgb(211, 211, 211);
+  background-color:#f2f2f2;
 }
 .new-project .button {
-  background-color: blue;
+  background-color: #4e7ef8;
   padding: var(--m-padding) 7px;
   position: absolute;
   top: 60%;
   left: 50%;
   -webkit-transform: translate(-50%, -60%);
   transform: translate(-50%, -60%);
-  border-radius: var(--m-radius);
+  border-radius: var(--s-radius);
   color: #fff;
   font-size: 11px;
 }
+.new-project .button:hover {
+  background-color: #618cfa;
+
+}
+
 </style>

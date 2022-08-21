@@ -39,9 +39,10 @@
           tabindex="2"
         />
       </div>
-      <div class="form-group">
-        <label for="login-rememberMe-client">Remember Me</label>
+      <div class="form-group flex">
+        <label for="login-rememberMe-client" class=" m-t-3">Remember Me</label>
         <input
+        class="m-l-3"
           type="checkbox"
           id="login-rememberMe-client"
           name="rememberMe"

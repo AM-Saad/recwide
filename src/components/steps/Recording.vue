@@ -144,7 +144,8 @@ export default {
       this.accessGranted = false;
       this.$store.commit("camerror", true);
     },
-    // will be ready to record if all required sources is ready (eg. if mode is screenAndWebcam then both the cam and screen should be ready first to start recording)
+    // will be ready to record if all required sources is ready (eg. if the mode is screenAndWebcam then both the cam and screen should be ready first to start recording)
+    // Whenever any source is ready will call this method to check if the other source is ready or it's the only source that is required to start recording
     checkIfReadyToRecord() {
       switch (this.mode) {
         case "screen":
@@ -168,9 +169,15 @@ export default {
       }
     },
     // will be finished if the blobs contain the total of required files that finished (eg. if the mode is screenAndWebcam then the blobs should have 2 files)
+    // This fired when click on stop and every time any source is finished (eg. when pushCamFile excuted and pushScreenFile also)
     checkIfRecordingIsFinished() {
       switch (this.mode) {
-        case "screen" || "webcam":
+        case "screen":
+          if (this.blobs.length > 0) {
+            this.$store.commit("finished", true);
+          }
+          break;
+        case  "webcam":
           if (this.blobs.length > 0) {
             this.$store.commit("finished", true);
           }
@@ -185,7 +192,7 @@ export default {
           break;
       }
     },
-    // Getting recording file from the cam component and push to the blobs property that holds the recordes
+    // Getting recording file from the cam component and push to the blobs property that holds the recordes then checkIfRecordingIsFinished()
     pushCamFile(val) {
       const exist = this.blobs.find((b) => b.name === "camRecording");
       if (!exist) {
@@ -193,7 +200,7 @@ export default {
         this.checkIfRecordingIsFinished();
       }
     },
-    // Getting recording file from the screen component and push to the blobs property that holds the recordes
+    // Getting recording file from the screen component and push to the blobs property that holds the recordes then checkIfRecordingIsFinished()
 
     pushScreenFile(val) {
       const exist = this.blobs.find((b) => b.name === "screenRecording");

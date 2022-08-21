@@ -1,6 +1,4 @@
-const articleById = (state) => (id) => {
-  return state.articles.find(a => a._id.toString() === id.toString())
-};
+
 
 
 const checkauthintecated = () => {
@@ -25,6 +23,5 @@ const checkauthintecated = () => {
 }
 
 export default {
-  articleById,
   checkauthintecated
 };
