@@ -55,31 +55,3 @@ export default {
 };
 </script>
 
-<style>
-h1 {
-  text-align: center;
-}
-.head {
-  margin: var(--s-margin);
-}
-.step {
-  padding: var(--l-padding);
-  border-radius: var(--m-radius);
-  margin: var(--m-margin);
-  align-items: center;
-  /* box-shadow: var(--shadow3); */
-}
-.step .btn btn-gradient {
-  margin: auto;
-  margin-top: var(--m-margin);
-}
-@media only screen and (max-width: 767px) and (min-width: 320px) {
-  h1 {
-    font-size: 22px;
-    margin: var(--m-margin) 0;
-  }
-  .step {
-    padding: var(--s-padding);
-  }
-}
-</style>

@@ -98,7 +98,7 @@ export default {
 };
 </script>
 
-<style >
+<style scoped>
 .video-wrapper {
   width: 94%;
   margin: var(--m-margin) 0;

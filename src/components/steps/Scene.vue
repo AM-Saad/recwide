@@ -131,6 +131,9 @@ export default {
 </script>
 
 <style scoped>
+h1{
+  text-align: center;
+}
 #modes {
   display: flex;
   padding: var(--m-padding);

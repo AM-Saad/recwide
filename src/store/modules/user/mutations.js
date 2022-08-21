@@ -29,9 +29,7 @@ const logout = (state) => {
   localStorage.removeItem('keepSession')
   localStorage.removeItem("uexpiryd")
   localStorage.removeItem("u")
-  // state.user = null
   state.jwt = null
-  // state.expiryDate = null
   state.isAuth = false
 
 }

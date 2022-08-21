@@ -1,7 +1,12 @@
 <template>
   <div>
     <div class="head">
-      <button tabindex="7" type="button" class="goBack" @click="switchComponent('Scene')">
+      <button
+        tabindex="7"
+        type="button"
+        class="goBack"
+        @click="switchComponent('Scene')"
+      >
         <i class="fas fa-arrow-left icon"></i>
         <span>Back To Recording Scene</span>
       </button>
@@ -18,7 +23,7 @@
       @continueToRec="continueToRec"
     />
 
-    <div class="grid step" :class="{ 'g-two': mode !== 'screen' }">
+    <div :class="{ flex: mode !== 'screen' }" class="step">
       <div class="step-options">
         <div>
           <AudioOptions @openAllowAccess="openAllowAccess" />
@@ -55,7 +60,7 @@
         </div>
       </div>
 
-      <div class="cam-preview-area" v-if="this.mode != 'screen'">
+      <div class="step-cam-preview" v-if="this.mode != 'screen'">
         <CamPreview
           v-on:cameraReady="camPrevReady()"
           v-on:AllowAccess="openAllowAccess('Webcam')"
@@ -201,19 +206,23 @@ h3 {
   margin: var(--m-margin) 0;
   font-size: 16px;
 }
-
+.head {
+  margin-bottom: var(--m-margin);
+}
+.step {
+  gap: 1rem;
+}
 .step-options {
-  width: 75%;
-  height: 100%;
-  margin: var(--m-margin) auto;
+  width: 100%;
   padding: var(--m-padding);
   border-radius: var(--m-radius);
   background: #fff;
   color: #000;
   box-shadow: var(--shadow3);
+  align-self: stretch;
 }
-#resolution{
-    padding: var(--s-padding);
+#resolution {
+  padding: var(--s-padding);
   background-color: #fff;
   margin-bottom: var(--m-margin);
   border-radius: var(--s-radius);
@@ -221,7 +230,7 @@ h3 {
   cursor: pointer;
   color: #333;
 }
-.cam-preview-area {
+.step-cam-preview {
   height: 100%;
   width: 100%;
 }
