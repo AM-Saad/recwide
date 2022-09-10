@@ -1,4 +1,5 @@
-# chat-app
+# Recwide | Online Camera & Screen Recorder.
+
 
 ## Project setup
 ```
